@@ -1,0 +1,29 @@
+/* src/componentes/CrearCuenta.css */
+.crear-cuenta {
+    width: 200px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.crear-cuenta h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.botonn {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.botonn:hover {
+    background-color: #0056b3;
+}

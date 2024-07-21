@@ -1,0 +1,23 @@
+/* src/componentes/Menu.css */
+.menu {
+    display: flex;
+    justify-content: center;
+    background-color: #333;
+    padding: 10px;
+}
+
+.menu-item {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 25px;
+    font-size: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.menu-item:hover {
+    background-color: #444;
+}
+
+.menu-item.active {
+    background-color: #555;
+}

@@ -1,0 +1,38 @@
+.campo {
+    margin: 24px 0;
+}
+
+.campo label {
+    font-size: 18px;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 8px;
+    color: var(--color-white-smoke);
+}
+
+.campo input {
+    width: 100%;
+    background-color: transparent;
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.06);
+    border: 3px solid var(--color-blue-light);
+    padding: 30px 20px;
+    outline-color: var(--color-blue-light);
+    font-size: 16px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    color: #fff;
+    height: 40px;
+}
+
+.mensaje-error {
+    color: red; /* Color rojo para los mensajes de error */
+    font-size: 14px;
+    margin-top: 4px; /* Espacio entre el campo y el mensaje de error */
+}
+
+
+.campo-color input {
+    padding: 5px;
+    height: 65px;
+}
+

@@ -1,0 +1,24 @@
+/* src/componentes/BarraBusqueda.css */
+.search-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    margin: 0 20px;
+}
+
+.search-bar input {
+    width: 70%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px 0 0 4px;
+    outline: none;
+}
+
+.search-bar button {
+    padding: 10px;
+    border: none;
+    background-color: #ccc;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+}

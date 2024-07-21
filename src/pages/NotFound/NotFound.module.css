@@ -1,0 +1,36 @@
+/* NotFound.module.css */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 78vh; /* Ocupa toda la altura de la pantalla */
+  background: linear-gradient(135deg, #20229e, #29bec9); /* Gradiente de colores */
+}
+
+.image {
+  max-width: 100%; 
+  height: auto;
+  margin-bottom: 1rem;
+  background-color: rgba(2, 2, 24, 0.7); 
+  border-radius: 50%;
+}
+
+.text_error {
+  font-size: 36px; 
+  color: #fff;
+  text-align: center; 
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  font-family: 'Arial', sans-serif; 
+  letter-spacing: 1px; 
+  transform: translateY(-10px); 
+}
+
+.text_error::after {
+  content: "Oops! Parece que te has perdido...";
+  display: block;
+  font-size: 24px; 
+  font-style: italic;
+  margin-top: 8px;
+}

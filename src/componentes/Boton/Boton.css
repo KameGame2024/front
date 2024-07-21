@@ -1,0 +1,42 @@
+.botones {
+    background-color: transparent;
+    border-radius: 10px;
+    font-weight: 700;
+    font-family: "Montserrat", sans-serif;
+    padding: 15px 32px;
+    border: 2px solid var(--color-white-smoke);
+    color: var(--color-white-smoke);
+    margin: 0 0 1em; /* Añade margen inferior y elimina el margen izquierdo */
+    cursor: pointer;
+    font-size: 14px;
+    width: 210px;
+    text-align: center; /* Centra el texto dentro del botón */
+    box-sizing: border-box; /* Incluye el padding en el ancho del botón */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.botones:hover {
+    color: #2271D1;
+    border: 2px solid #2271D1;
+}
+.btn-icon {
+    display: none; /* Muestra el icono en dispositivos móviles */
+}
+
+@media (max-width: 480px) {
+    .botones {
+        font-size: 12px; /* Reduce el tamaño de fuente para móviles */
+        padding: 10px 20px; /* Ajusta el padding para móviles */
+        width: 100px; /* Reduce el ancho del botón para móviles */
+    }
+
+    .btn-text {
+        display: none; /* Oculta el texto en dispositivos móviles */
+    }
+
+    .btn-icon {
+        display: inline-block; /* Muestra el icono en dispositivos móviles */
+    }
+}
