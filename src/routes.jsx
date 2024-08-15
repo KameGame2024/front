@@ -7,6 +7,7 @@ import CrearCuenta from "./pages/CrearCuenta";
 import Cartas from "./pages/Cartas";
 import Paquetes from "./pages/Paquetes";
 import Carrito from "./pages/Carrito";
+import Detalle from "./pages/Detalle";
 
 function AppRoutes() {
   return (
@@ -17,7 +18,7 @@ function AppRoutes() {
           <Route path="cartas" element={<Cartas />}></Route>
           <Route path="paquetes" element={<Paquetes />}></Route>
           <Route path="carrito" element={<Carrito />}></Route>
-          <Route path=":id" element=""></Route>
+          <Route path=":id" element={<Detalle />}></Route>
           <Route path="*" element={<NotFound />}></Route>
         </Route>
         <Route path="crear-cuenta" element={<CrearCuenta />}></Route>

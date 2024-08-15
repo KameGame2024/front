@@ -12,7 +12,7 @@ const Card = ({ imagen, nombre, descripcion, ataque, defensa, precio, id }) => {
                 <p className="card-stats">ATK: {ataque}</p>
                 <p className="card-stats">DEF: {defensa}</p>
                 <p className="card-price">Precio: ${precio}</p>
-                <Link to={`/detalle-carta/${id}`} className="card-button">
+                <Link to={`/${id}`} className="card-button">
                     Ver
                 </Link>
             </div>
