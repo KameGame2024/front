@@ -14,7 +14,7 @@
     position: relative;
 }
 
-.logo_cuenta {
+.logo-iniciosesion {
     position: absolute;
     top: 40px;
     left: 40px;
@@ -40,7 +40,7 @@
     background-color: #fff; 
 }
 
-.crear-cuenta {
+.iniciar-sesion {
     max-width: 400px;
     width: 100%;
 }
@@ -54,7 +54,7 @@ h2 {
 .botonn {
     width: 100%;
     padding: 10px;
-    margin-top: 15px; /* Reducido para menos espacio */
+    margin-top: 20px;
     background-color: var(--color-bg); /* Color del botón */
     color: #fff;
     border: none;
@@ -65,47 +65,31 @@ h2 {
     background-color: #a58d08;
 }
 
-.terms {
-    margin-top: 15px; /* Reducido para menos espacio */
-    display: flex;
-    align-items: center;
-}
 
-.terms input {
-    margin-right: 10px;
-}
-
-.error-message {
-    color: red;
-    font-size: 12px;
-    margin-top: 5px;
-}
-
-.confirmation-message {
-    margin-top: 2px; /* Reducido para menos espacio */
-    font-size: 14px;
-    max-width: 350px;
-    color: #979797;
-    text-align: justify;
-}
-
-.hcaptcha {
-    margin-top: 15px; /* Reducido para menos espacio */
-    font-size: 12px;
-    text-align: center;
-    color: #979797;
-}
-
-.login-link {
-    margin-top: 15px; /* Reducido para menos espacio */
+.forgot-password {
+    margin-top: 20px;
     text-align: center;
 }
 
-.login-link a {
+.forgot-password a {
     color: #a58d08;
     text-decoration: none;
 }
 
-.login-link a:hover {
+.forgot-password a:hover {
+    text-decoration: underline;
+}
+
+.register-link {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.register-link a {
+    color: #a58d08;
+    text-decoration: none;
+}
+
+.register-link a:hover {
     text-decoration: underline;
 }

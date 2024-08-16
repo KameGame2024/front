@@ -13,7 +13,7 @@ function Paquete({ nombre, precio, cantidad, imagen, id }) {
                 <p className="paquete-descripcion">Pack</p>
                 <p className="paquete-descripcion">Cartas: {cantidad}</p>
                 <p className="paquete-precio">Precio: ${precio}</p>
-                <Link to={`/detalle-carta/${id}`} className="card-button">
+                <Link to={`/detalle/paquete/${id}`} className="card-button">
                     Ver
                 </Link>
             </div>

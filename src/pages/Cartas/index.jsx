@@ -173,6 +173,7 @@ function Cartas() {
                             precio={carta.precio}
                             tipo={carta.tipo}
                             atributo={carta.atributo}
+                            id={carta.id}
                         />
                     ))}
                 </div>

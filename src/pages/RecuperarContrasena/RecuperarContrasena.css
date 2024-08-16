@@ -1,0 +1,132 @@
+.recuperar-contrasena-container {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.left-section {
+    flex: 0.5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-left-bg);
+}
+
+.logo-recuperar-contrasena {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    width: 250px;
+}
+
+.center-image {
+    max-width: 100%;
+    height: auto;
+}
+
+.right-section {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: var(--color-right-bg);
+}
+
+.recuperar-contrasena {
+    max-width: 400px;
+    width: 100%;
+    background: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.recuperar-contrasena h2 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.recuperar-contrasena p {
+    font-size: 14px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #979797;
+}
+
+.campo {
+    margin: 24px 0;
+}
+
+.campo label {
+    font-size: 18px;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 8px;
+    color: var(--color-bg);
+}
+
+.campo-input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.campo-input-wrapper input {
+    width: 100%;
+    background-color: transparent;
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.06);
+    border: 3px solid var(--color-bg);
+    padding: 20px;
+    outline: none;
+    font-size: 16px;
+    box-sizing: border-box;
+    color: var(--color-bg);
+    height: 40px;
+}
+
+.campo-password .eye-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+    color: var(--color-bg);
+}
+
+.mensaje-error {
+    color: red;
+    font-size: 14px;
+    margin-top: 4px;
+}
+
+.botonn {
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    background-color: var(--color-bg);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.botonn:hover {
+    background-color: #a58d08;
+}
+
+.login-link {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.login-link a {
+    color: #a58d08;
+    text-decoration: none;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}

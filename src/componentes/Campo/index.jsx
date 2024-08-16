@@ -1,28 +1,37 @@
-import React from "react";
-import "./Campo.css";
+import React, { useState } from 'react';
+import './Campo.css';
 
-const Campo = (props) => {
-    const placeholderModificado = `${props.placeholder}...`;
+const Campo = React.forwardRef(({ titulo, placeholder, type, required, mensajeError, ...props }, ref) => {
+    const [mostrarContrasena, setMostrarContrasena] = useState(false);
 
-    const manejarCambio = (e) => {
-        props.actualizarValor(e.target.value);
+    const placeholderModificado = `${placeholder}...`;
+
+    const toggleMostrarContrasena = () => {
+        setMostrarContrasena(!mostrarContrasena);
     };
 
     return (
-        <div className={`campo campo-${props.type}`}>
-            <label>{props.titulo}</label>
-            <input
-                placeholder={placeholderModificado}
-                required={props.required}
-                value={props.valor}
-                onChange={manejarCambio}
-                type={props.type}
-            />
-            {props.mensajeError && (
-                <p className="mensaje-error">{props.mensajeError}</p>
+        <div className={`campo campo-${type}`}>
+            <label>{titulo}</label>
+            <div className="campo-input-wrapper">
+                <input
+                    placeholder={placeholderModificado}
+                    required={required}
+                    type={type === "password" && mostrarContrasena ? "text" : type}
+                    ref={ref} // Usa el ref para manejar el registro del campo
+                    {...props} // Extiende otras propiedades necesarias
+                />
+                {type === "password" && (
+                    <span className="eye-icon" onClick={toggleMostrarContrasena}>
+                        {mostrarContrasena ? "🙈" : "👁️"}
+                    </span>
+                )}
+            </div>
+            {mensajeError && (
+                <p className="mensaje-error">{mensajeError}</p>
             )}
         </div>
     );
-};
+});
 
 export default Campo;

@@ -7,32 +7,50 @@
     font-weight: 600;
     display: block;
     margin-bottom: 8px;
-    color: var(--color-white-smoke);
+    color: var(--color-bg);
 }
 
-.campo input {
+.campo-input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.campo-input-wrapper input {
     width: 100%;
     background-color: transparent;
     box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.06);
-    border: 3px solid var(--color-blue-light);
-    padding: 30px 20px;
-    outline-color: var(--color-blue-light);
+    border: 3px solid var(--color-bg);
+    padding: 20px;
+    outline: none;
     font-size: 16px;
     box-sizing: border-box;
-    border-radius: 10px;
-    color: #fff;
+    color: var(--color-bg);
     height: 40px;
 }
 
+.campo-password .eye-icon {
+    position: absolute;
+    right: 10px; /* Ajusta la distancia del ícono desde el borde derecho */
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px; /* Ajusta el tamaño del ícono según sea necesario */
+    color: var(--color-bg);
+}
+
 .mensaje-error {
-    color: red; /* Color rojo para los mensajes de error */
+    color: red;
     font-size: 14px;
-    margin-top: 4px; /* Espacio entre el campo y el mensaje de error */
+    margin-top: 4px;
 }
 
-
-.campo-color input {
-    padding: 5px;
-    height: 65px;
+.password-requirements {
+    font-size: 14px;
+    color: #333;
+    margin-top: 8px;
+    margin-bottom: 16px;
 }
 
+.password-hints {
+    margin-top: 4px;
+}

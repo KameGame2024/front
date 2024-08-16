@@ -1,10 +1,9 @@
 // src/paginas/FiltrarPaquetes.jsx
-import React from 'react';
+import React, { useState } from 'react';
 import Filtro from '@src/componentes/Filtro';
 import Paquete from '@src/componentes/Paquete'; // Asegúrate de tener este componente
 import './Paquetes.css'; // Añadimos el archivo CSS
 
-// Datos de ejemplo para los paquetes
 const paquetes = [
     {
         "id": "1",
@@ -36,15 +35,57 @@ const paquetes = [
 ];
 
 function Paquetes() {
+    const [filtros, setFiltros] = useState({
+        precioMin: '',
+        precioMax: '',
+        sets: {
+            maze: false,
+            origins: false,
+            genesis: false
+        }
+    });
+
+    const manejarCambioFiltro = (e) => {
+        const { name, value, type, checked } = e.target;
+        const [category, key] = name.split('.');
+
+        if (type === 'checkbox') {
+            setFiltros((prevState) => ({
+                ...prevState,
+                [category]: {
+                    ...prevState[category],
+                    [key]: checked
+                }
+            }));
+        } else {
+            setFiltros((prevState) => ({
+                ...prevState,
+                [name]: value
+            }));
+        }
+    };
+
+    const filtrarPaquetes = (paquetes) => {
+        return paquetes.filter(paquete => {
+            const cumplePrecio = (!filtros.precioMin || paquete.precio >= filtros.precioMin) &&
+                                 (!filtros.precioMax || paquete.precio <= filtros.precioMax);
+            const cumpleSet = !Object.values(filtros.sets).includes(true) || Object.keys(filtros.sets).some(set => filtros.sets[set] && paquete.set.toLowerCase().includes(set));
+
+            return cumplePrecio && cumpleSet;
+        });
+    };
+
+    const paquetesFiltrados = filtrarPaquetes(paquetes);
+
     return (
         <div className='fondo'>
             <h1>PAQUETES</h1>
             <div className="filtrar-paquetes">
                 <div className="filtro-container">
-                    <Filtro categoria="paquetes"/>
+                    <Filtro categoria="paquetes" filtros={filtros} manejarCambioFiltro={manejarCambioFiltro} />
                 </div>
                 <div className="paquetes-container">
-                    {paquetes.map((paquete) => (
+                    {paquetesFiltrados.map((paquete) => (
                         <Paquete
                             key={paquete.id}
                             nombre={paquete.nombre}

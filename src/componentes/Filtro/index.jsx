@@ -1,3 +1,4 @@
+// src/componentes/Filtro.jsx
 import React from 'react';
 import './Filtro.css';
 
@@ -7,6 +8,7 @@ function Filtro({ categoria, filtros, manejarCambioFiltro }) {
             <h2>Filtros</h2>
             {categoria === 'cartas' && (
                 <>
+                    {/* Filtros para cartas */}
                     <div className="filtro-seccion">
                         <h3>Ataque</h3>
                         <div className='maxmin'>
@@ -98,6 +100,47 @@ function Filtro({ categoria, filtros, manejarCambioFiltro }) {
                                     onChange={manejarCambioFiltro}
                                 />
                                 <label htmlFor={atributo}>{atributo.charAt(0).toUpperCase() + atributo.slice(1)}</label>
+                            </div>
+                        ))}
+                    </div>
+                </>
+            )}
+            {categoria === 'paquetes' && (
+                <>
+                    {/* Filtros para paquetes */}
+                    <div className="filtro-seccion">
+                        <h3>Precio</h3>
+                        <div className='maxmin'>
+                            <input
+                                type="number"
+                                name="precioMin"
+                                placeholder="Mínimo"
+                                value={filtros.precioMin}
+                                onChange={manejarCambioFiltro}
+                            />
+                            <p>-</p>
+                            <input
+                                type="number"
+                                name="precioMax"
+                                placeholder="Máximo"
+                                value={filtros.precioMax}
+                                onChange={manejarCambioFiltro}
+                            />
+                        </div>
+                    </div>
+                    <hr className="separator-line" />
+                    <div className="filtro-seccion">
+                        <h3>Set</h3>
+                        {['maze', 'origins', 'genesis'].map(set => (
+                            <div key={set} className="filtro-checkbox">
+                                <input
+                                    type="checkbox"
+                                    id={set}
+                                    name={`sets.${set}`}
+                                    checked={filtros.sets[set]}
+                                    onChange={manejarCambioFiltro}
+                                />
+                                <label htmlFor={set}>{set.charAt(0).toUpperCase() + set.slice(1)}</label>
                             </div>
                         ))}
                     </div>
