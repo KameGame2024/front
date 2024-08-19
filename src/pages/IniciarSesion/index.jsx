@@ -7,21 +7,24 @@ import Campo from '@src/componentes/Campo';
 import './IniciarSesion.css';
 import usuarios from './usuarios.json'; // Importa el JSON de usuarios
 
+// Esquema de validación usando Yup
+const schema = yup.object().shape({
+    email: yup.string()
+        .email('El correo electrónico no es válido')
+        .required('El correo electrónico es requerido'),
+    password: yup.string()
+        .min(8, 'La contraseña debe tener al menos 8 caracteres')
+        .matches(/[a-z]/, 'La contraseña debe contener al menos una letra minúscula')
+        .matches(/[A-Z]/, 'La contraseña debe contener al menos una letra mayúscula')
+        .matches(/[0-9]/, 'La contraseña debe contener al menos un número')
+        .required('La contraseña es requerida'),
+});
+
 function IniciarSesion() {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm({
+        resolver: yupResolver(schema),
+    });
     const [loginError, setLoginError] = useState("");
-
-    // Validación personalizada para la contraseña
-    const validatePassword = (password) => {
-        const passwordCriteria = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
-        return passwordCriteria.test(password) || "La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula y un número.";
-    };
-
-    // Validación personalizada para el correo electrónico
-    const validateEmail = (email) => {
-        const emailCriteria = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailCriteria.test(email) || "El correo electrónico no es válido.";
-    };
 
     // Función que se llama al enviar el formulario
     const onSubmit = (data) => {
@@ -56,7 +59,7 @@ function IniciarSesion() {
                             placeholder="Ingrese su correo"
                             type="email"
                             required
-                            {...register('email', { validate: validateEmail })}
+                            {...register('email')}
                             mensajeError={errors.email?.message}
                         />
 
@@ -65,7 +68,7 @@ function IniciarSesion() {
                             placeholder="Ingrese su contraseña"
                             type="password"
                             required
-                            {...register('password', { validate: validatePassword })}
+                            {...register('password')}
                             mensajeError={errors.password?.message}
                         />
 

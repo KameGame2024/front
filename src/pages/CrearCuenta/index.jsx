@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from "react-router-dom";
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -8,18 +8,24 @@ import './CrearCuenta.css';
 
 // Esquema de validación usando Yup
 const schema = yup.object().shape({
-    email: yup.string().email('El correo electrónico no es válido').required('El correo electrónico es requerido'),
-    password: yup.string().min(8, 'La contraseña debe tener al menos 8 caracteres').required('La contraseña es requerida'),
-    terms: yup.bool().oneOf([true], 'Debes aceptar los términos y condiciones'),
+    email: yup.string()
+        .email('El correo electrónico no es válido')
+        .required('El correo electrónico es requerido'),
+    password: yup.string()
+        .min(8, 'La contraseña debe tener al menos 8 caracteres')
+        .matches(/[a-z]/, 'La contraseña debe contener al menos una letra minúscula')
+        .matches(/[A-Z]/, 'La contraseña debe contener al menos una letra mayúscula')
+        .matches(/[0-9]/, 'La contraseña debe contener al menos un número')
+        .required('La contraseña es requerida'),
+    terms: yup.bool()
+        .oneOf([true], 'Debes aceptar los términos y condiciones'),
 });
 
 function CrearCuenta() {
-    // Configuramos react-hook-form con validación
+    // Configuramos react-hook-form con validación usando Yup
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(schema),
     });
-
-    const [termsAccepted, setTermsAccepted] = useState(false);
 
     // Función que se llama al enviar el formulario
     const onSubmit = (data) => {
@@ -70,7 +76,6 @@ function CrearCuenta() {
                             <input
                                 type="checkbox"
                                 {...register('terms')}
-                                onChange={(e) => setTermsAccepted(e.target.checked)}
                             />
                             <label>
                                 Estoy de acuerdo con los <Link to="/terminos">términos de servicio</Link> de Kame Game
@@ -78,7 +83,7 @@ function CrearCuenta() {
                         </div>
                         {errors.terms && <p className="error-message">{errors.terms.message}</p>}
 
-                        <button className='botonn' type="submit" disabled={!termsAccepted}>Crear Cuenta</button>
+                        <button className='botonn' type="submit">Crear Cuenta</button>
                     </form>
 
                     <div className="hcaptcha">
