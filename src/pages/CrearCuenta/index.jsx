@@ -6,10 +6,26 @@ import * as yup from 'yup';
 import Campo from '@src/componentes/Campo';
 import './CrearCuenta.css';
 
+// Diccionario de usuarios
+const usuarios = [
+    { nombre: "Hinara", email: "hinara@gmail.com", password: "Hi121212", id: "2a6f" },
+    { nombre: "Pedro", email: "pedro@example.com", password: "mypassword12", id: "3141" }
+];
+
+// Verificar si el email ya existe
+const emailExists = (email) => {
+    return usuarios.some(user => user.email === email);
+};
+
 // Esquema de validación usando Yup
 const schema = yup.object().shape({
-    email: yup.string().email('El correo electrónico no es válido').required('El correo electrónico es requerido'),
-    password: yup.string().min(8, 'La contraseña debe tener al menos 8 caracteres').required('La contraseña es requerida'),
+    email: yup.string().email('El correo electrónico no es válido').required('El correo electrónico es requerido').test('email-exists', 'El correo electrónico ya está registrado', value => !emailExists(value)),
+    password: yup.string()
+        .min(8, 'La contraseña debe tener al menos 8 caracteres')
+        .matches(/[a-z]/, 'La contraseña debe contener al menos una minúscula')
+        .matches(/[A-Z]/, 'La contraseña debe contener al menos una mayúscula')
+        .matches(/[0-9]/, 'La contraseña debe contener al menos un número')
+        .required('La contraseña es requerida'),
     terms: yup.bool().oneOf([true], 'Debes aceptar los términos y condiciones'),
 });
 
