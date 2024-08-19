@@ -1,0 +1,70 @@
+/* src/paginas/Detalle.css */
+
+.detalle-carta, .detalle-paquete {
+    max-width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: row;
+    justify-content: center ;
+    text-align: left;
+}
+
+.descripcion_t{
+    text-align: left;
+}
+.detalle-titulo {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.detalle-imagen {
+    max-width: 400px;
+    height: auto;
+    display: block;
+    margin:20px 150px 0 0;
+}
+
+.detalle-info {
+    font-size: 1.2em;
+}
+
+.detalle-info p {
+    margin: 10px 0;
+}
+
+.detalle-info strong {
+    color: #333;
+}
+
+.detalle-cantidad {
+    display: flex;
+    align-items: center;
+}
+
+.detalle_masmenos {
+    margin: 0 5px;
+    border: none;
+    background-color:#ddd;
+}
+.detalle_cant{
+    background-color:#ddd;
+}
+
+.detalle-agregar{
+    background-color: var(--color-bg);
+    color: #fff;
+    border: none;
+    width: 350px;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.detalle-agregar:hover {
+    background-color: var(--color-light-gray);
+}
