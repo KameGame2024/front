@@ -41,11 +41,8 @@ function RecuperarContrasena() {
                             titulo="Correo Electrónico"
                             placeholder="Ingrese su correo electrónico"
                             type="email"
-                            valor=""
                             required
-                            actualizarValor={(value) => {
-                                register('email').onChange({ target: { value } });
-                            }}
+                            {...register('email')}  // Usa directamente register para manejar el campo
                             mensajeError={errors.email?.message}
                         />
                         <p>Introduce tu correo electrónico para recibir un enlace de recuperación.</p>

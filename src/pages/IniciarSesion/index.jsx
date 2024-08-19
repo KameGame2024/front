@@ -1,27 +1,44 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Campo from '@src/componentes/Campo';
 import './IniciarSesion.css';
+import usuarios from './usuarios.json'; // Importa el JSON de usuarios
 
 // Esquema de validación usando Yup
 const schema = yup.object().shape({
-    email: yup.string().email('El correo electrónico no es válido').required('El correo electrónico es requerido'),
-    password: yup.string().min(8, 'La contraseña debe tener al menos 8 caracteres').required('La contraseña es requerida'),
+    email: yup.string()
+        .email('El correo electrónico no es válido')
+        .required('El correo electrónico es requerido'),
+    password: yup.string()
+        .min(8, 'La contraseña debe tener al menos 8 caracteres')
+        .matches(/[a-z]/, 'La contraseña debe contener al menos una letra minúscula')
+        .matches(/[A-Z]/, 'La contraseña debe contener al menos una letra mayúscula')
+        .matches(/[0-9]/, 'La contraseña debe contener al menos un número')
+        .required('La contraseña es requerida'),
 });
 
 function IniciarSesion() {
-    // Configuramos react-hook-form con validación
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(schema),
     });
+    const [loginError, setLoginError] = useState("");
 
     // Función que se llama al enviar el formulario
     const onSubmit = (data) => {
-        console.log(data);
-        // Aquí puedes manejar el envío de datos, como hacer una solicitud POST
+        const user = usuarios.find(
+            (user) => user.email === data.email && user.password === data.password
+        );
+
+        if (user) {
+            console.log("Usuario autenticado correctamente:", user);
+            setLoginError("");
+            // Aquí puedes redirigir al usuario o hacer alguna acción adicional
+        } else {
+            setLoginError("Correo electrónico o contraseña incorrectos.");
+        }
     };
 
     return (
@@ -54,6 +71,8 @@ function IniciarSesion() {
                             {...register('password')}
                             mensajeError={errors.password?.message}
                         />
+
+                        {loginError && <div className="error">{loginError}</div>}
 
                         <div className="forgot-password">
                             <Link to="/recuperar-contrasena">¿Olvidaste tu contraseña?</Link>
