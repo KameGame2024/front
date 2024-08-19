@@ -5,23 +5,35 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Campo from '@src/componentes/Campo';
 import './RecuperarContrasena.css';
+import usuarios from '@src/data/usuarios.json'; // Importa el JSON de usuarios
 
 // Esquema de validación usando Yup
 const schema = yup.object().shape({
-    email: yup.string().email('El correo electrónico no es válido').required('El correo electrónico es requerido'),
+    email: yup.string()
+        .email('El correo electrónico no es válido')
+        .required('El correo electrónico es requerido'),
 });
 
 function RecuperarContrasena() {
     // Configuramos react-hook-form con validación
-    const { register, handleSubmit, formState: { errors } } = useForm({
+    const { register, handleSubmit, formState: { errors }, setError } = useForm({
         resolver: yupResolver(schema),
     });
 
     // Función que se llama al enviar el formulario
     const onSubmit = (data) => {
-        console.log(data);
-        // Aquí puedes manejar el envío de datos, como hacer una solicitud POST
-        // para enviar el enlace de recuperación al correo electrónico
+        const user = usuarios.find((user) => user.email === data.email);
+
+        if (user) {
+            console.log("Se ha enviado el correo con la recuperación de contraseña a: ", user.email);
+            // Aquí puedes redirigir al usuario o hacer alguna acción adicional
+        } else {
+            // Si el correo no existe, mostramos un error en el campo "email"
+            setError("email", {
+                type: "manual",
+                message: "Correo electrónico incorrecto.",
+            });
+        }
     };
 
     return (
@@ -42,7 +54,7 @@ function RecuperarContrasena() {
                             placeholder="Ingrese su correo electrónico"
                             type="email"
                             required
-                            {...register('email')}  // Usa directamente register para manejar el campo
+                            {...register('email')}
                             mensajeError={errors.email?.message}
                         />
                         <p>Introduce tu correo electrónico para recibir un enlace de recuperación.</p>

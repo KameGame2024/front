@@ -5,12 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Campo from '@src/componentes/Campo';
 import './CrearCuenta.css';
-
-// Diccionario de usuarios
-const usuarios = [
-    { nombre: "Hinara", email: "hinara@gmail.com", password: "Hi121212", id: "2a6f" },
-    { nombre: "Pedro", email: "pedro@example.com", password: "mypassword12", id: "3141" }
-];
+import usuarios from '@src/data/usuarios.json'; // Importa el JSON de usuarios
 
 // Verificar si el email ya existe
 const emailExists = (email) => {
