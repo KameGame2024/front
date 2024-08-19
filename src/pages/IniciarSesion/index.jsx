@@ -1,27 +1,41 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Campo from '@src/componentes/Campo';
 import './IniciarSesion.css';
-
-// Esquema de validación usando Yup
-const schema = yup.object().shape({
-    email: yup.string().email('El correo electrónico no es válido').required('El correo electrónico es requerido'),
-    password: yup.string().min(8, 'La contraseña debe tener al menos 8 caracteres').required('La contraseña es requerida'),
-});
+import usuarios from './usuarios.json'; // Importa el JSON de usuarios
 
 function IniciarSesion() {
-    // Configuramos react-hook-form con validación
-    const { register, handleSubmit, formState: { errors } } = useForm({
-        resolver: yupResolver(schema),
-    });
+    const { register, handleSubmit, formState: { errors } } = useForm();
+    const [loginError, setLoginError] = useState("");
+
+    // Validación personalizada para la contraseña
+    const validatePassword = (password) => {
+        const passwordCriteria = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
+        return passwordCriteria.test(password) || "La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula y un número.";
+    };
+
+    // Validación personalizada para el correo electrónico
+    const validateEmail = (email) => {
+        const emailCriteria = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailCriteria.test(email) || "El correo electrónico no es válido.";
+    };
 
     // Función que se llama al enviar el formulario
     const onSubmit = (data) => {
-        console.log(data);
-        // Aquí puedes manejar el envío de datos, como hacer una solicitud POST
+        const user = usuarios.find(
+            (user) => user.email === data.email && user.password === data.password
+        );
+
+        if (user) {
+            console.log("Usuario autenticado correctamente:", user);
+            setLoginError("");
+            // Aquí puedes redirigir al usuario o hacer alguna acción adicional
+        } else {
+            setLoginError("Correo electrónico o contraseña incorrectos.");
+        }
     };
 
     return (
@@ -42,7 +56,7 @@ function IniciarSesion() {
                             placeholder="Ingrese su correo"
                             type="email"
                             required
-                            {...register('email')}
+                            {...register('email', { validate: validateEmail })}
                             mensajeError={errors.email?.message}
                         />
 
@@ -51,9 +65,11 @@ function IniciarSesion() {
                             placeholder="Ingrese su contraseña"
                             type="password"
                             required
-                            {...register('password')}
+                            {...register('password', { validate: validatePassword })}
                             mensajeError={errors.password?.message}
                         />
+
+                        {loginError && <div className="error">{loginError}</div>}
 
                         <div className="forgot-password">
                             <Link to="/recuperar-contrasena">¿Olvidaste tu contraseña?</Link>
