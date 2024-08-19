@@ -44,11 +44,8 @@ function CrearCuenta() {
                             titulo="Correo Electrónico"
                             placeholder="Ingrese su correo"
                             type="email"
-                            valor=""
                             required
-                            actualizarValor={(value) => {
-                                register('email').onChange({ target: { value } });
-                            }}
+                            {...register('email')}
                             mensajeError={errors.email?.message}
                         />
 
@@ -60,11 +57,8 @@ function CrearCuenta() {
                             titulo="Contraseña"
                             placeholder="Ingrese su contraseña"
                             type="password"
-                            valor=""
                             required
-                            actualizarValor={(value) => {
-                                register('password').onChange({ target: { value } });
-                            }}
+                            {...register('password')}
                             mensajeError={errors.password?.message}
                         />
 
