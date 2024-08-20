@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Campo from '@src/componentes/Campo';
 import './RecuperarContrasena.css';
-import usuarios from '@src/data/usuarios.json'; // Importa el JSON de usuarios
+import { GlobalContext } from '@src/context/GlobalContext';
 
 // Esquema de validación usando Yup
 const schema = yup.object().shape({
@@ -15,7 +15,7 @@ const schema = yup.object().shape({
 });
 
 function RecuperarContrasena() {
-    // Configuramos react-hook-form con validación
+    const { usuarios } = useContext(GlobalContext);
     const { register, handleSubmit, formState: { errors }, setError } = useForm({
         resolver: yupResolver(schema),
     });

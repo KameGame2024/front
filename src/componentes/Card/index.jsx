@@ -1,10 +1,18 @@
-import React from 'react';
+// src/componentes/Card.jsx
+import React, { useContext } from 'react';
+import { GlobalContext } from '@src/context/GlobalContext';
 import { Link } from 'react-router-dom';
 import './Card.css';
 
-const Card = ({ imagen, nombre, descripcion, ataque, defensa, precio, id }) => {
+const Card = ({ imagen, nombre, descripcion, ataque, defensa, precio, id, seleccionada, mostrarSeleccion, mostrarBotonVer }) => {
+    const { seleccionarCarta } = useContext(GlobalContext); // Usa la función del contexto
+
+    const handleSelect = () => {
+        seleccionarCarta({ imagen, nombre, descripcion, ataque, defensa, precio, id });
+    };
+
     return (
-        <div className="card">
+        <div className={`card ${seleccionada ? 'seleccionada' : ''}`} onClick={mostrarSeleccion ? handleSelect : undefined}>
             <img src={imagen} alt={nombre} className="card-img" />
             <div className="card-content">
                 <h2 className="marca">YU-GI-OH</h2>
@@ -12,9 +20,16 @@ const Card = ({ imagen, nombre, descripcion, ataque, defensa, precio, id }) => {
                 <p className="card-stats">ATK: {ataque}</p>
                 <p className="card-stats">DEF: {defensa}</p>
                 <p className="card-price">Precio: ${precio}</p>
-                <Link to={`/detalle/carta/${id}`} className="card-button">
-                    Ver
-                </Link>
+                {mostrarBotonVer && (
+                    <Link to={`/detalle/carta/${id}`} className="card-button">
+                        Ver
+                    </Link>
+                )}
+                {mostrarSeleccion && (
+                    <button className="card-select-btn">
+                        {seleccionada ? 'Deseleccionar' : 'Seleccionar'}
+                    </button>
+                )}
             </div>
         </div>
     );

@@ -1,0 +1,19 @@
+/* src/componentes/Baraja.css */
+.mi-baraja-container {
+    background-color: #f9f9f9;
+    padding: 20px;
+}
+
+.mi-baraja-container h2 {
+    margin: 0;
+    text-align: center;
+    font-size: 36px;
+    padding-bottom: 20px;
+}
+
+.cartas-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center; /* Centra las cartas dentro del contenedor */
+}

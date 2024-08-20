@@ -1,0 +1,23 @@
+/* Coleccion.css */
+.fondo {
+    background-color: #f4f4f4;
+    padding: 20px;
+}
+
+.cartas-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.filtrar-cartas {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.filtro-container {
+    flex: 1;
+    max-width: 300px;
+}

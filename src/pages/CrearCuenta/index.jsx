@@ -1,20 +1,17 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from "react-router-dom";
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Campo from '@src/componentes/Campo';
 import './CrearCuenta.css';
-import usuarios from '@src/data/usuarios.json'; // Importa el JSON de usuarios
-
-// Verificar si el email ya existe
-const emailExists = (email) => {
-    return usuarios.some(user => user.email === email);
-};
+import { GlobalContext } from '@src/context/GlobalContext';
 
 // Esquema de validación usando Yup
 const schema = yup.object().shape({
-    email: yup.string().email('El correo electrónico no es válido').required('El correo electrónico es requerido').test('email-exists', 'El correo electrónico ya está registrado', value => !emailExists(value)),
+    email: yup.string()
+        .email('El correo electrónico no es válido')
+        .required('El correo electrónico es requerido'),
     password: yup.string()
         .min(8, 'La contraseña debe tener al menos 8 caracteres')
         .matches(/[a-z]/, 'La contraseña debe contener al menos una minúscula')
@@ -25,17 +22,26 @@ const schema = yup.object().shape({
 });
 
 function CrearCuenta() {
-    // Configuramos react-hook-form con validación
-    const { register, handleSubmit, formState: { errors } } = useForm({
+    const { usuarios, setUsuarios } = useContext(GlobalContext);
+    const { register, handleSubmit, formState: { errors }, setError } = useForm({
         resolver: yupResolver(schema),
     });
 
     const [termsAccepted, setTermsAccepted] = useState(false);
 
-    // Función que se llama al enviar el formulario
+    const emailExists = (email) => {
+        return usuarios.some(user => user.email === email);
+    };
+
     const onSubmit = (data) => {
+        if (emailExists(data.email)) {
+            setError('email', { type: 'manual', message: 'El correo electrónico ya está registrado' });
+            return;
+        }
+
         console.log(data);
-        // Aquí puedes manejar el envío de datos, como hacer una solicitud POST
+        // Simula el registro añadiendo el nuevo usuario al estado global
+        setUsuarios(prevUsuarios => [...prevUsuarios, { email: data.email, password: data.password }]);
     };
 
     return (

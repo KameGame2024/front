@@ -1,13 +1,12 @@
-// src/componentes/Cartas.js
-import React, { useState, useContext } from 'react';
-import { GlobalContext } from '@src/context/GlobalContext'; // Ajusta la ruta si es necesario
+// src/componentes/Coleccion.js
+import React, { useContext, useState } from 'react';
+import { GlobalContext } from '@src/context/GlobalContext';
 import Filtro from '@src/componentes/Filtro';
 import Card from '@src/componentes/Card';
-import './Cartas.css'; // Añadimos el archivo CSS
+import './Coleccion.css'; // Añade un archivo CSS específico para la colección
 
-function Cartas() {
-    const { cartas, busqueda } = useContext(GlobalContext);
-
+function Coleccion() {
+    const { cartas, seleccionarCarta, cartasSeleccionadas } = useContext(GlobalContext);
     const [filtros, setFiltros] = useState({
         ataqueMin: '',
         ataqueMax: '',
@@ -50,10 +49,8 @@ function Cartas() {
         }
     };
 
-    const filtrarCartas = (cartas) => {
+    const filtrarColeccion = (cartas) => {
         return cartas.filter(carta => {
-            const cumpleBusqueda = carta.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
-            carta.descripcion.toLowerCase().includes(busqueda.toLowerCase());
             const cumpleAtaque = (!filtros.ataqueMin || carta.ataque >= filtros.ataqueMin) &&
                                  (!filtros.ataqueMax || carta.ataque <= filtros.ataqueMax);
             const cumpleDefensa = (!filtros.defensaMin || carta.defensa >= filtros.defensaMin) &&
@@ -63,15 +60,15 @@ function Cartas() {
             const cumpleTipo = !Object.values(filtros.tipos).includes(true) || Object.keys(filtros.tipos).some(tipo => filtros.tipos[tipo] && carta.tipo.toLowerCase() === tipo);
             const cumpleAtributo = !Object.values(filtros.atributos).includes(true) || Object.keys(filtros.atributos).some(atributo => filtros.atributos[atributo] && carta.atributo.toLowerCase() === atributo);
 
-            return cumpleBusqueda && cumpleAtaque && cumpleDefensa && cumplePrecio && cumpleTipo && cumpleAtributo;
+            return cumpleAtaque && cumpleDefensa && cumplePrecio && cumpleTipo && cumpleAtributo;
         });
     };
 
-    const cartasFiltradas = filtrarCartas(cartas);
+    const cartasFiltradas = filtrarColeccion(cartas);
 
     return (
         <div className='fondo'>
-            <h1>CARTAS</h1>
+            <h1>MI COLECCIÓN</h1>
             <div className="filtrar-cartas">
                 <div className="filtro-container">
                     <Filtro categoria="cartas" filtros={filtros} manejarCambioFiltro={manejarCambioFiltro} />
@@ -86,10 +83,10 @@ function Cartas() {
                             ataque={carta.ataque}
                             defensa={carta.defensa}
                             precio={carta.precio}
-                            tipo={carta.tipo}
-                            mostrarBotonVer={true} 
-                            atributo={carta.atributo}
                             id={carta.id}
+                            seleccionada={cartasSeleccionadas.some(c => c.id === carta.id)}
+                            manejarSeleccionCarta={() => seleccionarCarta(carta)}
+                            mostrarSeleccion={true}
                         />
                     ))}
                 </div>
@@ -98,4 +95,4 @@ function Cartas() {
     );
 }
 
-export default Cartas;
+export default Coleccion;

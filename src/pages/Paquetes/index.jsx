@@ -1,40 +1,11 @@
-// src/paginas/FiltrarPaquetes.jsx
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Filtro from '@src/componentes/Filtro';
 import Paquete from '@src/componentes/Paquete'; // Asegúrate de tener este componente
 import './Paquetes.css'; // Añadimos el archivo CSS
-
-const paquetes = [
-    {
-        "id": "1",
-        "nombre": "Paquete 1",
-        "set": "Maze of Milenia",
-        "precio": 5000,
-        "cantidad": 9,
-        "descripcion": "Un paquete lleno de cartas poderosas de la serie Maze of Milenia.",
-        "imagen": "/img/paquete.png"
-    },
-    {
-        "id": "2",
-        "nombre": "Paquete 2",
-        "set": "Origins",
-        "precio": 6000,
-        "cantidad": 9,
-        "descripcion": "Paquete de cartas clásicas que han definido el juego.",
-        "imagen": "/img/paquete.png"
-    },
-    {
-        "id": "3",
-        "nombre": "Paquete 3",
-        "set": "Genesis",
-        "precio": 7000,
-        "cantidad": 9,
-        "descripcion": "Paquete de cartas que marca el inicio de una nueva era.",
-        "imagen": "/img/paquete.png"
-    }
-];
+import { GlobalContext } from '@src/context/GlobalContext';
 
 function Paquetes() {
+    const { paquetes, busqueda } = useContext(GlobalContext);
     const [filtros, setFiltros] = useState({
         precioMin: '',
         precioMax: '',
@@ -67,11 +38,13 @@ function Paquetes() {
 
     const filtrarPaquetes = (paquetes) => {
         return paquetes.filter(paquete => {
+            const cumpleBusqueda = paquete.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
+            paquete.descripcion.toLowerCase().includes(busqueda.toLowerCase());
             const cumplePrecio = (!filtros.precioMin || paquete.precio >= filtros.precioMin) &&
                                  (!filtros.precioMax || paquete.precio <= filtros.precioMax);
             const cumpleSet = !Object.values(filtros.sets).includes(true) || Object.keys(filtros.sets).some(set => filtros.sets[set] && paquete.set.toLowerCase().includes(set));
 
-            return cumplePrecio && cumpleSet;
+            return cumpleBusqueda && cumplePrecio && cumpleSet;
         });
     };
 

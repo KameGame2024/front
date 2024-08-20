@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from "react-router-dom";
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Campo from '@src/componentes/Campo';
 import './IniciarSesion.css';
-import usuarios from '@src/data/usuarios.json'; // Importa el JSON de usuarios
+import { GlobalContext } from '@src/context/GlobalContext'; // Importa GlobalContext
+import AuthContext from "@src/context/AuthContext";
 
 // Esquema de validación usando Yup
 const schema = yup.object().shape({
@@ -25,8 +26,10 @@ function IniciarSesion() {
         resolver: yupResolver(schema),
     });
     const [loginError, setLoginError] = useState("");
+    
+    const { usuarios } = useContext(GlobalContext); // Usa GlobalContext
+    const { login } = useContext(AuthContext);
 
-    // Función que se llama al enviar el formulario
     const onSubmit = (data) => {
         const user = usuarios.find(
             (user) => user.email === data.email && user.password === data.password
@@ -35,7 +38,7 @@ function IniciarSesion() {
         if (user) {
             console.log("Usuario autenticado correctamente:", user);
             setLoginError("");
-            // Aquí puedes redirigir al usuario o hacer alguna acción adicional
+            login(user.role); // Llama a la función login con el rol del usuario
         } else {
             setLoginError("Correo electrónico o contraseña incorrectos.");
         }
