@@ -29,8 +29,8 @@ function AppRoutes() {
             <Route path="carrito" element={<Carrito />}></Route>
             <Route path="/detalle/:tipo/:id" element={<Detalle />}></Route>
             <Route path="*" element={<NotFound />}></Route>
-            <Route path="mi-coleccion" element={<Coleccion />}></Route>
-            <Route path="mi-baraja" element={<Baraja />}></Route>
+            <Route path="mi-coleccion" element={<PrivateRoute><Coleccion /></PrivateRoute>}></Route>
+            <Route path="mi-baraja" element={<PrivateRoute><Baraja /></PrivateRoute>}></Route>
           </Route>
           <Route path="crear-cuenta" element={<CrearCuenta />}></Route>
           <Route path="iniciar-sesion" element={<IniciarSesion />}></Route>
