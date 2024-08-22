@@ -44,7 +44,7 @@ function RecuperarContrasena() {
                 </Link>
                 <img src="/img/RecuperarContrasena.png" alt="Recuperar Contraseña" className="center-image" />
             </div>
-
+            <img src="/img/Logo.png" alt="LogoNegrito" className="logo-recuperar-contrasena-negro" />
             <div className="right-section">
                 <div className="recuperar-contrasena">
                     <h2>Recuperar Contraseña</h2>
