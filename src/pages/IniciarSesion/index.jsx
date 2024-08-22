@@ -52,7 +52,7 @@ function IniciarSesion() {
                 </Link>
                 <img src="/img/IniciarSesion.png" alt="Iniciar Sesión" className="center-image" />
             </div>
-
+            <img src="/img/Logo.png" alt="LogoNegrito" className="logo-iniciosesion-negro" />
             <div className="right-section">
                 <div className="iniciar-sesion">
                     <h2>Iniciar Sesión</h2>

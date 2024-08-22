@@ -3,34 +3,6 @@
     height: 100vh; /* La altura será igual a la altura de la ventana */
 }
 
-.left-section {
-    flex: 0.5;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-image: url('/img/Background.png'); /* Ruta de la imagen de fondo */
-    background-position: center;
-    position: relative;
-}
-
-.logo-iniciosesion {
-    position: absolute;
-    top: 40px;
-    left: 40px;
-    width: 250px; /* Tamaño del logo */
-}
-
-.center-image {
-    width: 600px; /* Ajusta el tamaño de la imagen centrada según prefieras */
-    max-width: 80%;
-    height: auto;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
 .right-section {
     flex: 1;
     display: flex;
@@ -93,3 +65,62 @@ h2 {
 .register-link a:hover {
     text-decoration: underline;
 }
+
+@media (min-width: 769px) {
+    .logo-iniciosesion-negro{
+        display: none;
+    }
+
+    .logo-iniciosesion {
+        position: absolute;
+        top: 40px;
+        left: 30px;
+        width: 250px; /* Tamaño del logo */
+    } 
+
+    .left-section {
+        flex: 0.5;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-image: url('/img/Background.png'); /* Ruta de la imagen de fondo */
+        background-position: center;
+        position: relative;
+    }
+
+    .center-image {
+        width: 600px; /* Ajusta el tamaño de la imagen centrada según prefieras */
+        max-width: 80%;
+        height: auto;
+        position: absolute;
+        top: 60%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+@media (max-width: 768px) {
+    .logo-iniciosesion-negro {
+        display: block;
+        position: absolute;
+        top: 40px;
+        left: 30px;
+        width: 250px;
+    }
+
+    .container .left-section {
+        display:none;
+    }
+
+    /* Oculta el logo blanco, la sección izquierda y la imagen centrada */
+    .center-image, .logo-iniciosesion{ 
+        display: none;
+    }
+    /* Ajustes para la sección derecha en móvil */
+    .right-section {
+        flex: 1;
+        padding: 16px;
+    }
+}
+
