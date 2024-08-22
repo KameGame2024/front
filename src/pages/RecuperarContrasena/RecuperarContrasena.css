@@ -4,27 +4,6 @@
     overflow: hidden;
 }
 
-.left-section {
-    flex: 0.5;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--color-left-bg);
-}
-
-.logo-recuperar-contrasena {
-    position: absolute;
-    top: 40px;
-    left: 40px;
-    width: 250px;
-}
-
-.center-image {
-    max-width: 100%;
-    height: auto;
-}
-
 .right-section {
     flex: 1;
     display: flex;
@@ -129,4 +108,69 @@
 
 .login-link a:hover {
     text-decoration: underline;
+}
+
+/*
+.center-image {
+    max-width: 100%;
+    height: auto;
+}*/
+
+
+@media (min-width: 769px) {
+    .logo-recuperar-contrasena-negro{
+        display: none;
+    }
+
+    .logo-recuperar-contrasena {
+        position: absolute;
+        top: 40px;
+        left: 30px;
+        width: 200px; /* Tamaño del logo */
+    } 
+
+    .left-section {
+        flex: 0.5;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-image: url('/img/Background.png'); /* Ruta de la imagen de fondo */
+        background-position: center;
+        position: relative;
+    }
+
+    .center-image {
+        width: 600px; /* Ajusta el tamaño de la imagen centrada según prefieras */
+        max-width: 80%;
+        height: auto;
+        position: absolute;
+        top: 60%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+@media (max-width: 768px) {
+    .logo-recuperar-contrasena-negro {
+        display: block;
+        position: absolute;
+        top: 40px;
+        left: 30px;
+        width: 200px;
+    }
+
+    .container .left-section {
+        display:none;
+    }
+
+    /* Oculta el logo blanco, la sección izquierda y la imagen centrada */
+    .center-image, .logo-recuperar-contrasena{ 
+        display: none;
+    }
+    /* Ajustes para la sección derecha en móvil */
+    .right-section {
+        flex: 1;
+        padding: 16px;
+    }
 }

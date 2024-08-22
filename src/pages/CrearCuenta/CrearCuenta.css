@@ -26,7 +26,7 @@ h2 {
 .botonn {
     width: 100%;
     padding: 10px;
-    margin-top: 15px; /* Reducido para menos espacio */
+    margin-top: 20px; 
     background-color: var(--color-bg); /* Color del botón */
     color: #fff;
     border: none;
@@ -91,7 +91,7 @@ h2 {
         position: absolute;
         top: 40px;
         left: 30px;
-        width: 250px; /* Tamaño del logo */
+        width: 200px; /* Tamaño del logo */
     }
 
     .left-section {
@@ -121,7 +121,7 @@ h2 {
         position: absolute;
         top: 40px;
         left: 30px;
-        width: 250px;
+        width: 200px;
     }
 
     .container .left-section {
@@ -135,7 +135,9 @@ h2 {
     /* Ajustes para la sección derecha en móvil */
     .right-section {
         flex: 1;
-        padding: 16px;
+        padding-top: 50px;
+        
+        
     }
 }
 

@@ -52,7 +52,9 @@ function CrearCuenta() {
                 </Link>
                 <img src="/img/CrearCuenta.png" alt="Crear Cuenta" className="center-image" />
             </div>
-            <img src="/img/Logo.png" alt="LogoNegrito" className="logo-cuenta-negro" />
+            <Link to="/">
+                <img src="/img/Logo.png" alt="LogoNegrito" className="logo-cuenta-negro" />
+            </Link>
             <div className="right-section">
                 <div className="crear-cuenta">
                     <h2>Crear Cuenta</h2>

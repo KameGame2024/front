@@ -75,7 +75,7 @@ h2 {
         position: absolute;
         top: 40px;
         left: 30px;
-        width: 250px; /* Tamaño del logo */
+        width: 200px; /* Tamaño del logo */
     } 
 
     .left-section {
@@ -106,7 +106,7 @@ h2 {
         position: absolute;
         top: 40px;
         left: 30px;
-        width: 250px;
+        width: 200px;
     }
 
     .container .left-section {
