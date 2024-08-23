@@ -1,13 +1,14 @@
 // src/componentes/Cartas.js
 import React, { useState, useContext } from 'react';
-import { GlobalContext } from '@src/context/GlobalContext'; // Ajusta la ruta si es necesario
+import { GlobalContext } from '@src/context/GlobalContext';
 import Filtro from '@src/componentes/Filtro';
 import Card from '@src/componentes/Card';
-import './Cartas.css'; // Añadimos el archivo CSS
+import { FaChevronDown } from 'react-icons/fa'; // Import the down arrow icon
+import './Cartas.css';
 
 function Cartas() {
     const { cartas, busqueda } = useContext(GlobalContext);
-
+    const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal visibility
     const [filtros, setFiltros] = useState({
         ataqueMin: '',
         ataqueMax: '',
@@ -72,10 +73,18 @@ function Cartas() {
     return (
         <div className='fondo'>
             <h1>CARTAS</h1>
+            {/* Mobile filter button */}
+            <div className="mobile-filter-button" onClick={() => setIsModalOpen(true)}>
+                <FaChevronDown /> Filtrar
+            </div>
+
             <div className="filtrar-cartas">
-                <div className="filtro-container">
+                {/* Filters container (visible only on larger screens) */}
+                <div className={`filtro-container ${isModalOpen ? 'modal-open' : ''}`}>
                     <Filtro categoria="cartas" filtros={filtros} manejarCambioFiltro={manejarCambioFiltro} />
                 </div>
+                
+                {/* Cards container */}
                 <div className="cartas-container">
                     {cartasFiltradas.map((carta) => (
                         <Card
@@ -94,6 +103,16 @@ function Cartas() {
                     ))}
                 </div>
             </div>
+
+            {/* Filter modal for mobile */}
+            {isModalOpen && (
+                <div className="filtro-modal">
+                    <div className="modal-content">
+                        <button className="close-modal" onClick={() => setIsModalOpen(false)}>X</button>
+                        <Filtro categoria="cartas" filtros={filtros} manejarCambioFiltro={manejarCambioFiltro} />
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

@@ -27,11 +27,10 @@
     margin-left: 15px;
 }
 
-/* Estilo para pantallas pequeñas */
 @media (max-width: 768px) {
     .header {
         padding: 5px;
-        flex-wrap: wrap; /* Permite que los elementos se envuelvan si es necesario */
+        flex-wrap: nowrap; /* Asegura que los elementos no se desplacen a la siguiente línea */
     }
 
     .header img {
@@ -41,9 +40,7 @@
     .button-group {
         display: flex;
         align-items: center;
-        gap: 0.5em; /* Menor espacio entre los íconos */
-        flex-wrap: nowrap; /* Evita que los íconos se envuelvan */
-        overflow-x: auto; /* Permite desplazamiento horizontal si los íconos no caben en la pantalla */
+        gap: 0.5em; /* Menor espacio entre los íconos para pantallas pequeñas */
     }
 
     .nav-link img {
@@ -53,9 +50,5 @@
     .button-group .nav-link img {
         height: 25px;
         margin-left: 5px; /* Ajusta para pantallas pequeñas */
-    }
-
-    .menu-icon {
-        display: block; /* Asegura que el icono del menú se muestre en pantallas pequeñas */
     }
 }

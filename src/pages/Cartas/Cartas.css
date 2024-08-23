@@ -1,30 +1,55 @@
-/* src/paginas/FiltrarCartas.css */
-.filtrar-cartas {
-    display: flex;
-    gap: 20px; /* Espacio entre el filtro y las cartas */
-    background-color: #f9f9f9;
-}
+/* src/componentes/Cartas.css */
 
-.filtro-container {
-    flex: 1;
-    margin-left: 30px;
-    max-width: 300px; /* Ajusta el ancho máximo del filtro si es necesario */
-}
-
-.cartas-container {
-    margin-left: 80px;
-    flex: 4;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-}
-
-.fondo{
-    background-color: #f9f9f9;
-}
-.fondo h1{
-    margin: 0;
+/* Mobile filter button */
+.mobile-filter-button {
+    display: none;
+    cursor: pointer;
+    background-color: #282828;
+    color: white;
+    padding: 10px;
     text-align: center;
-    font-size: 40px;
-    padding: 60px;
+    font-size: 18px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+@media (max-width: 768px) {
+    .mobile-filter-button {
+        display: block;
+    }
+
+    .filtro-container {
+        display: none;
+    }
+
+    .filtro-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 5px;
+        max-width: 400px;
+        width: 90%;
+    }
+
+    .close-modal {
+        background-color: #282828;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+        font-size: 16px;
+        float: right;
+        margin-bottom: 10px;
+    }
 }
