@@ -135,9 +135,7 @@ h2 {
     /* Ajustes para la sección derecha en móvil */
     .right-section {
         flex: 1;
-        padding-top: 50px;
-        
-        
+        padding: 16px;
     }
 }
 

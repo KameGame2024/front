@@ -1,4 +1,4 @@
-/* src/componentes/Menu.css */
+/* Default styles for larger screens */
 .menu {
     display: flex;
     justify-content: center;
@@ -20,4 +20,78 @@
 
 .menu-item.active {
     background-color: #555;
+}
+
+/* Mobile menu styles (hidden by default) */
+@media (max-width: 768px) {
+    .menu {
+        display: none;
+        flex-direction: column;
+        background-color: rgba(0, 0, 0, 0.9); /* Dark overlay */
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        justify-content: center;
+        align-items: center;
+        z-index: 10;
+        transition: opacity 0.3s ease;
+        opacity: 0;
+        pointer-events: none; /* Prevent clicks when closed */
+    }
+
+    .menu-open {
+        display: flex;
+        opacity: 1;
+        pointer-events: auto; /* Enable clicks when open */
+    }
+
+    .menu-item {
+        padding: 20px;
+        font-size: 24px;
+        text-align: center;
+    }
+
+    .menu-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 9;
+    }
+
+    .menu-icon {
+        display: block;
+        font-size: 24px;
+        cursor: pointer;
+        margin-left: auto;
+        color: #333;
+    }
+
+    .header .button-group {
+        display: none; /* Hide the buttons on mobile */
+    }
+}
+
+/* Media query for larger screens (restore original layout) */
+@media (min-width: 769px) {
+    .menu {
+        display: flex;
+        position: static;
+        background-color: #333;
+        opacity: 1;
+        pointer-events: auto;
+        flex-direction: row;
+    }
+
+    .menu-overlay {
+        display: none;
+    }
+
+    .menu-icon {
+        display: none;
+    }
 }
