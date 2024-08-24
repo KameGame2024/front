@@ -16,7 +16,8 @@ import { AuthProvider } from "@src/context/AuthContext";
 import Coleccion from "./pages/Coleccion";
 import Baraja from "./pages/Baraja";
 import CentroCombate from "./pages/CentroCombate";
-
+import ListaUsuarios from "./pages/ListaUsuarios/ListaUsuarios";
+import AdminRoute from "./componentes/AdminRoute";
 
 function AppRoutes() {
   return (
@@ -37,7 +38,8 @@ function AppRoutes() {
           <Route path="crear-cuenta" element={<CrearCuenta />}></Route>
           <Route path="iniciar-sesion" element={<IniciarSesion />}></Route>
           <Route path="recuperar-contrasena" element={<RecuperarContrasena />}></Route>
-          <Route path="admin" element={<PrivateRoute><Admin /></PrivateRoute>}></Route>
+          <Route path="admin" element={<AdminRoute><Admin /></AdminRoute>}></Route>
+          <Route path="lista-usuarios" element={<AdminRoute><ListaUsuarios/></AdminRoute>}></Route>
         </Routes>
       </AuthProvider>
     </BrowserRouter>
