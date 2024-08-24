@@ -3,9 +3,11 @@ import Filtro from '@src/componentes/Filtro';
 import Paquete from '@src/componentes/Paquete'; // Asegúrate de tener este componente
 import './Paquetes.css'; // Añadimos el archivo CSS
 import { GlobalContext } from '@src/context/GlobalContext';
+import { FaChevronDown } from 'react-icons/fa'; // Import the down arrow icon
 
 function Paquetes() {
     const { paquetes, busqueda } = useContext(GlobalContext);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [filtros, setFiltros] = useState({
         precioMin: '',
         precioMax: '',
@@ -53,8 +55,11 @@ function Paquetes() {
     return (
         <div className='fondo'>
             <h1>PAQUETES</h1>
+            <div className="mobile-filter-button" onClick={() => setIsModalOpen(true)}>
+                <FaChevronDown /> Filtrar
+            </div>
             <div className="filtrar-paquetes">
-                <div className="filtro-container">
+                <div className={`filtro-container ${isModalOpen ? 'modal-open' : ''}`}>
                     <Filtro categoria="paquetes" filtros={filtros} manejarCambioFiltro={manejarCambioFiltro} />
                 </div>
                 <div className="paquetes-container">
@@ -72,6 +77,15 @@ function Paquetes() {
                     ))}
                 </div>
             </div>
+            {isModalOpen && (
+                <div className="filtro-modal">
+                    <div className="modal-content">
+                        <Filtro categoria="paquetes" filtros={filtros} manejarCambioFiltro={manejarCambioFiltro} />
+                        <button className="close-modal" onClick={() => setIsModalOpen(false)}>Cerrar</button>
+                        
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
