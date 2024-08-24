@@ -5,12 +5,15 @@ import BarraBusqueda from '../BarraBusqueda';
 import Menu from '../Menu';
 import './Header.css';
 import { GlobalContext } from '@src/context/GlobalContext';
+import AuthContext from '../../context/AuthContext';
 
 function Header() {
     const location = useLocation();
     const { actualizarBusqueda } = useContext(GlobalContext);
     const showSearchBar = location.pathname === '/cartas' || location.pathname === '/paquetes';
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    const { isAuthenticated, logout } = useContext(AuthContext);
 
     const handleSearch = (query) => {
         actualizarBusqueda(query);
@@ -28,9 +31,16 @@ function Header() {
                 </NavLink>
                 {showSearchBar && <BarraBusqueda onSearch={handleSearch} />}
                 <div className="button-group">
-                    <NavLink to="/crear-cuenta" className="nav-link">
-                        <img src="/img/icons/user.png" alt="Perfil" />
+                    {isAuthenticated && (
+                        <NavLink to="/" className="nav-link" onClick={logout}>
+                        <img src="/img/icons/logout.png" alt="Perfil" />
                     </NavLink>
+                    )}
+                    {!isAuthenticated && (
+                        <NavLink to="/iniciar-sesion" className="nav-link">
+                        <img src="/img/icons/user.png" alt="Perfil" />
+                        </NavLink>
+                    )}
                     <NavLink to="/carrito" className="nav-link">
                         <img src="/img/icons/shopping-bag.png" alt="Carrito" />
                     </NavLink>
