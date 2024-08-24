@@ -1,9 +1,10 @@
-import React, { useContext, useState } from 'react';
-import Filtro from '@src/componentes/Filtro';
-import Paquete from '@src/componentes/Paquete'; // Asegúrate de tener este componente
-import './Paquetes.css'; // Añadimos el archivo CSS
+// src/componentes/Paquetes.js
+import React, { useState, useContext } from 'react';
 import { GlobalContext } from '@src/context/GlobalContext';
+import Filtro from '@src/componentes/Filtro';
+import Paquete from '@src/componentes/Paquete';
 import { FaChevronDown } from 'react-icons/fa'; // Import the down arrow icon
+import './Paquetes.css';
 
 function Paquetes() {
     const { paquetes, busqueda } = useContext(GlobalContext);
@@ -62,6 +63,8 @@ function Paquetes() {
                 <div className={`filtro-container ${isModalOpen ? 'modal-open' : ''}`}>
                     <Filtro categoria="paquetes" filtros={filtros} manejarCambioFiltro={manejarCambioFiltro} />
                 </div>
+                
+                {/* Paquetes container */}
                 <div className="paquetes-container">
                     {paquetesFiltrados.map((paquete) => (
                         <Paquete

@@ -15,6 +15,7 @@ import PrivateRoute from "@src/componentes/PrivateRoute";
 import { AuthProvider } from "@src/context/AuthContext";
 import Coleccion from "./pages/Coleccion";
 import Baraja from "./pages/Baraja";
+import CentroCombate from "./pages/CentroCombate";
 
 
 function AppRoutes() {
@@ -31,6 +32,7 @@ function AppRoutes() {
             <Route path="*" element={<NotFound />}></Route>
             <Route path="mi-coleccion" element={<PrivateRoute><Coleccion /></PrivateRoute>}></Route>
             <Route path="mi-baraja" element={<PrivateRoute><Baraja /></PrivateRoute>}></Route>
+            <Route path="centro-combate" element={<PrivateRoute><CentroCombate /></PrivateRoute>}></Route>
           </Route>
           <Route path="crear-cuenta" element={<CrearCuenta />}></Route>
           <Route path="iniciar-sesion" element={<IniciarSesion />}></Route>

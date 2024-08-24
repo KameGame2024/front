@@ -1,5 +1,4 @@
-/* src/paginas/Detalle.css */
-
+/* Estilos generales */
 .detalle-carta, .detalle-paquete {
     max-width: 80%;
     margin: 0 auto;
@@ -10,13 +9,14 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: row;
-    justify-content: center ;
+    justify-content: center;
     text-align: left;
 }
 
 .descripcion_t{
     text-align: left;
 }
+
 .detalle-titulo {
     font-size: 2em;
     margin-bottom: 20px;
@@ -26,7 +26,7 @@
     max-width: 400px;
     height: auto;
     display: block;
-    margin:20px 150px 0 0;
+    margin: 20px 150px 0 0;
 }
 
 .detalle-info {
@@ -49,10 +49,11 @@
 .detalle_masmenos {
     margin: 0 5px;
     border: none;
-    background-color:#ddd;
+    background-color: #ddd;
 }
+
 .detalle_cant{
-    background-color:#ddd;
+    background-color: #ddd;
 }
 
 .detalle-agregar{
@@ -67,4 +68,80 @@
 
 .detalle-agregar:hover {
     background-color: var(--color-light-gray);
+}
+
+/* Estilos para dispositivos móviles */
+@media (max-width: 768px) {
+    .detalle-carta, .detalle-paquete {
+        flex-direction: column;
+        padding: 10px;
+        border: none;
+        box-shadow: none;
+    }
+
+    .detalle-imagen {
+        margin: 0;
+        max-width: 100%;
+    }
+
+    .detalle-info {
+        font-size: 1em;
+    }
+
+    .detalle-titulo {
+        font-size: 1.5em;
+    }
+
+    .detalle-agregar {
+        width: 100%;
+        padding: 10px;
+    }
+}
+
+/* Estilos para tabletas */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .detalle-carta, .detalle-paquete {
+        flex-direction: row;
+        max-width: 90%;
+    }
+
+    .detalle-imagen {
+        margin: 20px;
+        max-width: 300px;
+    }
+
+    .detalle-info {
+        font-size: 1.1em;
+    }
+
+    .detalle-titulo {
+        font-size: 1.8em;
+    }
+
+    .detalle-agregar {
+        width: 80%;
+    }
+}
+
+/* Estilos para pantallas grandes */
+@media (min-width: 1025px) {
+    .detalle-carta, .detalle-paquete {
+        max-width: 80%;
+    }
+
+    .detalle-imagen {
+        max-width: 400px;
+    }
+
+    .detalle-info {
+        font-size: 1.2em;
+    }
+
+    .detalle-titulo {
+        font-size: 2em;
+    }
+
+    .detalle-agregar {
+        width: 350px;
+    }
 }

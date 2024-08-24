@@ -24,14 +24,17 @@
 
 /* Para mantener el diseño responsivo */
 @media (max-width: 768px) {
+    /* Show mobile filter button */
     .mobile-filter-button {
         display: block;
     }
 
+    /* Hide filter container */
     .filtro-container {
         display: none;
     }
 
+    /* Modal styling for mobile */
     .filtro-modal {
         position: fixed;
         top: 0;
@@ -50,8 +53,9 @@
         background-color: white;
         padding: 20px;
         border-radius: 5px;
-        max-width: 400px;
+        max-width: 90%; /* Adjusted to fit better on mobile screens */
         width: 100%;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         height: 80%; /* Ajusta la altura del modal para que no ocupe toda la pantalla */
         overflow-y: auto; /* Habilita la barra de desplazamiento vertical */
         box-sizing: border-box;

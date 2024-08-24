@@ -1,4 +1,5 @@
 /* src/componentes/Resumen.css */
+
 .resumen {
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -9,9 +10,11 @@
     flex-direction: column;
     align-items: center;
     background-color: #fff;
-    width: 500px;
+    width: 100%; /* Ajusta el ancho al 100% por defecto */
+    max-width: 500px; /* Mantén el ancho máximo para grandes pantallas */
 }
-.textico{
+
+.textico {
     text-align: justify;
     font-size: 20px;
 }
@@ -37,4 +40,48 @@
 
 .resumen button:hover {
     background-color: #3b3d3f;
+}
+
+/* Estilos para dispositivos móviles */
+@media (max-width: 822px) {
+    .resumen {
+        padding: 10px;
+        margin: 5px;
+    }
+
+    .textico {
+        font-size: 18px;
+    }
+
+    .resumen h3 {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .resumen {
+        padding: 8px;
+        margin: 5px;
+        width: 100%;
+        box-sizing: border-box; /* Asegura que el padding y el borde no afecten al ancho */
+    }
+
+    .textico {
+        font-size: 16px;
+        line-height: 1.4; /* Mejora la legibilidad reduciendo la altura de línea */
+    }
+
+    .resumen h3 {
+        font-size: 22px;
+        margin-bottom: 10px;
+    }
+
+    .resumen p {
+        font-size: 14px;
+    }
+
+    .resumen button {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
 }
