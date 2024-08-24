@@ -23,10 +23,13 @@
 }
 
 .detalle-imagen {
-    max-width: 400px;
+    width: 300px;
     height: auto;
     display: block;
     margin: 20px 150px 0 0;
+    align-self: center;
+    align-items: center;
+    justify-content: center;
 }
 
 .detalle-info {
