@@ -23,7 +23,7 @@ const schema = yup.object().shape({
 
 function CrearCuenta() {
     const { usuarios, agregarUsuario } = useContext(GlobalContext);
-    const { register, handleSubmit, formState: { errors }, setError } = useForm({
+    const { register, handleSubmit, formState: { errors }, setError, reset } = useForm({
         resolver: yupResolver(schema),
     });
 
@@ -39,9 +39,13 @@ function CrearCuenta() {
             return;
         }
 
-        console.log(data);
-        // Simula el registro añadiendo el nuevo usuario al estado global
         agregarUsuario({ email: data.email, password: data.password });
+
+        // Limpiar el formulario
+        reset();
+
+        // Mostrar mensaje de éxito
+        alert('Tu cuenta ha sido creada, inicia sesión.');
     };
 
     return (

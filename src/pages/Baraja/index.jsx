@@ -9,7 +9,7 @@ function Baraja() {
 
     return (
         <div className="mi-baraja-container">
-            <h2>Mi Baraja</h2>
+            <h2>MI BARAJA</h2>
             {cartasSeleccionadas.length > 0 ? (
                 <div className="cartas-grid">
                     {cartasSeleccionadas.map((carta) => (
