@@ -8,6 +8,10 @@ import './CrearCuenta.css';
 import { GlobalContext } from '@src/context/GlobalContext';
 import TerminosYCondiciones from '@src/componentes/TerminosyCondiciones/TerminosyCondiciones.jsx'; // Importamos el modal
 // Esquema de validación usando Yup
+
+
+import { NavLink } from 'react-router-dom';
+
 const schema = yup.object().shape({
     email: yup.string()
         .email('El correo electrónico no es válido')
@@ -30,6 +34,8 @@ function CrearCuenta() {
     const [termsAccepted, setTermsAccepted] = useState(false);
     const [showTermsModal, setShowTermsModal] = useState(false); // Estado para controlar la visibilidad del modal
 
+    const [mostrarRegistroPrompt, setMostrarRegistroPrompt] = useState(false); // Estado para controlar la visibilidad del prompt
+
     const emailExists = (email) => {
         return usuarios.some(user => user.email === email);
     };
@@ -46,7 +52,7 @@ function CrearCuenta() {
         reset();
 
         // Mostrar mensaje de éxito
-        alert('Tu cuenta ha sido creada, inicia sesión.');
+        setMostrarRegistroPrompt(true);
     };
 
     const handleTermsAccepted = () => {
@@ -127,6 +133,15 @@ function CrearCuenta() {
                     onClose={() => setShowTermsModal(false)}
                     onAccept={handleTermsAccepted}
                 />
+            )}
+
+            {mostrarRegistroPrompt && (
+                <div className="prompt-overlay">
+                    <div className="prompt-contenido">
+                        <p>Tu cuenta ha sido creada, inicia sesión.</p>
+                        <NavLink to="/iniciar-sesion" className="aceptar-boton" onClick={() => setMostrarRegistroPrompt(false)}>Iniciar Sesion</NavLink>
+                    </div>
+                </div>
             )}
         </div>
     );
