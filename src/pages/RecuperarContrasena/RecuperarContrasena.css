@@ -151,6 +151,46 @@
     }
 }
 
+.prompt-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Estilos para el contenido del prompt */
+.prompt-contenido {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+}
+
+.aceptar-boton {
+    width: 100%;
+    padding: 10px 20px;
+    background-color: #282828;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.aceptar-boton:hover {
+    background-color: #444444;
+}
+
 @media (max-width: 768px) {
     .logo-recuperar-contrasena-negro {
         display: block;

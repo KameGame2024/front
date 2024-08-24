@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -20,15 +20,14 @@ function RecuperarContrasena() {
         resolver: yupResolver(schema),
     });
 
-    // Función que se llama al enviar el formulario
+    const [mostrarPrompt, setMostrarPrompt] = useState(false); // Estado para controlar la visibilidad del prompt
+
     const onSubmit = (data) => {
         const user = usuarios.find((user) => user.email === data.email);
 
         if (user) {
-            console.log("Se ha enviado el correo con la recuperación de contraseña a: ", user.email);
-            // Aquí puedes redirigir al usuario o hacer alguna acción adicional
+            setMostrarPrompt(true); // Mostrar el prompt cuando se envíe correctamente
         } else {
-            // Si el correo no existe, mostramos un error en el campo "email"
             setError("email", {
                 type: "manual",
                 message: "Correo electrónico incorrecto.",
@@ -69,6 +68,15 @@ function RecuperarContrasena() {
                     </form>
                 </div>
             </div>
+
+            {mostrarPrompt && (
+                <div className="prompt-overlay">
+                    <div className="prompt-contenido">
+                        <p>El correo de verificación ha sido enviado a tu correo electrónico.</p>
+                        <button className="aceptar-boton" onClick={() => setMostrarPrompt(false)}>Aceptar</button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
