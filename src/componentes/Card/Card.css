@@ -1,4 +1,5 @@
 /* src/componentes/Card.css */
+
 .card {
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -84,4 +85,20 @@
 
 .card-select-btn:hover {
     background-color: #3b3d3f;
+}
+
+/* Ajustes para pantallas más pequeñas (max-width: 768px) */
+@media (max-width: 768px) {
+    .card-img {
+        width: 150px; /* Reduce el ancho de la imagen en pantallas pequeñas */
+        height: auto; /* Ajusta la altura automáticamente según la proporción de la imagen */
+    }
+}
+
+/* Ajustes específicos para dispositivos móviles muy pequeños (max-width: 480px) */
+@media (max-width: 480px) {
+    .card-img {
+        width: 130px; /* Reduce aún más el ancho de la imagen en pantallas muy pequeñas */
+        height: 240px; /* Ajusta la altura automáticamente según la proporción de la imagen */
+    }
 }

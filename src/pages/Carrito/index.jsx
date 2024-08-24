@@ -1,4 +1,3 @@
-// src/paginas/Carrito.jsx
 import React, { useContext } from 'react';
 import Producto from '@src/componentes/Producto';
 import Resumen from '@src/componentes/Resumen';
@@ -6,7 +5,7 @@ import { GlobalContext } from '@src/context/GlobalContext';
 import './Carrito.css';
 
 const Carrito = () => {
-    const { productosEnCarrito, incrementarCantidad, decrementarCantidad, eliminarProducto } = useContext(GlobalContext);
+    const { productosEnCarrito, incrementarCantidad, decrementarCantidad, eliminarProducto, vaciarCarrito } = useContext(GlobalContext);
 
     const totalItems = productosEnCarrito.reduce((acc, producto) => acc + producto.cantidad, 0);
     const costoTotal = productosEnCarrito.reduce((acc, producto) => acc + (producto.precio * producto.cantidad), 0);
@@ -14,7 +13,10 @@ const Carrito = () => {
     const subtotal = costoTotal + costoEnvio;
 
     const pagar = () => {
+        // Lógica para el pago
         alert('Pago realizado con éxito');
+        // Vaciar el carrito después del pago
+        vaciarCarrito();
     };
 
     return (
@@ -33,7 +35,7 @@ const Carrito = () => {
                             />
                         ))
                     ) : (
-                        <p>No hay productos en el carrito.</p>
+                        <p className="carrito-vacio">No hay productos en el carrito.</p>
                     )}
                 </div>
                 <Resumen

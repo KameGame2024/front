@@ -1,3 +1,5 @@
+/* src/componentes/Menu.css */
+
 /* Default styles for larger screens */
 .menu {
     display: flex;
@@ -22,6 +24,9 @@
     background-color: #555;
 }
 
+.menu-close-icon{
+    display: none;
+}
 /* Mobile menu styles (hidden by default) */
 @media (max-width: 768px) {
     .menu {
@@ -63,6 +68,16 @@
         z-index: 9;
     }
 
+    .menu-close-icon {
+        display: block;
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 30px;
+        color: #fff;
+        cursor: pointer;
+    }
+
     .menu-icon {
         display: block;
         font-size: 24px;
@@ -72,12 +87,12 @@
     }
 
     .header .button-group {
-        display: none; /* Hide the buttons on mobile */
+        margin-right: 10px;
     }
 }
 
 /* Media query for larger screens (restore original layout) */
-@media (min-width: 769px) {
+@media screen and (min-width: 769px) {
     .menu {
         display: flex;
         position: static;

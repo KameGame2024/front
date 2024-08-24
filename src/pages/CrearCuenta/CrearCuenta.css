@@ -139,3 +139,60 @@ h2 {
     }
 }
 
+
+
+@media (max-width: 480px) {
+    .container {
+        flex-direction: column; /* Cambia la dirección del flex para apilar las secciones verticalmente */
+    }
+
+    .right-section {
+        padding: 10px; /* Ajusta el padding para más espacio en pantallas pequeñas */
+    }
+
+    .crear-cuenta {
+        max-width: 100%; /* Asegura que el contenedor del formulario ocupe todo el ancho disponible */
+        padding: 0 10px; /* Añade padding a los lados para evitar que el contenido toque los bordes */
+    }
+
+    .logo_cuenta, .center-image {
+        display: none; /* Oculta el logo y la imagen centrada en pantallas muy pequeñas */
+    }
+
+    .logo-cuenta-negro {
+        width: 150px; /* Reduce el tamaño del logo para pantallas pequeñas */
+    }
+
+    .crear-cuenta h2 {
+        margin-top: 70px;
+        font-size: 30px; /* Ajusta el tamaño del texto del título */
+    }
+
+    .botonn {
+        padding: 8px; /* Reduce el padding del botón para que sea más accesible en pantallas pequeñas */
+        font-size: 14px; /* Ajusta el tamaño de la fuente del botón */
+    }
+
+    .terms {
+        gap: 5px;
+        flex-direction: row; /* Cambia la dirección del flex para apilar el checkbox y el texto verticalmente */
+        align-items: flex-start; /* Alinea el contenido al inicio para mejor visualización */
+    }
+
+    .terms input {
+        margin-right: 0; /* Elimina el margen derecho del checkbox */
+        margin-bottom: 10px; /* Añade un margen inferior para separación */
+    }
+
+    .error-message, .confirmation-message, .hcaptcha, .login-link {
+        font-size: 12px; /* Ajusta el tamaño de la fuente para pantallas pequeñas */
+    }
+
+    .confirmation-message {
+        max-width: 100%; /* Asegura que el mensaje de confirmación ocupe todo el ancho disponible */
+    }
+
+    .login-link {
+        font-size: 14px; /* Ajusta el tamaño de la fuente del enlace de login */
+    }
+}

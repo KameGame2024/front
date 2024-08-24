@@ -48,7 +48,7 @@
     margin-bottom: 5px;
 }
 
-.card-button {
+.pack-button {
     display: inline-block;
     padding: 8px 12px;
     border: none;
@@ -60,6 +60,36 @@
     cursor: pointer;
 }
 
-.card-button:hover {
+.pack-button:hover {
     background-color: #3b3d3f;
+}
+
+/* Ajustes para pantallas más pequeñas (max-width: 768px) */
+@media (max-width: 768px) {
+    .paquete {
+        width: 320px; /* Ajusta el ancho del paquete para pantallas más pequeñas */
+        height: auto; /* Ajusta la altura automáticamente */
+        margin-left: 0;
+    }
+
+    .paquete-imagen {
+        width: 150px; /* Reduce el ancho de la imagen en pantallas pequeñas */
+        height: auto; /* Ajusta la altura automáticamente según la proporción de la imagen */
+        padding: 10px; /* Ajusta el padding */
+    }
+}
+
+/* Ajustes específicos para dispositivos móviles muy pequeños (max-width: 480px) */
+@media (max-width: 480px) {
+    .paquete {
+        width: 100%; /* Asegura que el paquete ocupe el ancho completo del contenedor */
+        height: auto; /* Ajusta la altura automáticamente */
+        margin-left: 0;
+    }
+
+    .paquete-imagen {
+        width: 130px; /* Reduce aún más el ancho de la imagen en pantallas muy pequeñas */
+        height: auto; /* Ajusta la altura automáticamente según la proporción de la imagen */
+        padding: 5px; /* Ajusta el padding */
+    }
 }

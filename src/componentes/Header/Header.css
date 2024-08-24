@@ -4,6 +4,7 @@
     justify-content: space-between;
     background-color: var(--color-white);
     padding: 10px;
+    flex-wrap: wrap; /* Permite que los elementos se ajusten al siguiente renglón si es necesario */
 }
 
 .header img {
@@ -19,7 +20,7 @@
     display: flex;
     align-items: center;
     gap: 1em;
-    margin-left: auto;
+    margin-left: auto; /* Alinea el grupo de botones a la derecha del logo */
 }
 
 .button-group .nav-link img {
@@ -27,10 +28,11 @@
     margin-left: 15px;
 }
 
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
     .header {
+        flex-direction: row;
+        align-items: center;
         padding: 5px;
-        flex-wrap: nowrap; /* Asegura que los elementos no se desplacen a la siguiente línea */
     }
 
     .header img {
@@ -38,17 +40,24 @@
     }
 
     .button-group {
-        display: flex;
+        display: flex; 
         align-items: center;
-        gap: 0.5em; /* Menor espacio entre los íconos para pantallas pequeñas */
+        gap: 0.5em;
+        margin-left: auto; /* Mantiene los botones a la derecha del logo */
     }
 
     .nav-link img {
-        height: 40px; /* Mantiene la visibilidad del logo */
+        height: 40px;
     }
 
     .button-group .nav-link img {
         height: 25px;
-        margin-left: 5px; /* Ajusta para pantallas pequeñas */
+        margin-left: 5px;
+    }
+
+    .search-bar {
+        width: 100%; /* Asegura que la barra de búsqueda ocupe todo el ancho */
+        margin-top: 10px; /* Añadir un margen superior para separar de los botones */
+        order: 1; /* Asegura que la barra de búsqueda aparezca debajo del logo y botones */
     }
 }

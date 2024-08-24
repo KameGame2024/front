@@ -6,7 +6,7 @@ const GlobalProvider = ({ children }) => {
     const [cartas, setCartas] = useState([]);
     const [cartasSeleccionadas, setCartasSeleccionadas] = useState([]);
     const [paquetes, setPaquetes] = useState([]);
-    const [usuarios, setUsuarios] = useState([]);
+    const [usuarios, setUsuario] = useState([]);
     const [productosEnCarrito, setProductosEnCarrito] = useState([]);
     const [busqueda, setBusqueda] = useState('');
 
@@ -25,7 +25,7 @@ const GlobalProvider = ({ children }) => {
 
                 setCartas(cartasData);
                 setPaquetes(paquetesData);
-                setUsuarios(usuariosData);
+                setUsuario(usuariosData);
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
@@ -34,16 +34,62 @@ const GlobalProvider = ({ children }) => {
         fetchData();
     }, []);
 
+    const agregarCarta = (nuevaCarta) => {
+        setCartas(prevCartas => {
+            const cartaExistente = prevCartas.find(c => c.id === nuevaCarta.id);
+            if (cartaExistente) {
+                return prevCartas.map(c =>
+                    c.id === nuevaCarta.id ? { ...c, ...nuevaCarta } : c
+                );
+            }
+            return [...prevCartas, nuevaCarta];
+        });
+    };
+
+    const eliminarCarta = (id) => {
+        setCartas(prevCartas => prevCartas.filter(carta => carta.id !== id));
+    };
+
+    const agregarPaquete = (nuevoPaquete) => {
+        setPaquetes(prevPaquetes => {
+            const paqueteExistente = prevPaquetes.find(p => p.id === nuevoPaquete.id);
+            if (paqueteExistente) {
+                return prevPaquetes.map(p =>
+                    p.id === nuevoPaquete.id ? { ...p, ...nuevoPaquete } : p
+                );
+            }
+            return [...prevPaquetes, nuevoPaquete];
+        });
+    };
+
+    const eliminarPaquete = (id) => {
+        setPaquetes(prevPaquetes => prevPaquetes.filter(paquete => paquete.id !== id));
+    };
+
+    const agregarUsuario = (nuevoUsuario) => {
+        setUsuario(prevUsuarios => {
+            const usuarioExistente = prevUsuarios.find(u => u.email === nuevoUsuario.email);
+            if (usuarioExistente) {
+                return prevUsuarios.map(u =>
+                    u.email === nuevoUsuario.email ? { ...u, ...nuevoUsuario } : u
+                );
+            }
+            return [...prevUsuarios, nuevoUsuario];
+        });
+    };
+
+    const eliminarUsuario = (email) => {
+        setUsuario(prevUsuarios => prevUsuarios.filter(usuario => usuario.email !== email));
+    };
+
     const agregarProductoAlCarrito = (producto) => {
         setProductosEnCarrito(prevProductos => {
             const productoExistente = prevProductos.find(p => p.id === producto.id);
             if (productoExistente) {
-                // Actualiza la cantidad si el producto ya está en el carrito
                 return prevProductos.map(p =>
                     p.id === producto.id ? { ...p, cantidad: p.cantidad + producto.cantidad } : p
                 );
             }
-            // Agrega el producto al carrito con la cantidad inicial
             return [...prevProductos, producto];
         });
     };
@@ -64,6 +110,10 @@ const GlobalProvider = ({ children }) => {
         setProductosEnCarrito(prevProductos => prevProductos.filter(producto => producto.id !== id));
     };
 
+    const vaciarCarrito = () => {
+        setProductosEnCarrito([]);
+    };
+
     const seleccionarCarta = (carta) => {
         setCartasSeleccionadas(prevCartas => {
             const cartaExistente = prevCartas.find(c => c.id === carta.id);
@@ -79,7 +129,27 @@ const GlobalProvider = ({ children }) => {
     };
 
     return (
-        <GlobalContext.Provider value={{ cartas, cartasSeleccionadas, paquetes, usuarios, productosEnCarrito, agregarProductoAlCarrito, incrementarCantidad, decrementarCantidad, eliminarProducto, seleccionarCarta, busqueda, actualizarBusqueda }}>
+        <GlobalContext.Provider value={{
+            cartas,
+            cartasSeleccionadas,
+            paquetes,
+            usuarios,
+            productosEnCarrito,
+            agregarCarta,
+            eliminarCarta,
+            agregarPaquete,
+            eliminarPaquete,
+            agregarUsuario,
+            eliminarUsuario,
+            agregarProductoAlCarrito,
+            incrementarCantidad,
+            decrementarCantidad,
+            eliminarProducto,
+            vaciarCarrito,
+            seleccionarCarta,
+            busqueda,
+            actualizarBusqueda
+        }}>
             {children}
         </GlobalContext.Provider>
     );

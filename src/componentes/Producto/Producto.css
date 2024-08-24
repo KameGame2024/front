@@ -1,4 +1,5 @@
 /* src/componentes/Producto.css */
+
 .producto {
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -10,9 +11,12 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    overflow: hidden; /* Asegura que los elementos no se salgan del contenedor */
+    
 }
 
-.cont{
+/* Contenedor de la imagen y la información del producto */
+.cont {
     display: flex;
     flex-direction: column;
     margin-right: 20px;
@@ -20,6 +24,7 @@
     font-size: 14px;
 }
 
+/* Imagen del producto */
 .producto-img {
     width: 120px;
     height: auto;
@@ -28,10 +33,12 @@
     margin-right: 15px;
 }
 
+/* Información del producto */
 .producto-info {
     flex-grow: 1;
 }
 
+/* Contenedor y botones de cantidad */
 .producto-cantidad {
     display: flex;
     align-items: center;
@@ -39,8 +46,18 @@
 
 .producto-cantidad button {
     margin: 0 5px;
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f1f1f1;
+    cursor: pointer;
 }
 
+.producto-cantidad span {
+    margin: 0 5px;
+}
+
+/* Botón de eliminar producto */
 .producto-eliminar {
     background-color: #e74c3c;
     color: #fff;
@@ -52,4 +69,35 @@
 
 .producto-eliminar:hover {
     background-color: #c0392b;
+}
+
+/* Estilos para dispositivos móviles */
+@media (max-width: 768px) {
+    .producto {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px;
+        margin: 5px 0;
+        align-items: center;
+    }
+
+    .cont {
+        flex-direction: column;
+        align-items: center;
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .producto-img {
+        width: 200px;
+        margin-right: 10px;
+    }
+
+    .producto-info {
+        margin-bottom: 10px;
+    }
+
+    .producto-cantidad {
+        margin-bottom: 10px;
+    }
 }
