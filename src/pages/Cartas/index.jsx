@@ -108,8 +108,9 @@ function Cartas() {
             {isModalOpen && (
                 <div className="filtro-modal">
                     <div className="modal-content">
-                        <button className="close-modal" onClick={() => setIsModalOpen(false)}>X</button>
                         <Filtro categoria="cartas" filtros={filtros} manejarCambioFiltro={manejarCambioFiltro} />
+                        <button className="close-modal" onClick={() => setIsModalOpen(false)}>Cerrar</button>
+                        
                     </div>
                 </div>
             )}

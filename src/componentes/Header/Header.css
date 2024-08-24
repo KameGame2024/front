@@ -30,7 +30,7 @@
 @media (max-width: 768px) {
     .header {
         padding: 5px;
-        flex-wrap: nowrap; /* Asegura que los elementos no se desplacen a la siguiente línea */
+        flex-wrap: wrap; /* Asegura que los elementos no se desplacen a la siguiente línea */
     }
 
     .header img {

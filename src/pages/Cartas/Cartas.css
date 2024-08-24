@@ -1,5 +1,3 @@
-/* src/componentes/Cartas.css */
-
 /* Mobile filter button */
 .mobile-filter-button {
     display: none;
@@ -13,6 +11,18 @@
     border-radius: 5px;
 }
 
+/* Estilos generales para asegurar el 100% de ancho en pantallas pequeñas */
+.header, .filtrar-cartas, .cartas-container {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.fondo {
+    background-color: #f9f9f9;
+    padding: 10px;
+}
+
+/* Para mantener el diseño responsivo */
 @media (max-width: 768px) {
     .mobile-filter-button {
         display: block;
@@ -32,6 +42,8 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        padding: 20px;
+        box-sizing: border-box;
     }
 
     .modal-content {
@@ -39,17 +51,31 @@
         padding: 20px;
         border-radius: 5px;
         max-width: 400px;
-        width: 90%;
+        width: 100%;
+        height: 80%; /* Ajusta la altura del modal para que no ocupe toda la pantalla */
+        overflow-y: auto; /* Habilita la barra de desplazamiento vertical */
+        box-sizing: border-box;
     }
 
     .close-modal {
         background-color: #282828;
         color: white;
         border: none;
-        padding: 5px 10px;
+        padding: 10px 20px;
         cursor: pointer;
         font-size: 16px;
-        float: right;
-        margin-bottom: 10px;
+        margin: auto;
+        display: block;
+        text-align: center;
+        border-radius: 5px;
+        margin-top: 20px; /* Añade espacio adicional debajo de los filtros */
+    }
+}
+
+/* Estilos adicionales para pantallas pequeñas */
+@media (max-width: 768px) {
+    .header, .filtrar-cartas, .cartas-container {
+        padding: 10px;
+        width: 100%;
     }
 }
