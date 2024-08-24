@@ -3,12 +3,14 @@ import Producto from '@src/componentes/Producto';
 import Resumen from '@src/componentes/Resumen';
 import { GlobalContext } from '@src/context/GlobalContext';
 import './Carrito.css';
-import { NavLink} from 'react-router-dom';
-
+import { NavLink, useNavigate } from 'react-router-dom';
 
 const Carrito = () => {
     const { productosEnCarrito, incrementarCantidad, decrementarCantidad, eliminarProducto, vaciarCarrito, usuarioLogueado } = useContext(GlobalContext);
     const [mostrarModal, setMostrarModal] = useState(false);
+    const [mostrarModalCarritoVacio, setMostrarModalCarritoVacio] = useState(false);
+    const [mensajeError, setMensajeError] = useState('');
+    const navigate = useNavigate();
 
     const totalItems = productosEnCarrito.reduce((acc, producto) => acc + producto.cantidad, 0);
     const costoTotal = productosEnCarrito.reduce((acc, producto) => acc + (producto.precio * producto.cantidad), 0);
@@ -16,11 +18,18 @@ const Carrito = () => {
     const subtotal = costoTotal + costoEnvio;
 
     const pagar = () => {
+        if (productosEnCarrito.length === 0) {
+            setMensajeError('No hay productos en el carrito.');
+            setMostrarModalCarritoVacio(true);
+            return;
+        }
+
         if (usuarioLogueado) {
             alert('Pago realizado con éxito');
             vaciarCarrito();
         } else {
-            setMostrarModal(true); // Mostrar el modal si no está logueado
+            setMensajeError('No puedes comprar porque aún no te has logueado o no posees una cuenta.');
+            setMostrarModal(true);
         }
     };
 
@@ -55,11 +64,23 @@ const Carrito = () => {
             {mostrarModal && (
                 <div className="modal-overlay">
                     <div className="modal-content">
-                        <p>No puedes comprar porque aún no te has logueado o no posees una cuenta.</p>
-                        <NavLink to="/iniciar-sesion">
-                            <button className="aceptar-boton">Iniciar Sesión</button>
-                        </NavLink>
+                        <p>{mensajeError}</p>
+                        {!usuarioLogueado && (
+                            <NavLink to="/iniciar-sesion">
+                                <button className="aceptar-boton">Iniciar Sesión</button>
+                            </NavLink>
+                        )}
                         <button className="cancelar-boton" onClick={() => setMostrarModal(false)}>Cancelar</button>
+                    </div>
+                </div>
+            )}
+
+            {mostrarModalCarritoVacio && (
+                <div className="modal-overlay">
+                    <div className="modal-content">
+                        <p>No hay productos en el carrito.</p>
+                        <button className="aceptar-boton" onClick={() => navigate('/')}>Agregar Productos</button>
+                        <button className="cancelar-boton" onClick={() => setMostrarModalCarritoVacio(false)}>Cancelar</button>
                     </div>
                 </div>
             )}
