@@ -4,8 +4,10 @@
 .menu {
     display: flex;
     justify-content: center;
+    align-items: center;
     background-color: #333;
     padding: 10px;
+    text-align: center;
 }
 
 .menu-item {

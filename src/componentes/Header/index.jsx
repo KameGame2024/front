@@ -34,12 +34,13 @@ function Header() {
                     <NavLink to="/carrito" className="nav-link">
                         <img src="/img/icons/shopping-bag.png" alt="Carrito" />
                     </NavLink>
+                    {isMenuOpen ? (
+                        <FaTimes className="menu-icon" onClick={toggleMenu} />
+                    ) : (
+                        <FaBars className="menu-icon" onClick={toggleMenu} />
+                    )}
                 </div>
-                {isMenuOpen ? (
-                    <FaTimes className="menu-icon" onClick={toggleMenu} />
-                ) : (
-                    <FaBars className="menu-icon" onClick={toggleMenu} />
-                )}
+                
             </header>
             <Menu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
             {isMenuOpen && <div className="menu-overlay" onClick={toggleMenu}></div>}

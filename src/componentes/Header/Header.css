@@ -12,6 +12,12 @@
     height: auto;
 }
 
+.nav-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
 .nav-link img {
     height: 60px;
 }
@@ -42,8 +48,8 @@
     .button-group {
         display: flex; 
         align-items: center;
-        gap: 0.5em;
-        margin-left: auto; /* Mantiene los botones a la derecha del logo */
+        gap: 1em;
+        margin: auto; /* Mantiene los botones a la derecha del logo */
     }
 
     .nav-link img {
@@ -52,7 +58,7 @@
 
     .button-group .nav-link img {
         height: 25px;
-        margin-left: 5px;
+        margin: auto;
     }
 
     .search-bar {
