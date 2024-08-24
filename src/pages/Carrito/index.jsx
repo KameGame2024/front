@@ -1,11 +1,14 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import Producto from '@src/componentes/Producto';
 import Resumen from '@src/componentes/Resumen';
 import { GlobalContext } from '@src/context/GlobalContext';
 import './Carrito.css';
+import { NavLink} from 'react-router-dom';
+
 
 const Carrito = () => {
-    const { productosEnCarrito, incrementarCantidad, decrementarCantidad, eliminarProducto, vaciarCarrito } = useContext(GlobalContext);
+    const { productosEnCarrito, incrementarCantidad, decrementarCantidad, eliminarProducto, vaciarCarrito, usuarioLogueado } = useContext(GlobalContext);
+    const [mostrarModal, setMostrarModal] = useState(false);
 
     const totalItems = productosEnCarrito.reduce((acc, producto) => acc + producto.cantidad, 0);
     const costoTotal = productosEnCarrito.reduce((acc, producto) => acc + (producto.precio * producto.cantidad), 0);
@@ -13,10 +16,12 @@ const Carrito = () => {
     const subtotal = costoTotal + costoEnvio;
 
     const pagar = () => {
-        // Lógica para el pago
-        alert('Pago realizado con éxito');
-        // Vaciar el carrito después del pago
-        vaciarCarrito();
+        if (usuarioLogueado) {
+            alert('Pago realizado con éxito');
+            vaciarCarrito();
+        } else {
+            setMostrarModal(true); // Mostrar el modal si no está logueado
+        }
     };
 
     return (
@@ -46,6 +51,18 @@ const Carrito = () => {
                     pagar={pagar}
                 />
             </div>
+
+            {mostrarModal && (
+                <div className="modal-overlay">
+                    <div className="modal-content">
+                        <p>No puedes comprar porque aún no te has logueado o no posees una cuenta.</p>
+                        <NavLink to="/iniciar-sesion">
+                            <button className="aceptar-boton">Iniciar Sesión</button>
+                        </NavLink>
+                        <button className="cancelar-boton" onClick={() => setMostrarModal(false)}>Cancelar</button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
