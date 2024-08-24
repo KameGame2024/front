@@ -36,7 +36,7 @@ function IniciarSesion() {
         );
 
         if (user) {
-            console.log("Usuario autenticado correctamente:", user);
+            console.log("Usuario autenticado correctamente:", user.email);
             setLoginError("");
             login(user.role); // Llama a la función login con el rol del usuario
         } else {
