@@ -13,15 +13,19 @@
     border-radius: 5px;
 }
 
+/* Mobile View */
 @media (max-width: 768px) {
+    /* Show mobile filter button */
     .mobile-filter-button {
         display: block;
     }
 
+    /* Hide filter container */
     .filtro-container {
         display: none;
     }
 
+    /* Modal styling for mobile */
     .filtro-modal {
         position: fixed;
         top: 0;
@@ -38,8 +42,9 @@
         background-color: white;
         padding: 20px;
         border-radius: 5px;
-        max-width: 400px;
+        max-width: 90%; /* Adjusted to fit better on mobile screens */
         width: 90%;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 
     .close-modal {
@@ -51,5 +56,29 @@
         font-size: 16px;
         float: right;
         margin-bottom: 10px;
+    }
+
+    /* Optional: Styling for any additional elements or adjustments */
+    .filtro-container,
+    .modal-content {
+        box-sizing: border-box; /* Ensure padding and border are included in the total width and height */
+    }
+}
+
+/* iPhone SE y pantallas pequeñas (max-width: 480px) */
+@media (max-width: 480px) {
+    .cartas-container {
+        padding: 10px; /* Ajusta el padding para adaptarse a pantallas más pequeñas */
+        box-sizing: border-box; /* Asegura que el padding no aumente el tamaño total */
+    }
+
+    .cartas-container .card {
+        width: 100%; /* Asegura que las tarjetas ocupen el ancho completo del contenedor */
+        margin-bottom: 10px; /* Añade un espacio entre las tarjetas */
+    }
+
+    .mobile-filter-button {
+        font-size: 16px; /* Ajusta el tamaño del texto del botón para pantallas pequeñas */
+        padding: 8px; /* Ajusta el padding del botón */
     }
 }

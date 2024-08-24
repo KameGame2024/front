@@ -1,11 +1,14 @@
-import React, { useContext, useState } from 'react';
-import Filtro from '@src/componentes/Filtro';
-import Paquete from '@src/componentes/Paquete'; // Asegúrate de tener este componente
-import './Paquetes.css'; // Añadimos el archivo CSS
+// src/componentes/Paquetes.js
+import React, { useState, useContext } from 'react';
 import { GlobalContext } from '@src/context/GlobalContext';
+import Filtro from '@src/componentes/Filtro';
+import Paquete from '@src/componentes/Paquete';
+import { FaChevronDown } from 'react-icons/fa'; // Import the down arrow icon
+import './Paquetes.css';
 
 function Paquetes() {
     const { paquetes, busqueda } = useContext(GlobalContext);
+    const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal visibility
     const [filtros, setFiltros] = useState({
         precioMin: '',
         precioMax: '',
@@ -53,10 +56,18 @@ function Paquetes() {
     return (
         <div className='fondo'>
             <h1>PAQUETES</h1>
+            {/* Mobile filter button */}
+            <div className="mobile-filter-button" onClick={() => setIsModalOpen(true)}>
+                <FaChevronDown /> Filtrar
+            </div>
+
             <div className="filtrar-paquetes">
-                <div className="filtro-container">
+                {/* Filters container (visible only on larger screens) */}
+                <div className={`filtro-container ${isModalOpen ? 'modal-open' : ''}`}>
                     <Filtro categoria="paquetes" filtros={filtros} manejarCambioFiltro={manejarCambioFiltro} />
                 </div>
+                
+                {/* Paquetes container */}
                 <div className="paquetes-container">
                     {paquetesFiltrados.map((paquete) => (
                         <Paquete
@@ -72,6 +83,16 @@ function Paquetes() {
                     ))}
                 </div>
             </div>
+
+            {/* Filter modal for mobile */}
+            {isModalOpen && (
+                <div className="filtro-modal">
+                    <div className="modal-content">
+                        <button className="close-modal" onClick={() => setIsModalOpen(false)}>X</button>
+                        <Filtro categoria="paquetes" filtros={filtros} manejarCambioFiltro={manejarCambioFiltro} />
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
