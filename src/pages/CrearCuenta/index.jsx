@@ -6,7 +6,7 @@ import * as yup from 'yup';
 import Campo from '@src/componentes/Campo';
 import './CrearCuenta.css';
 import { GlobalContext } from '@src/context/GlobalContext';
-
+import TerminosYCondiciones from '@src/componentes/TerminosyCondiciones/TerminosyCondiciones.jsx'; // Importamos el modal
 // Esquema de validación usando Yup
 const schema = yup.object().shape({
     email: yup.string()
@@ -28,6 +28,7 @@ function CrearCuenta() {
     });
 
     const [termsAccepted, setTermsAccepted] = useState(false);
+    const [showTermsModal, setShowTermsModal] = useState(false); // Estado para controlar la visibilidad del modal
 
     const emailExists = (email) => {
         return usuarios.some(user => user.email === email);
@@ -46,6 +47,11 @@ function CrearCuenta() {
 
         // Mostrar mensaje de éxito
         alert('Tu cuenta ha sido creada, inicia sesión.');
+    };
+
+    const handleTermsAccepted = () => {
+        setTermsAccepted(true); // Actualizar el estado cuando se acepten los términos
+        setShowTermsModal(false); // Cerrar el modal
     };
 
     return (
@@ -93,10 +99,11 @@ function CrearCuenta() {
                             <input
                                 type="checkbox"
                                 {...register('terms')}
+                                checked={termsAccepted} // Sincroniza con el estado
                                 onChange={(e) => setTermsAccepted(e.target.checked)}
                             />
                             <label>
-                                Estoy de acuerdo con los <Link to="/terminos">términos de servicio</Link> de Kame Game
+                                Estoy de acuerdo con los <span onClick={() => setShowTermsModal(true)} className="terms-link">términos de servicio</span> de Kame Game
                             </label>
                         </div>
                         {errors.terms && <p className="error-message">{errors.terms.message}</p>}
@@ -113,6 +120,14 @@ function CrearCuenta() {
                     </div>
                 </div>
             </div>
+
+            {/* Modal de Términos y Condiciones */}
+            {showTermsModal && (
+                <TerminosYCondiciones
+                    onClose={() => setShowTermsModal(false)}
+                    onAccept={handleTermsAccepted}
+                />
+            )}
         </div>
     );
 }

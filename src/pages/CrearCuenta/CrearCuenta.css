@@ -1,6 +1,6 @@
 .container {
-    display: flex;
-    height: 100vh; /* La altura será igual a la altura de la ventana */
+    width: 100%;
+    box-sizing: border-box;/* Asegura que el modal se posicione correctamente dentro del contenedor */
 }
 
 .right-section {
@@ -8,7 +8,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px;
     background-color: #fff; 
 }
 
@@ -82,6 +81,83 @@ h2 {
     text-decoration: underline;
 }
 
+.terminos-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 90%; /* Ajusta el ancho según sea necesario */
+    max-width: 800px; /* Opcional: establece un ancho máximo */
+    height: 80%; /* Ajusta la altura según sea necesario */
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    transform: translate(-50%, -50%);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    z-index: 1000; /* Asegúrate de que el modal esté por encima del contenido */
+    overflow-y: auto; /* Permite el desplazamiento si el contenido es largo */
+}
+/* Estilo para el contenido del modal */
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    max-width: 400px;
+    width: 100%;
+    height: 60%;
+    font-size: 16px;
+    overflow-y: auto;
+    box-sizing: border-box;/* Asegura que el contenido del modal esté por encima del overlay */
+}
+
+/* Botones del modal */
+.modal-buttons {
+    background-color: #282828;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: auto;
+    display: block;
+    text-align: center;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.modal-close,
+.modal-accept {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.modal-close {
+    background-color: #ccc;
+}
+
+.modal-accept {
+    background-color: #a58d08;
+    color: #fff;
+}
+
+.modal-accept:hover {
+    background-color: #8e7607;
+}
+
+/* Estilo para el enlace de los términos */
+.terms-link {
+    color: #a58d08;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.terms-link:hover {
+    text-decoration: none;
+}
+
 @media (min-width: 769px) {
     .logo-cuenta-negro{
         display: none;
@@ -138,8 +214,6 @@ h2 {
         padding: 16px;
     }
 }
-
-
 
 @media (max-width: 480px) {
     .container {
