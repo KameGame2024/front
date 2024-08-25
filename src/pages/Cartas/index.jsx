@@ -86,21 +86,25 @@ function Cartas() {
                 
                 {/* Cards container */}
                 <div className="cartas-container">
-                    {cartasFiltradas.map((carta) => (
-                        <Card
-                            key={carta.id}
-                            imagen={carta.imagen}
-                            nombre={carta.nombre}
-                            descripcion={carta.descripcion}
-                            ataque={carta.ataque}
-                            defensa={carta.defensa}
-                            precio={carta.precio}
-                            tipo={carta.tipo}
-                            mostrarBotonVer={true} 
-                            atributo={carta.atributo}
-                            id={carta.id}
-                        />
-                    ))}
+                    {cartasFiltradas.length > 0 ? (
+                        cartasFiltradas.map((carta) => (
+                            <Card
+                                key={carta.id}
+                                imagen={carta.imagen}
+                                nombre={carta.nombre}
+                                descripcion={carta.descripcion}
+                                ataque={carta.ataque}
+                                defensa={carta.defensa}
+                                precio={carta.precio}
+                                tipo={carta.tipo}
+                                mostrarBotonVer={true} 
+                                atributo={carta.atributo}
+                                id={carta.id}
+                            />
+                        ))
+                    ) : (
+                        <p className="no-cartas">No hay cartas disponibles en este momento</p>
+                    )}
                 </div>
             </div>
 
@@ -110,7 +114,6 @@ function Cartas() {
                     <div className="modal-content">
                         <Filtro categoria="cartas" filtros={filtros} manejarCambioFiltro={manejarCambioFiltro} />
                         <button className="close-modal" onClick={() => setIsModalOpen(false)}>Cerrar</button>
-                        
                     </div>
                 </div>
             )}
