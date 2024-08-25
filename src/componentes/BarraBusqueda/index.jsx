@@ -22,15 +22,17 @@ function BarraBusqueda() {
                 placeholder="Buscar..."
                 value={textoBusqueda}
                 onChange={manejarCambio}
+                className='search-input'
                 onKeyPress={(e) => {
                     if (e.key === 'Enter') {
                         manejarBusqueda();
                     }
                 }}
             />
-            <button type="button" onClick={manejarBusqueda}>
+            <div className='icon'>
                 <FaSearch />
-            </button>
+            </div>
+            
         </div>
     );
 }
