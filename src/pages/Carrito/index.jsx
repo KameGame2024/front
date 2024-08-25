@@ -2,11 +2,13 @@ import React, { useContext, useState } from 'react';
 import Producto from '@src/componentes/Producto';
 import Resumen from '@src/componentes/Resumen';
 import { GlobalContext } from '@src/context/GlobalContext';
+import AuthContext from '@src/context/AuthContext'; // Importa AuthContext
 import './Carrito.css';
 import { NavLink, useNavigate } from 'react-router-dom';
 
 const Carrito = () => {
-    const { productosEnCarrito, incrementarCantidad, decrementarCantidad, eliminarProducto, vaciarCarrito, usuarioLogueado } = useContext(GlobalContext);
+    const { productosEnCarrito, incrementarCantidad, decrementarCantidad, eliminarProducto, vaciarCarrito } = useContext(GlobalContext);
+    const { isAuthenticated } = useContext(AuthContext); // Obtén isAuthenticated de AuthContext
     const [mostrarModal, setMostrarModal] = useState(false);
     const [mostrarModalCarritoVacio, setMostrarModalCarritoVacio] = useState(false);
     const [mensajeError, setMensajeError] = useState('');
@@ -24,7 +26,7 @@ const Carrito = () => {
             return;
         }
 
-        if (usuarioLogueado) {
+        if (isAuthenticated) { // Usar isAuthenticated en lugar de usuarioLogueado
             alert('Pago realizado con éxito');
             vaciarCarrito();
         } else {
@@ -65,7 +67,7 @@ const Carrito = () => {
                 <div className="modal-overlay">
                     <div className="modal-content">
                         <p>{mensajeError}</p>
-                        {!usuarioLogueado && (
+                        {!isAuthenticated && (
                             <NavLink to="/iniciar-sesion">
                                 <button className="aceptar-boton">Iniciar Sesión</button>
                             </NavLink>
