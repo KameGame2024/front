@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
+import { FaEdit, FaTrash } from 'react-icons/fa'; // Importando los íconos
 import { GlobalContext } from '@src/context/GlobalContext';
-import './ListaUsuarios.css'; // Puedes agregar estilos personalizados en este archivo
+import './ListaUsuarios.css';
 
 const ListaUsuarios = () => {
     const { usuarios, eliminarUsuario, editarUsuario } = useContext(GlobalContext);
@@ -36,11 +37,14 @@ const ListaUsuarios = () => {
                             <td>{usuario.email}</td>
                             <td>
                                 {editIndex === index ? (
-                                    <input
-                                        type="text"
+                                    <select
                                         value={newRole}
                                         onChange={(e) => setNewRole(e.target.value)}
-                                    />
+                                        className="select-rol"
+                                    >
+                                        <option value="user">User</option>
+                                        <option value="admin">Admin</option>
+                                    </select>
                                 ) : (
                                     usuario.role
                                 )}
@@ -50,11 +54,11 @@ const ListaUsuarios = () => {
                                     <button onClick={() => guardarRol(usuario.email)}>Guardar</button>
                                 ) : (
                                     <>
-                                        <button onClick={() => activarEdicion(index, usuario.role)}>
-                                            <img src="/icons/edit.png" alt="Editar" className="icono-editar" />
+                                        <button onClick={() => activarEdicion(index, usuario.role)} className="icono-editar">
+                                            <FaEdit /> {/* Ícono de lápiz */}
                                         </button>
-                                        <button onClick={() => eliminarUsuario(usuario.email)}>
-                                            <img src="/icons/delete.png" alt="Eliminar" className="icono-eliminar" />
+                                        <button onClick={() => eliminarUsuario(usuario.email)} className="icono-eliminar">
+                                            <FaTrash /> {/* Ícono de basura */}
                                         </button>
                                     </>
                                 )}

@@ -5,6 +5,7 @@
     background-color: #f9f9f9;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow-x: auto; /* Permite el desplazamiento horizontal si el contenido es más ancho que el contenedor */
 }
 
 .lista-usuarios-container h2 {
@@ -40,6 +41,17 @@
     transition: transform 0.2s ease;
 }
 
+.select-rol {
+    padding: 5px;
+    font-size: 14px;
+    width: 100%;
+    color:#282828;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+
 .icono-editar:hover,
 .icono-eliminar:hover {
     transform: scale(1.1);
@@ -64,6 +76,21 @@ button {
     font-size: 14px;
 }
 
-button:hover {
-    background-color: #444;
+.icono-editar, .icono-eliminar {
+    font-size: 1.2rem; /* Tamaño de los íconos */
+    color: #555; /* Color de los íconos */
+    cursor: pointer;
+    background: none;
+    border: none;
+    margin: 0 5px;
+}
+
+.icono-editar:hover, .icono-eliminar:hover {
+    color: #007bff; /* Cambiar el color al pasar el mouse */
+}
+
+@media  (max-width: 410px) {
+    .lista-usuarios-container{
+        padding: 0px;
+    }
 }
