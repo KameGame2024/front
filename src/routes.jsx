@@ -35,13 +35,13 @@ function AppRoutes() {
             <Route path="mi-coleccion" element={<PrivateRoute><Coleccion /></PrivateRoute>}></Route>
             <Route path="mi-baraja" element={<PrivateRoute><Baraja /></PrivateRoute>}></Route>
             <Route path="centro-combate" element={<PrivateRoute><CentroCombate /></PrivateRoute>}></Route>
-            <Route path="cartas-admin" element={<CartasAdmin />}></Route>
+            <Route path="admin" element={<AdminRoute><Admin /></AdminRoute>}></Route>
+          <Route path="editar-usuarios" element={<AdminRoute><ListaUsuarios/></AdminRoute>}></Route>
+          <Route path="cartas-admin" element={<AdminRoute><CartasAdmin/></AdminRoute>}></Route>
           </Route>
           <Route path="crear-cuenta" element={<CrearCuenta />}></Route>
           <Route path="iniciar-sesion" element={<IniciarSesion />}></Route>
           <Route path="recuperar-contrasena" element={<RecuperarContrasena />}></Route>
-          <Route path="admin" element={<AdminRoute><Admin /></AdminRoute>}></Route>
-          <Route path="editar-usuarios" element={<AdminRoute><ListaUsuarios/></AdminRoute>}></Route>
         </Routes>
       </AuthProvider>
     </BrowserRouter>

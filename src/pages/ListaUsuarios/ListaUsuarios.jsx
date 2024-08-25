@@ -3,16 +3,9 @@ import { GlobalContext } from '@src/context/GlobalContext';
 import './ListaUsuarios.css'; // Puedes agregar estilos personalizados en este archivo
 
 const ListaUsuarios = () => {
-    const { usuarios, setUsuarios } = useContext(GlobalContext);
+    const { usuarios, eliminarUsuario, editarUsuario } = useContext(GlobalContext);
     const [editIndex, setEditIndex] = useState(null);
     const [newRole, setNewRole] = useState('');
-
-    // Función para eliminar un usuario
-    const eliminarUsuario = (index) => {
-        const usuariosActualizados = [...usuarios];
-        usuariosActualizados.splice(index, 1);
-        setUsuarios(usuariosActualizados);
-    };
 
     // Función para activar el modo de edición
     const activarEdicion = (index, role) => {
@@ -21,10 +14,8 @@ const ListaUsuarios = () => {
     };
 
     // Función para guardar los cambios del rol
-    const guardarRol = (index) => {
-        const usuariosActualizados = [...usuarios];
-        usuariosActualizados[index].role = newRole;
-        setUsuarios(usuariosActualizados);
+    const guardarRol = (email) => {
+        editarUsuario(email, newRole); // Llamada al método del contexto para editar el rol
         setEditIndex(null); // Salir del modo de edición
     };
 
@@ -56,13 +47,13 @@ const ListaUsuarios = () => {
                             </td>
                             <td>
                                 {editIndex === index ? (
-                                    <button onClick={() => guardarRol(index)}>Guardar</button>
+                                    <button onClick={() => guardarRol(usuario.email)}>Guardar</button>
                                 ) : (
                                     <>
                                         <button onClick={() => activarEdicion(index, usuario.role)}>
                                             <img src="/icons/edit.png" alt="Editar" className="icono-editar" />
                                         </button>
-                                        <button onClick={() => eliminarUsuario(index)}>
+                                        <button onClick={() => eliminarUsuario(usuario.email)}>
                                             <img src="/icons/delete.png" alt="Eliminar" className="icono-eliminar" />
                                         </button>
                                     </>

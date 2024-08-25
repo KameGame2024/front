@@ -10,10 +10,9 @@ import AuthContext from '../../context/AuthContext';
 function Header() {
     const location = useLocation();
     const { actualizarBusqueda } = useContext(GlobalContext);
+    const { isAuthenticated, logout, user } = useContext(AuthContext); // Obtener el usuario autenticado
     const showSearchBar = location.pathname === '/cartas' || location.pathname === '/paquetes';
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-    const { isAuthenticated, logout } = useContext(AuthContext);
 
     const handleSearch = (query) => {
         actualizarBusqueda(query);
@@ -23,37 +22,52 @@ function Header() {
         setIsMenuOpen(!isMenuOpen);
     };
 
+    // Verificar si el usuario es administrador
+    const isAdmin = isAuthenticated && user?.role === 'admin';
+
     return (
         <div>
             <header className="header">
                 <NavLink to="/" className="nav-link">
                     <img src="/img/Logo.png" alt="Logo" />
                 </NavLink>
-                {showSearchBar && <BarraBusqueda onSearch={handleSearch} />}
+                
+                {!isAdmin && showSearchBar && <BarraBusqueda onSearch={handleSearch} />} {/* Mostrar la barra de búsqueda solo si no es administrador */}
+                
                 <div className="button-group">
                     {isAuthenticated && (
                         <NavLink to="/" className="nav-link" onClick={logout}>
-                        <img src="/img/icons/logout.png" alt="Perfil" />
-                    </NavLink>
+                            <img src="/img/icons/logout.png" alt="Cerrar sesión" />
+                        </NavLink>
                     )}
                     {!isAuthenticated && (
                         <NavLink to="/iniciar-sesion" className="nav-link">
-                        <img src="/img/icons/user.png" alt="Perfil" />
+                            <img src="/img/icons/user.png" alt="Perfil" />
                         </NavLink>
                     )}
-                    <NavLink to="/carrito" className="nav-link">
-                        <img src="/img/icons/shopping-bag.png" alt="Carrito" />
-                    </NavLink>
-                    {isMenuOpen ? (
-                        <FaTimes className="menu-icon" onClick={toggleMenu} />
-                    ) : (
-                        <FaBars className="menu-icon" onClick={toggleMenu} />
+                    {/* Mostrar el carrito y el menú solo si no es administrador */}
+                    {!isAdmin && (
+                        <>
+                            <NavLink to="/carrito" className="nav-link">
+                                <img src="/img/icons/shopping-bag.png" alt="Carrito" />
+                            </NavLink>
+                            {isMenuOpen ? (
+                                <FaTimes className="menu-icon" onClick={toggleMenu} />
+                            ) : (
+                                <FaBars className="menu-icon" onClick={toggleMenu} />
+                            )}
+                        </>
                     )}
                 </div>
-                
             </header>
-            <Menu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
-            {isMenuOpen && <div className="menu-overlay" onClick={toggleMenu}></div>}
+            
+            {/* Mostrar el menú solo si no es administrador */}
+            {!isAdmin && (
+                <>
+                    <Menu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
+                    {isMenuOpen && <div className="menu-overlay" onClick={toggleMenu}></div>}
+                </>
+            )}
         </div>
     );
 }
