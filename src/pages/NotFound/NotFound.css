@@ -1,33 +1,63 @@
+/* Estilos generales */
 .container_2 {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 78vh;
   background-image: url('/img/Background.png'); 
   background-position: center;
+  padding: 0 20px; /* Añadir un padding para evitar que el contenido toque los bordes */
 }
 
 .image {
-  max-width: 100%; 
-  height: auto;
+  max-width: 80%;
   border-radius: 8px;
-  margin-bottom: 1rem;
+  margin: 80px;
 }
 
 .text_error {
-  font-size: 36px; 
+  font-size: 36px;
   color: #fff;
-  text-align: center; 
+  text-align: center;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-  letter-spacing: 1px; 
-  transform: translateY(-10px); 
+  letter-spacing: 1px;
+  transform: translateY(-10px);
 }
 
 .text_error::after {
   content: "Oops! Parece que te has perdido...";
   display: block;
-  font-size: 24px; 
+  font-size: 24px;
   font-style: italic;
   margin-top: 8px;
+}
+
+/* Estilos para pantallas de 768px o menos */
+@media (max-width: 1040px) {
+  .text_error {
+    font-size: 28px; /* Reducir el tamaño del texto */
+  }
+
+  .text_error::after {
+    font-size: 20px; /* Reducir el tamaño del subtítulo */
+  }
+
+  .image {
+    max-width: 60%; /* Ajustar el tamaño de la imagen */
+  }
+}
+
+/* Estilos para pantallas de 440px o menos */
+@media (max-width: 760px) {
+  .text_error {
+    font-size: 24px; /* Reducir aún más el tamaño del texto */
+  }
+
+  .text_error::after {
+    font-size: 18px; /* Reducir el tamaño del subtítulo */
+  }
+
+  .image {
+    max-width: 80%; /* Ajustar el tamaño de la imagen para pantallas muy pequeñas */
+  }
 }
