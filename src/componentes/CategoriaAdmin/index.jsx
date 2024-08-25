@@ -4,7 +4,7 @@ import './CategoriaAdmin.css';
 
 function CategoriasAdmin() {
     const categorias = [
-        { src: '/img/EditarTienda.png', alt: 'EditarTienda', path: '/editar-tienda' },
+        { src: '/img/EditarTienda.png', alt: 'EditarTienda', path: '/cartas-admin' },
         { src: '/img/EditarUsuariosMobile.png', alt: 'EditarUsuarios', path: '/editar-usuarios' },
     ];
 

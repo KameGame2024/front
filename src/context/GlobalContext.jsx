@@ -83,6 +83,12 @@ const GlobalProvider = ({ children }) => {
         setUsuario(prevUsuarios => prevUsuarios.filter(usuario => usuario.email !== email));
     };
 
+    const editarUsuario = (email, nuevoRole) => {
+        setUsuario(prevUsuarios => prevUsuarios.map(usuario =>
+            usuario.email === email ? { ...usuario, role: nuevoRole } : usuario
+        ));
+    };
+
     const agregarProductoAlCarrito = (producto) => {
         setProductosEnCarrito(prevProductos => {
             const productoExistente = prevProductos.find(p => p.id === producto.id);
@@ -152,6 +158,7 @@ const GlobalProvider = ({ children }) => {
             agregarPaquete,
             eliminarPaquete,
             agregarUsuario,
+            editarUsuario,
             eliminarUsuario,
             agregarProductoAlCarrito,
             incrementarCantidad,
