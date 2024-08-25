@@ -52,11 +52,7 @@
 .detalle_masmenos {
     margin: 0 5px;
     border: none;
-    background-color: #ddd;
-}
-
-.detalle_cant{
-    background-color: #ddd;
+    background-color: var(--color-light-gray);
 }
 
 .detalle-agregar{

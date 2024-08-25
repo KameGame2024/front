@@ -19,19 +19,10 @@ const Footer = () => {
                     <img src="/img/LogoBlanco.png" alt="Logo" className="logo" />
             </Link>
             <div className='redes'>
-                <a href='https://www.aluracursos.com/'>
+                <a href='https://www.facebook.com/anna.ospinabedoya'>
                     <img src="/img/icons/Facebook.png" alt='Facebook' />
                 </a>
-                <a href='https://www.aluracursos.com/'>
-                    <img src="/img/icons/TikTok.png" alt='TikTok' />
-                </a>
-                <a href='https://www.aluracursos.com/'>
-                    <img src="/img/icons/Wpp.png" alt='Whatsapp' />
-                </a>
-                <a href='https://www.aluracursos.com/'>
-                    <img src="/img/icons/Youtube.png" alt='Youtube' />
-                </a>
-                <a href='https://www.aluracursos.com/'>
+                <a href='https://www.instagram.com/annaseanna/'>
                     <img src="/img/icons/Instagram.png" alt='Instagram' />
                 </a>
             </div>
