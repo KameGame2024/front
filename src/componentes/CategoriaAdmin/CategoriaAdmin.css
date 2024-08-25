@@ -1,0 +1,21 @@
+/* src/componentes/Categorias.css */
+.categorias {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: var(--color-white);
+    justify-content: center;
+    gap: 20px;
+    padding: 40px;
+}
+
+.categoria-item {
+    text-align: center;
+    width: 500px;
+    padding: 10px;
+}
+
+.categoria-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}

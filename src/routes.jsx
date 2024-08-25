@@ -39,7 +39,7 @@ function AppRoutes() {
           <Route path="iniciar-sesion" element={<IniciarSesion />}></Route>
           <Route path="recuperar-contrasena" element={<RecuperarContrasena />}></Route>
           <Route path="admin" element={<AdminRoute><Admin /></AdminRoute>}></Route>
-          <Route path="lista-usuarios" element={<AdminRoute><ListaUsuarios/></AdminRoute>}></Route>
+          <Route path="editar-usuarios" element={<AdminRoute><ListaUsuarios/></AdminRoute>}></Route>
         </Routes>
       </AuthProvider>
     </BrowserRouter>
