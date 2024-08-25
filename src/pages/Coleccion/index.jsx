@@ -6,7 +6,7 @@ import Card from '@src/componentes/Card';
 import './Coleccion.css'; // Añade un archivo CSS específico para la colección
 
 function Coleccion() {
-    const { cartas, seleccionarCarta, cartasSeleccionadas } = useContext(GlobalContext);
+    const { cartasAdmin, seleccionarCarta, cartasSeleccionadas } = useContext(GlobalContext);
     const [filtros, setFiltros] = useState({
         ataqueMin: '',
         ataqueMax: '',
@@ -64,7 +64,7 @@ function Coleccion() {
         });
     };
 
-    const cartasFiltradas = filtrarColeccion(cartas);
+    const cartasFiltradas = filtrarColeccion(cartasAdmin);
 
     return (
         <div className='fondo'>
