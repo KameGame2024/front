@@ -4,6 +4,7 @@ const GlobalContext = createContext();
 
 const GlobalProvider = ({ children }) => {
     const [cartas, setCartas] = useState([]);
+    const [cartasAdmin, setCartasAdmin] = useState([]);
     const [cartasSeleccionadas, setCartasSeleccionadas] = useState([]);
     const [paquetes, setPaquetes] = useState([]);
     const [usuarios, setUsuario] = useState([]);
@@ -23,7 +24,7 @@ const GlobalProvider = ({ children }) => {
                 const paquetesData = await paquetesResponse.json();
                 const usuariosData = await usuariosResponse.json();
 
-                setCartas(cartasData);
+                setCartasAdmin(cartasData);
                 setPaquetes(paquetesData);
                 setUsuario(usuariosData);
             } catch (error) {
@@ -124,6 +125,16 @@ const GlobalProvider = ({ children }) => {
         });
     };
 
+    const habilitarCarta = (carta) => {
+        setCartas(prevCartas => {
+            const cartaExistente = prevCartas.find(c => c.id === carta.id);
+            if (cartaExistente) {
+                return prevCartas.filter(c => c.id !== carta.id); // Deselecciona la carta si ya está en la lista
+            }
+            return [...prevCartas, carta]; // Agrega la carta a la lista
+        });
+    };
+
     const actualizarBusqueda = (query) => {
         setBusqueda(query);
     };
@@ -131,6 +142,7 @@ const GlobalProvider = ({ children }) => {
     return (
         <GlobalContext.Provider value={{
             cartas,
+            cartasAdmin,
             cartasSeleccionadas,
             paquetes,
             usuarios,
@@ -147,6 +159,7 @@ const GlobalProvider = ({ children }) => {
             eliminarProducto,
             vaciarCarrito,
             seleccionarCarta,
+            habilitarCarta,
             busqueda,
             actualizarBusqueda
         }}>

@@ -18,6 +18,7 @@ import Baraja from "./pages/Baraja";
 import CentroCombate from "./pages/CentroCombate";
 import ListaUsuarios from "./pages/ListaUsuarios/ListaUsuarios";
 import AdminRoute from "./componentes/AdminRoute";
+import CartasAdmin from "./pages/CartasAdmin";
 
 function AppRoutes() {
   return (
@@ -34,6 +35,7 @@ function AppRoutes() {
             <Route path="mi-coleccion" element={<PrivateRoute><Coleccion /></PrivateRoute>}></Route>
             <Route path="mi-baraja" element={<PrivateRoute><Baraja /></PrivateRoute>}></Route>
             <Route path="centro-combate" element={<PrivateRoute><CentroCombate /></PrivateRoute>}></Route>
+            <Route path="cartas-admin" element={<CartasAdmin />}></Route>
           </Route>
           <Route path="crear-cuenta" element={<CrearCuenta />}></Route>
           <Route path="iniciar-sesion" element={<IniciarSesion />}></Route>
