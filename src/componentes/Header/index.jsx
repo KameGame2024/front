@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { FaBars, FaTimes } from 'react-icons/fa'; // Importando FaTimes para el botón de cierre
+import { FaBars, FaTimes } from 'react-icons/fa';
 import BarraBusqueda from '../BarraBusqueda';
 import Menu from '../Menu';
 import './Header.css';
@@ -10,7 +10,7 @@ import AuthContext from '../../context/AuthContext';
 function Header() {
     const location = useLocation();
     const { actualizarBusqueda } = useContext(GlobalContext);
-    const { isAuthenticated, logout, user } = useContext(AuthContext); // Obtener el usuario autenticado
+    const { isAuthenticated, logout, userRole } = useContext(AuthContext); // Cambiado a userRole
     const showSearchBar = location.pathname === '/cartas' || location.pathname === '/paquetes';
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -22,16 +22,22 @@ function Header() {
         setIsMenuOpen(!isMenuOpen);
     };
 
-    // Verificar si el usuario es administrador
-    const isAdmin = isAuthenticated && user?.role === 'admin';
+    // Verificar si el usuario es administrador usando userRole
+    const isAdmin = isAuthenticated && userRole === 'admin';
 
     return (
         <div>
             <header className="header">
-                <NavLink to="/" className="nav-link">
-                    <img src="/img/Logo.png" alt="Logo" />
-                </NavLink>
-                
+                {!isAdmin && (
+                    <NavLink to="/" className="nav-link">
+                        <img src="/img/Logo.png" alt="Logo" />
+                    </NavLink>)
+                }
+                {isAdmin && (
+                    <NavLink to="/Admin" className="nav-link">
+                        <img src="/img/Logo.png" alt="Logo" />
+                    </NavLink>)
+                }
                 {!isAdmin && showSearchBar && <BarraBusqueda onSearch={handleSearch} />} {/* Mostrar la barra de búsqueda solo si no es administrador */}
                 
                 <div className="button-group">
@@ -45,7 +51,6 @@ function Header() {
                             <img src="/img/icons/user.png" alt="Perfil" />
                         </NavLink>
                     )}
-                    {/* Mostrar el carrito y el menú solo si no es administrador */}
                     {!isAdmin && (
                         <>
                             <NavLink to="/carrito" className="nav-link">
@@ -60,8 +65,7 @@ function Header() {
                     )}
                 </div>
             </header>
-            
-            {/* Mostrar el menú solo si no es administrador */}
+
             {!isAdmin && (
                 <>
                     <Menu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
