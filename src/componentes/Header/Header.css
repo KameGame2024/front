@@ -18,6 +18,13 @@
     text-decoration: none;
 }
 
+.button-group-user{
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    margin-right: 20px;
+}
+
 .nav-link img {
     height: 60px;
 }
@@ -31,7 +38,43 @@
 
 .button-group .nav-link img {
     height: 30px;
-    margin-left: 15px;
+}
+
+.login-button {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    gap: 0.25em;
+}
+
+.login-button p {
+    height: fit-content;
+    margin: 0;
+    text-decoration: none;
+    color: #000;
+    font-size: 0.9em;
+    text-align: center;
+    font-weight: 700;
+    position: relative;
+}
+
+.login-button p::after{
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 5px;
+    bottom: -0.5px;
+    left: 0;
+    transform: scaleX(0);
+    box-shadow:
+        0 4px 0 #000;
+    transform-origin: bottom right;
+    transition: transform 0.5s ease-out;
+}
+
+.login-button:hover p::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
 }
 
 @media screen and (max-width: 768px) {
@@ -50,6 +93,11 @@
         align-items: center;
         gap: 1em;
         margin: auto; /* Mantiene los botones a la derecha del logo */
+    }
+
+    .button-group-user{
+        gap: 1em;
+        margin-right: 0px;
     }
 
     .nav-link img {

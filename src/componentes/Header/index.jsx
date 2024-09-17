@@ -46,23 +46,30 @@ function Header() {
                             <img src="/img/icons/logout.png" alt="Cerrar sesión" />
                         </NavLink>
                     )}
-                    {!isAuthenticated && (
-                        <NavLink to="/iniciar-sesion" className="nav-link">
-                            <img src="/img/icons/user.png" alt="Perfil" />
-                        </NavLink>
-                    )}
-                    {!isAdmin && (
-                        <>
-                            <NavLink to="/carrito" className="nav-link">
-                                <img src="/img/icons/shopping-bag.png" alt="Carrito" />
+                    <div className='button-group-user'>
+                        {!isAuthenticated && (
+                            <NavLink to="/iniciar-sesion" className="nav-link">
+                                <div className='login-button'>
+                                    <img src="/img/icons/user.png" alt="Perfil" />
+                                    <p>LOGIN</p>
+                                </div>
+                                
                             </NavLink>
-                            {isMenuOpen ? (
-                                <FaTimes className="menu-icon" onClick={toggleMenu} />
-                            ) : (
-                                <FaBars className="menu-icon" onClick={toggleMenu} />
-                            )}
-                        </>
-                    )}
+                        )}
+                        {!isAdmin && (
+                            <>
+                                <NavLink to="/carrito" className="nav-link">
+                                    <img src="/img/icons/shopping-bag.png" alt="Carrito" />
+                                </NavLink>
+                                {isMenuOpen ? (
+                                    <FaTimes className="menu-icon" onClick={toggleMenu} />
+                                ) : (
+                                    <FaBars className="menu-icon" onClick={toggleMenu} />
+                                )}
+                            </>
+                        )}
+                    </div>
+                    
                 </div>
             </header>
 
