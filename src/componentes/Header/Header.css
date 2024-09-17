@@ -16,6 +16,7 @@
     display: flex;
     align-items: center;
     text-decoration: none;
+    position: relative;
 }
 
 .button-group-user{
@@ -46,15 +47,16 @@
     align-items: center;
     text-decoration: none;
     gap: 0.5em;
+    width: 140px;
+    height: 48px;
 }
 
 .buttons-text {
     height: fit-content;
     margin: 0;
     text-decoration: none;
-    color: #333;
+    color: var(--color-bg);
     font-size: 0.9em;
-    text-align: center;
     font-weight: 700;
     position: relative;
 }
@@ -68,7 +70,7 @@
     left: 0;
     transform: scaleX(0);
     box-shadow:
-        0 4px 0 #333;
+        0 4px 0 var(--color-bg);
     transform-origin: bottom right;
     transition: transform 0.5s ease-out;
 }
@@ -90,7 +92,7 @@
     align-items: center;
     justify-content: center;
     gap: 0.5em;
-    background-color: #bbbbbb;
+    background-color: var(--color-light-gray);
     width: 24px;
     height: 24px;
     border-radius: 50%;
@@ -104,7 +106,23 @@
     margin: 0;
     font-size: 0.8em;
     font-weight: 700;
-    color: #333;
+    color: var(--color-bg);
+}
+
+.drop-btn{
+    width: 28px;
+    height: 28px;
+    color: var(--color-bg);
+}
+
+.logout-button{
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    color: var(--color-bg);
+    position: absolute;
+    top: 10px;
+    background-color: var(--color-white);
 }
 
 @media screen and (max-width: 768px) {
@@ -131,7 +149,9 @@
     }
 
     .user-options-button{
-        flex-direction: column;
+        width: 40px;
+        align-items: center;
+        justify-content: center;
     }
 
     .nav-link img {
@@ -145,6 +165,16 @@
 
     .buttons-text {
         font-size: 0.8em;
+        text-align: center;
+        display: none;
+    }
+
+    .logout-button{
+        width: 120px;
+    }
+
+    .logout-button p{
+        display: block;
     }
 
     .search-bar {
