@@ -9,7 +9,7 @@ import AuthContext from '../../context/AuthContext';
 
 function Header() {
     const location = useLocation();
-    const { actualizarBusqueda } = useContext(GlobalContext);
+    const { actualizarBusqueda, productosEnCarrito } = useContext(GlobalContext);
     const { isAuthenticated, logout, userRole } = useContext(AuthContext); // Cambiado a userRole
     const showSearchBar = location.pathname === '/cartas' || location.pathname === '/paquetes';
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -49,9 +49,9 @@ function Header() {
                     <div className='button-group-user'>
                         {!isAuthenticated && (
                             <NavLink to="/iniciar-sesion" className="nav-link">
-                                <div className='login-button'>
+                                <div className='user-options-button'>
                                     <img src="/img/icons/user.png" alt="Perfil" />
-                                    <p>LOGIN</p>
+                                    <p className='buttons-text'>LOGIN</p>
                                 </div>
                                 
                             </NavLink>
@@ -59,7 +59,16 @@ function Header() {
                         {!isAdmin && (
                             <>
                                 <NavLink to="/carrito" className="nav-link">
-                                    <img src="/img/icons/shopping-bag.png" alt="Carrito" />
+                                <div className='user-options-button'>
+                                    <div className='carrito-imagen'>
+                                        <img src="/img/icons/shopping-bag.png" alt="Carrito" />
+                                        <div className='carrito-info'>
+                                            <p>{productosEnCarrito.length}</p>
+                                        </div>
+                                    </div>
+                                    <p className='buttons-text'>CARRITO</p>
+                                </div>
+                                    
                                 </NavLink>
                                 {isMenuOpen ? (
                                     <FaTimes className="menu-icon" onClick={toggleMenu} />

@@ -38,27 +38,28 @@
 
 .button-group .nav-link img {
     height: 30px;
+    z-index: 1;
 }
 
-.login-button {
+.user-options-button {
     display: flex;
     align-items: center;
     text-decoration: none;
-    gap: 0.25em;
+    gap: 0.5em;
 }
 
-.login-button p {
+.buttons-text {
     height: fit-content;
     margin: 0;
     text-decoration: none;
-    color: #000;
+    color: #333;
     font-size: 0.9em;
     text-align: center;
     font-weight: 700;
     position: relative;
 }
 
-.login-button p::after{
+.buttons-text::after{
     content: '';
     position: absolute;
     width: 100%;
@@ -67,14 +68,43 @@
     left: 0;
     transform: scaleX(0);
     box-shadow:
-        0 4px 0 #000;
+        0 4px 0 #333;
     transform-origin: bottom right;
     transition: transform 0.5s ease-out;
 }
 
-.login-button:hover p::after {
+.buttons-text:hover::after {
     transform: scaleX(1);
     transform-origin: bottom left;
+}
+
+.carrito-imagen{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.carrito-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+    background-color: #bbbbbb;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    z-index: 1;
+}
+
+.carrito-info p {
+    margin: 0;
+    font-size: 0.8em;
+    font-weight: 700;
+    color: #333;
 }
 
 @media screen and (max-width: 768px) {
@@ -91,13 +121,17 @@
     .button-group {
         display: flex; 
         align-items: center;
-        gap: 1em;
+        gap: 0.25em;
         margin: auto; /* Mantiene los botones a la derecha del logo */
     }
 
     .button-group-user{
         gap: 1em;
         margin-right: 0px;
+    }
+
+    .user-options-button{
+        flex-direction: column;
     }
 
     .nav-link img {
@@ -107,6 +141,10 @@
     .button-group .nav-link img {
         height: 25px;
         margin: auto;
+    }
+
+    .buttons-text {
+        font-size: 0.8em;
     }
 
     .search-bar {
