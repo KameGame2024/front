@@ -11,6 +11,7 @@ const Carrito = () => {
     const { isAuthenticated } = useContext(AuthContext); // Obtén isAuthenticated de AuthContext
     const [mostrarModal, setMostrarModal] = useState(false);
     const [mostrarModalCarritoVacio, setMostrarModalCarritoVacio] = useState(false);
+    const [mostrarModalCompra, setMostrarModalCompra] = useState(false);
     const [mensajeError, setMensajeError] = useState('');
     const navigate = useNavigate();
 
@@ -27,7 +28,10 @@ const Carrito = () => {
         }
 
         if (isAuthenticated) { // Usar isAuthenticated en lugar de usuarioLogueado
-            alert('Pago realizado con éxito');
+            setMostrarModalCompra(true);
+            setTimeout(() => {
+                setMostrarModalCompra(false);
+            }, 3000);
             vaciarCarrito();
         } else {
             setMensajeError('No puedes comprar porque aún no te has logueado o no posees una cuenta.');
@@ -83,6 +87,15 @@ const Carrito = () => {
                         <p>No hay productos en el carrito.</p>
                         <button className="aceptar-boton" onClick={() => navigate('/')}>Agregar Productos</button>
                         <button className="cancelar-boton" onClick={() => setMostrarModalCarritoVacio(false)}>Cancelar</button>
+                    </div>
+                </div>
+            )}
+
+            {mostrarModalCompra && (
+                <div className="prompt-overlay">
+                    <div className="prompt-contenido">
+                        <p>Compra realizada con éxito.</p>
+                        <NavLink className="aceptar-boton" onClick={() => setMostrarModalCompra(false)}>Aceptar</NavLink>
                     </div>
                 </div>
             )}

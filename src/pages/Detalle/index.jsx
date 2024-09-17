@@ -3,12 +3,14 @@ import React, { useContext, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { GlobalContext } from '../../context/GlobalContext';
 import './Detalle.css';
+import { NavLink } from 'react-router-dom';
 
 function Detalle() {
     const { tipo, id } = useParams();
     const { cartas, paquetes, agregarProductoAlCarrito } = useContext(GlobalContext);
     const [detalle, setDetalle] = useState(null);
     const [cantidad, setCantidad] = useState(1);
+    const [mostrarModalAgregado, setMostrarModalAgregado] = useState(false);
 
     useEffect(() => {
         if (tipo && id) {
@@ -25,7 +27,10 @@ function Detalle() {
     const manejarAgregarAlCarrito = () => {
         if (detalle) {
             agregarProductoAlCarrito({ ...detalle, cantidad });
-            alert('Producto agregado con éxito al carrito');
+            setMostrarModalAgregado(true);
+            setTimeout(() => {
+                setMostrarModalAgregado(false);
+            }, 3000);
         }
     };
 
@@ -60,6 +65,14 @@ function Detalle() {
                     <button className="detalle-agregar" onClick={manejarAgregarAlCarrito}>Agregar al carrito</button>
                 </div>
             </div>
+            {mostrarModalAgregado && (
+                <div className="prompt-overlay">
+                    <div className="prompt-contenido">
+                        <p>Producto Agregado al carrito.</p>
+                        <NavLink className="aceptar-boton" onClick={() => setMostrarModalAgregado(false)}>Aceptar</NavLink>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
