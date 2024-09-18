@@ -1,12 +1,31 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FaEdit, FaTrash } from 'react-icons/fa'; // Importando los íconos
 import { GlobalContext } from '@src/context/GlobalContext';
 import './ListaUsuarios.css';
 
+import { urlGetUsuarios, urlDeleteUsuario, urlUpdateUsuario } from '../../utils/constants';
+
 const ListaUsuarios = () => {
-    const { usuarios, eliminarUsuario, editarUsuario } = useContext(GlobalContext);
+    const { eliminarUsuario, editarUsuario } = useContext(GlobalContext);
+    const [usuarios, setUsuarios] = useState([]);
     const [editIndex, setEditIndex] = useState(null);
     const [newRole, setNewRole] = useState('');
+
+    useEffect(() => {
+        // Fetch users when the component mounts
+        const fetchUsuariosData = async () => {
+            try {
+                const response = await fetch(urlGetUsuarios);
+                const data = await response.json();
+                setUsuarios(data);
+            }
+            catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+
+        fetchUsuariosData();
+    }, []);
 
     // Función para activar el modo de edición
     const activarEdicion = (index, role) => {
@@ -46,7 +65,7 @@ const ListaUsuarios = () => {
                                         <option value="admin">Admin</option>
                                     </select>
                                 ) : (
-                                    usuario.role
+                                    usuario.rol
                                 )}
                             </td>
                             <td>

@@ -1,13 +1,34 @@
 // src/componentes/Cartas.js
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { GlobalContext } from '@src/context/GlobalContext';
 import Filtro from '@src/componentes/Filtro';
 import Card from '@src/componentes/Card';
 import { FaChevronDown } from 'react-icons/fa'; // Import the down arrow icon
 import './Cartas.css';
 
+import { urlGetCartas } from '../../utils/constants';
+
 function Cartas() {
-    const { cartas, busqueda } = useContext(GlobalContext);
+    const [cartas, setCartas] = useState([]);
+
+    useEffect(() => {
+        // Fetch cards when the component mounts
+        const fetchCartasData = async () => {
+            try {
+                const response = await fetch(urlGetCartas);
+                const data = await response.json();
+                setCartas(data);
+            }
+            catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+
+        fetchCartasData();
+    }, []);
+
+
+    const { busqueda } = useContext(GlobalContext);
     const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal visibility
     const [filtros, setFiltros] = useState({
         ataqueMin: '',
@@ -56,11 +77,11 @@ function Cartas() {
             const cumpleBusqueda = carta.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
             carta.descripcion.toLowerCase().includes(busqueda.toLowerCase());
             const cumpleAtaque = (!filtros.ataqueMin || carta.ataque >= filtros.ataqueMin) &&
-                                 (!filtros.ataqueMax || carta.ataque <= filtros.ataqueMax);
+                                (!filtros.ataqueMax || carta.ataque <= filtros.ataqueMax);
             const cumpleDefensa = (!filtros.defensaMin || carta.defensa >= filtros.defensaMin) &&
-                                  (!filtros.defensaMax || carta.defensa <= filtros.defensaMax);
+                                (!filtros.defensaMax || carta.defensa <= filtros.defensaMax);
             const cumplePrecio = (!filtros.precioMin || carta.precio >= filtros.precioMin) &&
-                                 (!filtros.precioMax || carta.precio <= filtros.precioMax);
+                                (!filtros.precioMax || carta.precio <= filtros.precioMax);
             const cumpleTipo = !Object.values(filtros.tipos).includes(true) || Object.keys(filtros.tipos).some(tipo => filtros.tipos[tipo] && carta.tipo.toLowerCase() === tipo);
             const cumpleAtributo = !Object.values(filtros.atributos).includes(true) || Object.keys(filtros.atributos).some(atributo => filtros.atributos[atributo] && carta.atributo.toLowerCase() === atributo);
 

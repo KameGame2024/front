@@ -1,14 +1,17 @@
 // src/componentes/Paquetes.js
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { GlobalContext } from '@src/context/GlobalContext';
 import Filtro from '@src/componentes/Filtro';
 import Paquete from '@src/componentes/Paquete';
 import { FaChevronDown } from 'react-icons/fa'; // Import the down arrow icon
 import './Paquetes.css';
 
+import { urlGetPaquetes } from '../../utils/constants';
+
 function Paquetes() {
-    const { paquetes, busqueda } = useContext(GlobalContext);
+    const { busqueda } = useContext(GlobalContext);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [paquetes, setPaquetes] = useState([]);
     const [filtros, setFiltros] = useState({
         precioMin: '',
         precioMax: '',
@@ -18,6 +21,22 @@ function Paquetes() {
             genesis: false
         }
     });
+
+    useEffect(() => {
+        // Fetch packages when the component mounts
+        const fetchPaquetesData = async () => {
+            try {
+                const response = await fetch(urlGetPaquetes);
+                const data = await response.json();
+                setPaquetes(data);
+            }
+            catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+
+        fetchPaquetesData();
+    }, []);
 
     const manejarCambioFiltro = (e) => {
         const { name, value, type, checked } = e.target;
