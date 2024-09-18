@@ -6,16 +6,17 @@ import Card from '@src/componentes/Card';
 import { FaChevronDown } from 'react-icons/fa'; // Import the down arrow icon
 import './Cartas.css';
 
-import { urlGetCartas } from '../../utils/constants';
+import { urlGetCartasEnInventario } from '../../utils/constants';
 
 function Cartas() {
     const [cartas, setCartas] = useState([]);
 
     useEffect(() => {
+
         // Fetch cards when the component mounts
         const fetchCartasData = async () => {
             try {
-                const response = await fetch(urlGetCartas);
+                const response = await fetch(urlGetCartasEnInventario);
                 const data = await response.json();
                 setCartas(data);
             }
@@ -121,6 +122,7 @@ function Cartas() {
                                 mostrarBotonVer={true} 
                                 atributo={carta.atributo}
                                 id={carta.id}
+                                cantidad={carta.cantidad}
                             />
                         ))
                     ) : (

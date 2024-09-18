@@ -4,7 +4,7 @@ import { GlobalContext } from '@src/context/GlobalContext';
 import { Link } from 'react-router-dom';
 import './Card.css';
 
-const Card = ({ imagen, nombre, descripcion, ataque, defensa, precio, id, seleccionada, manejarSeleccionCarta, mostrarSeleccion, mostrarBotonVer }) => { // Usa la función del contexto
+const Card = ({ imagen, nombre, descripcion, ataque, defensa, precio, id, seleccionada, manejarSeleccionCarta, mostrarSeleccion, mostrarBotonVer, cantidad }) => { // Usa la función del contexto
 
     return (
         <div className={`card ${seleccionada ? 'seleccionada' : ''}`} onClick={mostrarSeleccion ? manejarSeleccionCarta : undefined}>
@@ -15,6 +15,7 @@ const Card = ({ imagen, nombre, descripcion, ataque, defensa, precio, id, selecc
                 <p className="card-stats">ATK: {ataque}</p>
                 <p className="card-stats">DEF: {defensa}</p>
                 <p className="card-price">Precio: ${precio}</p>
+                <p className="card-quantity">Cantidad: {cantidad}</p>
                 {mostrarBotonVer && (
                     <Link to={`/detalle/carta/${id}`} className="card-button">
                         Ver

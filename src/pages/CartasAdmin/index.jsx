@@ -1,11 +1,31 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { GlobalContext } from '@src/context/GlobalContext';
 import Filtro from '@src/componentes/Filtro';
 import Card from '@src/componentes/Card';
 
-const CartasAdmin = () => {
+import { urlGetCartas } from '../../utils/constants';
 
-    const { cartas, cartasAdmin, habilitarCarta } = useContext(GlobalContext);
+const CartasAdmin = () => {
+    const [cartas, setCartas] = useState([]);
+    const { habilitarCarta } = useContext(GlobalContext);
+
+    useEffect(() => {
+
+        // Fetch cards when the component mounts
+        const fetchCartasData = async () => {
+            try {
+                const response = await fetch(urlGetCartas);
+                const data = await response.json();
+                setCartas(data);
+            }
+            catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+
+        fetchCartasData();
+    }, []);
+
     const [filtros, setFiltros] = useState({
         ataqueMin: '',
         ataqueMax: '',
@@ -63,7 +83,7 @@ const CartasAdmin = () => {
         });
     };
 
-    const cartasFiltradas = filtrarColeccion(cartasAdmin);
+    const cartasFiltradas = filtrarColeccion(cartas);
 
     return (
         <div>
@@ -88,6 +108,7 @@ const CartasAdmin = () => {
                             seleccionada={cartas.some(c => c.id === carta.id)}
                             manejarSeleccionCarta={() => habilitarCarta(carta)}
                             mostrarSeleccion={true}
+                            cantidad={carta.cantidad}
                         />
                     ))}
                 </div>
