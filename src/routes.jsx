@@ -38,6 +38,7 @@ function AppRoutes() {
             <Route path="admin" element={<AdminRoute><Admin /></AdminRoute>}></Route>
           <Route path="editar-usuarios" element={<AdminRoute><ListaUsuarios/></AdminRoute>}></Route>
           <Route path="cartas-admin" element={<AdminRoute><CartasAdmin/></AdminRoute>}></Route>
+          <Route path="paquetes-admin" element={<AdminRoute><Paquetes/></AdminRoute>}></Route>
           </Route>
           <Route path="crear-cuenta" element={<CrearCuenta />}></Route>
           <Route path="iniciar-sesion" element={<IniciarSesion />}></Route>
