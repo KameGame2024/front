@@ -1,18 +1,34 @@
 // src/componentes/Baraja.jsx
-import React, { useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import Card from '@src/componentes/Card';
-import { GlobalContext } from '@src/context/GlobalContext';
 import './Baraja.css';
+import { urlGetBarajaUsuario } from '../../utils/constants';
 
 function Baraja() {
-    const { cartasSeleccionadas } = useContext(GlobalContext);
+    const [cartasBaraja, setCartasBaraja] = useState([]);
+
+    const fetchCartasBaraja = async () => {
+        try {
+
+            // TODO: con el AUTH token, se puede obtener el id del usuario
+            const response = await fetch(urlGetBarajaUsuario(3));
+            const data = await response.json();
+            setCartasBaraja(data);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    }
+
+    useEffect(() => {
+        fetchCartasBaraja();
+    }, []);
 
     return (
         <div className="mi-baraja-container">
             <h2>MI BARAJA</h2>
-            {cartasSeleccionadas.length > 0 ? (
+            {cartasBaraja.length > 0 ? (
                 <div className="cartas-grid">
-                    {cartasSeleccionadas.map((carta) => (
+                    {cartasBaraja.map((carta) => (
                         <Card
                             key={carta.id}
                             imagen={carta.imagen}
@@ -22,9 +38,7 @@ function Baraja() {
                             defensa={carta.defensa}
                             precio={carta.precio}
                             id={carta.id}
-                            seleccionada={true}
-                            mostrarSeleccion={false}
-                            mostrarBotonVer={false} // No mostrar el botón "Ver"
+                            mostrarBotonVer={false}
                         />
                     ))}
                 </div>
