@@ -1,12 +1,49 @@
 // src/componentes/Coleccion.js
-import React, { useContext, useState } from 'react';
-import { GlobalContext } from '@src/context/GlobalContext';
+import React, { useEffect, useState } from 'react';
 import Filtro from '@src/componentes/Filtro';
 import Card from '@src/componentes/Card';
 import './Coleccion.css'; // Añade un archivo CSS específico para la colección
 
+import { urlGetCartasUsuario } from '../../utils/constants';
+import PaginationBar from '../../componentes/paginationBar';
+
 function Coleccion() {
-    const { cartasAdmin, seleccionarCarta, cartasSeleccionadas } = useContext(GlobalContext);
+
+    const [cartas, setCartas] = useState([]);
+    const [paginaActual, setPaginaActual] = useState(1);
+    const [paginasTotales, setPaginasTotales] = useState(0);
+
+    const fetchCartasData = async (page) => {
+        try {
+            // TODO: con el AUTH token, se puede obtener el id del usuario
+            const urlWithPage = `${urlGetCartasUsuario(3)}?page=${page}&limit=12`;
+            const response = await fetch(urlWithPage);
+            const data = await response.json();
+            setCartas(data.data);
+            setPaginasTotales(data.pages);
+
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
+
+    useEffect(() => {
+        // Fetch cards when the component mounts
+        fetchCartasData(paginaActual);
+    }, [paginaActual]);
+
+    const handlePrevPage = () => {
+        if (paginaActual > 1) {
+            setPaginaActual(paginaActual - 1);
+        }
+    }
+
+    const handleNextPage = () => {
+        if (paginaActual < paginasTotales) {
+            setPaginaActual(paginaActual + 1);
+        }
+    }
+
     const [filtros, setFiltros] = useState({
         ataqueMin: '',
         ataqueMax: '',
@@ -64,7 +101,7 @@ function Coleccion() {
         });
     };
 
-    const cartasFiltradas = filtrarColeccion(cartasAdmin);
+    const cartasFiltradas = filtrarColeccion(cartas);
 
     return (
         <div className='fondo'>
@@ -84,12 +121,18 @@ function Coleccion() {
                             defensa={carta.defensa}
                             precio={carta.precio}
                             id={carta.id}
-                            seleccionada={cartasSeleccionadas.some(c => c.id === carta.id)}
-                            manejarSeleccionCarta={() => seleccionarCarta(carta)}
-                            mostrarSeleccion={true}
                         />
                     ))}
                 </div>
+            </div>
+            <div>
+                <PaginationBar
+                    paginasTotales={paginasTotales}
+                    paginaActual={paginaActual}
+                    handlePaginate={setPaginaActual}
+                    handlePrevPage={handlePrevPage}
+                    handleNextPage={handleNextPage}
+                />
             </div>
         </div>
     );

@@ -7,11 +7,11 @@ import { FaChevronDown } from 'react-icons/fa'; // Import the down arrow icon
 import './Paquetes.css';
 
 import { urlGetPaquetes } from '../../utils/constants';
+import PaginationBar from '../../componentes/paginationBar';
 
 function Paquetes() {
     const { busqueda } = useContext(GlobalContext);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [paquetes, setPaquetes] = useState([]);
     const [filtros, setFiltros] = useState({
         precioMin: '',
         precioMax: '',
@@ -21,22 +21,41 @@ function Paquetes() {
             genesis: false
         }
     });
+    const [paquetes, setPaquetes] = useState([]);
+    const [paginaActual, setPaginaActual] = useState(1);
+    const [paginasTotales, setPaginasTotales] = useState(0);
+
+
+    const fetchPaquetesData = async (page) => {
+        try {
+            const urlWithPage = `${urlGetPaquetes}?page=${page}&limit=12`;
+            const response = await fetch(urlWithPage);
+            const data = await response.json();
+            setPaquetes(data.data);
+            setPaginasTotales(data.pages);
+        }
+        catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
 
     useEffect(() => {
         // Fetch packages when the component mounts
-        const fetchPaquetesData = async () => {
-            try {
-                const response = await fetch(urlGetPaquetes);
-                const data = await response.json();
-                setPaquetes(data);
-            }
-            catch (error) {
-                console.error("Error fetching data:", error);
-            }
-        };
 
-        fetchPaquetesData();
-    }, []);
+        fetchPaquetesData(paginaActual);
+    }, [paginaActual]);
+
+    const handlePrevPage = () => {
+        if (paginaActual > 1) {
+            setPaginaActual(paginaActual - 1);
+        }
+    }
+
+    const handleNextPage = () => {
+        if (paginaActual < paginasTotales) {
+            setPaginaActual(paginaActual + 1);
+        }
+    }
 
     const manejarCambioFiltro = (e) => {
         const { name, value, type, checked } = e.target;
@@ -99,6 +118,17 @@ function Paquetes() {
                     ))}
                 </div>
             </div>
+
+            <div>
+                <PaginationBar
+                    paginasTotales={paginasTotales}
+                    paginaActual={paginaActual}
+                    handlePaginate={setPaginaActual}
+                    handlePrevPage={handlePrevPage}
+                    handleNextPage={handleNextPage}
+                />
+            </div>
+
             {isModalOpen && (
                 <div className="filtro-modal">
                     <div className="modal-content">

@@ -3,6 +3,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { GlobalContext } from '@src/context/GlobalContext';
 import Filtro from '@src/componentes/Filtro';
 import Card from '@src/componentes/Card';
+import PaginationBar from '../../componentes/paginationBar';
 import { FaChevronDown } from 'react-icons/fa'; // Import the down arrow icon
 import './Cartas.css';
 
@@ -10,23 +11,40 @@ import { urlGetCartasEnInventario } from '../../utils/constants';
 
 function Cartas() {
     const [cartas, setCartas] = useState([]);
+    const [paginaActual, setPaginaActual] = useState(1);
+    const [paginasTotales, setPaginasTotales] = useState(0);
+
+    const fetchCartasData = async (page) => {
+        try {
+            const urlWithPage = `${urlGetCartasEnInventario}?page=${page}&limit=12`;
+            const response = await fetch(urlWithPage);
+            const data = await response.json();
+            setCartas(data.data);
+            setPaginasTotales(data.pages);
+        }
+        catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
 
     useEffect(() => {
 
         // Fetch cards when the component mounts
-        const fetchCartasData = async () => {
-            try {
-                const response = await fetch(urlGetCartasEnInventario);
-                const data = await response.json();
-                setCartas(data);
-            }
-            catch (error) {
-                console.error("Error fetching data:", error);
-            }
-        };
+        fetchCartasData(paginaActual);
 
-        fetchCartasData();
-    }, []);
+    }, [paginaActual]);
+
+    const handlePrevPage = () => {
+        if (paginaActual > 1) {
+            setPaginaActual(paginaActual - 1);
+        }
+    }
+
+    const handleNextPage = () => {
+        if (paginaActual < paginasTotales) {
+            setPaginaActual(paginaActual + 1);
+        }
+    }
 
 
     const { busqueda } = useContext(GlobalContext);
@@ -130,6 +148,16 @@ function Cartas() {
                     )}
                 </div>
             </div>
+
+            <div>
+                <PaginationBar
+                    paginasTotales={paginasTotales}
+                    paginaActual={paginaActual}
+                    handlePaginate={setPaginaActual}
+                    handlePrevPage={handlePrevPage}
+                    handleNextPage={handleNextPage}
+                />
+            </div>    
 
             {/* Filter modal for mobile */}
             {isModalOpen && (

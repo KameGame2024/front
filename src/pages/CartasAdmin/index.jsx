@@ -1,30 +1,45 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { GlobalContext } from '@src/context/GlobalContext';
+import React, { useState, useEffect } from 'react';
 import Filtro from '@src/componentes/Filtro';
 import Card from '@src/componentes/Card';
 
 import { urlGetCartas } from '../../utils/constants';
+import PaginationBar from '../../componentes/paginationBar';
 
 const CartasAdmin = () => {
     const [cartas, setCartas] = useState([]);
-    const { habilitarCarta } = useContext(GlobalContext);
+    const [paginaActual, setPaginaActual] = useState(1);
+    const [paginasTotales, setPaginasTotales] = useState(0);
+
+    
+    const fetchCartasData = async (page) => {
+        try {
+            const urlWithPage = `${urlGetCartas}?page=${page}&limit=12`;
+            const response = await fetch(urlWithPage);
+            const data = await response.json();
+            setCartas(data.data);
+            setPaginasTotales(data.pages);
+        }
+        catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
 
     useEffect(() => {
-
         // Fetch cards when the component mounts
-        const fetchCartasData = async () => {
-            try {
-                const response = await fetch(urlGetCartas);
-                const data = await response.json();
-                setCartas(data);
-            }
-            catch (error) {
-                console.error("Error fetching data:", error);
-            }
-        };
+        fetchCartasData(paginaActual);
+    }, [paginaActual]);
 
-        fetchCartasData();
-    }, []);
+    const handlePrevPage = () => {
+        if (paginaActual > 1) {
+            setPaginaActual(paginaActual - 1);
+        }
+    }
+
+    const handleNextPage = () => {
+        if (paginaActual < paginasTotales) {
+            setPaginaActual(paginaActual + 1);
+        }
+    }
 
     const [filtros, setFiltros] = useState({
         ataqueMin: '',
@@ -105,13 +120,20 @@ const CartasAdmin = () => {
                             defensa={carta.defensa}
                             precio={carta.precio}
                             id={carta.id}
-                            seleccionada={cartas.some(c => c.id === carta.id)}
-                            manejarSeleccionCarta={() => habilitarCarta(carta)}
-                            mostrarSeleccion={true}
                             cantidad={carta.cantidad}
+                            mostrarBotonVer={true}
                         />
                     ))}
                 </div>
+            </div>
+            <div>
+                <PaginationBar
+                    paginasTotales={paginasTotales}
+                    paginaActual={paginaActual}
+                    handlePaginate={setPaginaActual}
+                    handlePrevPage={handlePrevPage}
+                    handleNextPage={handleNextPage}
+                />
             </div>
         </div>
         </div>
