@@ -6,23 +6,26 @@ import './ListaUsuarios.css';
 import { urlGetUsuarios, urlDeleteUsuario, urlUpdateUsuario } from '../../utils/constants';
 
 const ListaUsuarios = () => {
-    const { eliminarUsuario, editarUsuario } = useContext(GlobalContext);
+
     const [usuarios, setUsuarios] = useState([]);
     const [editIndex, setEditIndex] = useState(null);
-    const [newRole, setNewRole] = useState('');
+    const [newRole, setNewRole] = useState('usuario');
+
+
+    // Fetch users when the component mounts
+    const fetchUsuariosData = async () => {
+        try {
+            const response = await fetch(urlGetUsuarios);
+            const data = await response.json();
+            setUsuarios(data);
+        }
+        catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
 
     useEffect(() => {
-        // Fetch users when the component mounts
-        const fetchUsuariosData = async () => {
-            try {
-                const response = await fetch(urlGetUsuarios);
-                const data = await response.json();
-                setUsuarios(data);
-            }
-            catch (error) {
-                console.error("Error fetching data:", error);
-            }
-        };
+        
 
         fetchUsuariosData();
     }, []);
@@ -34,9 +37,48 @@ const ListaUsuarios = () => {
     };
 
     // Función para guardar los cambios del rol
-    const guardarRol = (email) => {
-        editarUsuario(email, newRole); // Llamada al método del contexto para editar el rol
+    const guardarRol = (usuarioId) => {
+        // editarUsuario(email, newRole); // Llamada al método del contexto para editar el rol
+        // usar fetch para enviar la petición al servidor de editar el rol
+
+        let UpdateData = { rol: newRole };
+        console.log(UpdateData);
+
+        if (UpdateData.rol === undefined) {
+            UpdateData = { rol: 'usuario' };
+        }
+        fetch(urlUpdateUsuario(usuarioId), {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(UpdateData),
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                fetchUsuariosData();
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+
         setEditIndex(null); // Salir del modo de edición
+
+    };
+
+    // Función para eliminar un usuario
+    const eliminarUsuario = (usuarioId) => {
+        // eliminarUsuario(usuarioId); // Llamada al método del contexto para eliminar el usuario
+        // usar fetch para enviar la petición al servidor de eliminar el usuario
+        try {
+            fetch(urlDeleteUsuario(usuarioId), {
+                method: 'DELETE',
+            })
+            
+        } catch (error) {
+            console.error('Error:', error);
+        }
     };
 
     return (
@@ -61,7 +103,7 @@ const ListaUsuarios = () => {
                                         onChange={(e) => setNewRole(e.target.value)}
                                         className="select-rol"
                                     >
-                                        <option value="user">User</option>
+                                        <option value="usuario">Usuario</option>
                                         <option value="admin">Admin</option>
                                     </select>
                                 ) : (
@@ -70,15 +112,15 @@ const ListaUsuarios = () => {
                             </td>
                             <td>
                                 {editIndex === index ? (
-                                    <button onClick={() => guardarRol(usuario.email)}>Guardar</button>
+                                    <button onClick={() => guardarRol(usuario.id)}>Guardar</button>
                                 ) : (
                                     <>
                                         <button onClick={() => activarEdicion(index, usuario.role)} className="icono-editar">
                                             <FaEdit /> {/* Ícono de lápiz */}
                                         </button>
-                                        <button onClick={() => eliminarUsuario(usuario.email)} className="icono-eliminar">
-                                            <FaTrash /> {/* Ícono de basura */}
-                                        </button>
+                                        {/* <button onClick={() => eliminarUsuario(usuario.id)} className="icono-eliminar">
+                                            <FaTrash />}
+                                        </button> */}
                                     </>
                                 )}
                             </td>
