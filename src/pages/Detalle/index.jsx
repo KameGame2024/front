@@ -5,28 +5,59 @@ import { GlobalContext } from '../../context/GlobalContext';
 import './Detalle.css';
 import { NavLink } from 'react-router-dom';
 
+import { urlGetCartaInventario, urlGetPaqueteInventario } from '../../utils/constants';
+
 function Detalle() {
     const { tipo, id } = useParams();
-    const { cartas, paquetes, agregarProductoAlCarrito } = useContext(GlobalContext);
+    const { agregarProductoAlCarrito } = useContext(GlobalContext);
     const [detalle, setDetalle] = useState(null);
     const [cantidad, setCantidad] = useState(1);
     const [mostrarModalAgregado, setMostrarModalAgregado] = useState(false);
 
+    const fetchCarta = async (id_carta) => {
+        try {
+            const urlCarta = urlGetCartaInventario(id_carta);
+            const response = await fetch(urlCarta);
+            const data = await response.json();
+            setDetalle(data);
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
+    const fetchPaquete = async (id_paquete) => {
+        try {
+            const urlPaquete = urlGetPaqueteInventario(id_paquete);
+            const response = await fetch(urlPaquete);
+            const data = await response.json();
+            setDetalle(data);
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
     useEffect(() => {
         if (tipo && id) {
-            const encontrado = tipo === 'carta'
-                ? cartas.find(item => item.id === id)
-                : paquetes.find(item => item.id === id);
-            setDetalle(encontrado);
+            if(tipo === 'carta'){
+                fetchCarta(id)
+            } else {
+                fetchPaquete(id)
+            }
         }
-    }, [tipo, id, cartas, paquetes]);
+    }, []);
 
-    const incrementarCantidad = () => setCantidad(prev => prev + 1);
+    const incrementarCantidad = () => {
+        if(tipo === 'carta'){
+            setCantidad(prev => (prev < detalle.cantidad ? prev + 1 : prev));
+        } else {
+            setCantidad(prev => prev + 1);
+        }
+    };
     const decrementarCantidad = () => setCantidad(prev => (prev > 1 ? prev - 1 : 1));
 
     const manejarAgregarAlCarrito = () => {
         if (detalle) {
-            agregarProductoAlCarrito({ ...detalle, cantidad });
+            agregarProductoAlCarrito({ ...detalle, cantidad, "maxCantidad": tipo === 'carta' ? detalle.cantidad : 50 });
             setMostrarModalAgregado(true);
             setTimeout(() => {
                 setMostrarModalAgregado(false);
@@ -49,12 +80,13 @@ function Detalle() {
                         <p><strong>Defensa:</strong> {detalle.defensa}</p>
                         <p><strong>Tipo:</strong> {detalle.tipo}</p>
                         <p><strong>Atributo:</strong> {detalle.atributo}</p>
+                        <p><strong>Disponibles:</strong> {detalle.cantidad}</p>
                     </>
                 )}
                 {tipo === 'paquete' && (
                     <>
                         <p><strong>Set:</strong> {detalle.set}</p>
-                        <p><strong>Cantidad:</strong> {detalle.cantidad}</p>
+                        <p><strong>Cartas:</strong> {detalle.cantidad}</p>
                     </>
                 )}
                 <h1 className="detalle-precio"><strong>$ {detalle.precio}</strong></h1>

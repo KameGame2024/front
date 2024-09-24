@@ -15,7 +15,7 @@ const Card = ({ imagen, nombre, descripcion, ataque, defensa, precio, id, cantid
                 <p className="card-stats">ATK: {ataque}</p>
                 <p className="card-stats">DEF: {defensa}</p>
                 <p className="card-price">Precio: ${precio}</p>
-                <p className="card-quantity">Cantidad: {cantidad}</p>
+                <p className="card-quantity">Disponibles: {cantidad}</p>
                 {tipoDetalle === 'admin' && (
                     <Link to={`/detalle-admin/carta/${id}`} className="card-button">
                         Ver

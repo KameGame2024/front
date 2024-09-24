@@ -92,6 +92,13 @@ const GlobalProvider = ({ children }) => {
     const agregarProductoAlCarrito = (producto) => {
         setProductosEnCarrito(prevProductos => {
             const productoExistente = prevProductos.find(p => p.id === producto.id);
+
+            // Revisar que la cantidad no exceda la cantidad máxima
+            if (productoExistente && productoExistente.cantidad + producto.cantidad > producto.maxCantidad) {
+                return prevProductos.map(p =>
+                    p.id === producto.id ? { ...p, cantidad: p.maxCantidad } : p
+                );
+            }
             if (productoExistente) {
                 return prevProductos.map(p =>
                     p.id === producto.id ? { ...p, cantidad: p.cantidad + producto.cantidad } : p
@@ -103,7 +110,7 @@ const GlobalProvider = ({ children }) => {
 
     const incrementarCantidad = (id) => {
         setProductosEnCarrito(prevProductos => prevProductos.map(producto =>
-            producto.id === id ? { ...producto, cantidad: producto.cantidad + 1 } : producto
+            producto.id === id && producto.cantidad < producto.maxCantidad ? { ...producto, cantidad: producto.cantidad + 1 } : producto
         ));
     };
 
