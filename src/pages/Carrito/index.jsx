@@ -6,6 +6,7 @@ import AuthContext from '@src/context/AuthContext'; // Importa AuthContext
 import './Carrito.css';
 import { NavLink, useNavigate } from 'react-router-dom';
 
+import { urlCompra } from '../../utils/constants';
 const Carrito = () => {
     const { productosEnCarrito, incrementarCantidad, decrementarCantidad, eliminarProducto, vaciarCarrito } = useContext(GlobalContext);
     const { isAuthenticated } = useContext(AuthContext); // Obtén isAuthenticated de AuthContext
@@ -28,7 +29,7 @@ const Carrito = () => {
         }
 
         if (isAuthenticated) { // Usar isAuthenticated en lugar de usuarioLogueado
-            setMostrarModalCompra(true);
+            handleCompra();
             setTimeout(() => {
                 setMostrarModalCompra(false);
             }, 3000);
@@ -37,6 +38,45 @@ const Carrito = () => {
             setMensajeError('No puedes comprar porque aún no te has logueado o no posees una cuenta.');
             setMostrarModal(true);
         }
+    };
+
+    const handleCompra = () => {
+        
+        const paquetesComprados = [];
+        const cartasCompradas = [];
+        productosEnCarrito.forEach(producto => {
+            if (producto.tipo === 'paquete') {
+                for (let i = 0; i < producto.cantidad; i++) {
+                    paquetesComprados.push(producto);
+                }
+            } else {
+                cartasCompradas.push(producto);
+            }
+        });
+
+        const compra = {
+            user_id: 3, // Reemplazar con el id del usuario logueado
+            paquetes: paquetesComprados,
+            cartas: cartasCompradas
+        };
+
+        console.log(compra);
+
+        fetch(urlCompra, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(compra)
+        })
+            .then(response => response.json())
+            .then(data => {
+                setMostrarModalCompra(true);
+                console.log('Compra realizada:', data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
     };
 
     return (

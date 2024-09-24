@@ -52,6 +52,7 @@ const urlPostInventario = 'http://localhost:3000/inventario_tiendas/';
 const urlPostBaraja = 'http://localhost:3000/barajas/';
 const urlAddCartaInventario = `${urlPostInventario}carta/add`;
 const urlAddPaqueteInventario = `${urlPostInventario}paquete/add`;
+const urlCompra = `${urlPostInventario}compra/`;
 
 export {
     urlPostUsuario,
@@ -61,7 +62,8 @@ export {
     urlPostInventario,
     urlPostBaraja,
     urlAddCartaInventario,
-    urlAddPaqueteInventario
+    urlAddPaqueteInventario,
+    urlCompra
 };
 
 

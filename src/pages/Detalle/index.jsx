@@ -57,7 +57,7 @@ function Detalle() {
 
     const manejarAgregarAlCarrito = () => {
         if (detalle) {
-            agregarProductoAlCarrito({ ...detalle, cantidad, "maxCantidad": tipo === 'carta' ? detalle.cantidad : 50 });
+            agregarProductoAlCarrito({ ...detalle, cantidad, tipo, "maxCantidad": tipo === 'carta' ? detalle.cantidad : 50 });
             setMostrarModalAgregado(true);
             setTimeout(() => {
                 setMostrarModalAgregado(false);
