@@ -121,6 +121,7 @@ function Coleccion() {
                             defensa={carta.defensa}
                             precio={carta.precio}
                             id={carta.id}
+                            tipoDetalle='user'
                         />
                     ))}
                 </div>

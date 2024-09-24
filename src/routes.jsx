@@ -19,6 +19,8 @@ import CentroCombate from "./pages/CentroCombate";
 import ListaUsuarios from "./pages/ListaUsuarios/ListaUsuarios";
 import AdminRoute from "./componentes/AdminRoute";
 import CartasAdmin from "./pages/CartasAdmin";
+import DetalleAdmin from "./pages/DetalleAdmin";
+import PaquetesAdmin from "./pages/PaquetesAdmin";
 
 function AppRoutes() {
   return (
@@ -38,7 +40,8 @@ function AppRoutes() {
             <Route path="admin" element={<AdminRoute><Admin /></AdminRoute>}></Route>
           <Route path="editar-usuarios" element={<AdminRoute><ListaUsuarios/></AdminRoute>}></Route>
           <Route path="cartas-admin" element={<AdminRoute><CartasAdmin/></AdminRoute>}></Route>
-          <Route path="paquetes-admin" element={<AdminRoute><Paquetes/></AdminRoute>}></Route>
+          <Route path="paquetes-admin" element={<AdminRoute><PaquetesAdmin/></AdminRoute>}></Route>
+          <Route path="detalle-admin/:tipo/:id" element={<AdminRoute><DetalleAdmin/></AdminRoute>}></Route>
           </Route>
           <Route path="crear-cuenta" element={<CrearCuenta />}></Route>
           <Route path="iniciar-sesion" element={<IniciarSesion />}></Route>

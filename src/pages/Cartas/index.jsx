@@ -137,10 +137,10 @@ function Cartas() {
                                 defensa={carta.defensa}
                                 precio={carta.precio}
                                 tipo={carta.tipo}
-                                mostrarBotonVer={true} 
                                 atributo={carta.atributo}
                                 id={carta.id}
                                 cantidad={carta.cantidad}
+                                tipoDetalle="compra"
                             />
                         ))
                     ) : (

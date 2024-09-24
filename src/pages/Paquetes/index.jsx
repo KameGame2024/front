@@ -114,6 +114,7 @@ function Paquetes() {
                             descripcion={paquete.descripcion}
                             imagen={paquete.imagen}
                             id={paquete.id}
+                            tipoDetalle='compra'
                         />
                     ))}
                 </div>

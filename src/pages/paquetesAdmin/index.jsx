@@ -4,7 +4,7 @@ import { GlobalContext } from '@src/context/GlobalContext';
 import Filtro from '@src/componentes/Filtro';
 import Paquete from '@src/componentes/Paquete';
 import { FaChevronDown } from 'react-icons/fa'; // Import the down arrow icon
-import './Paquetes.css';
+import '../Paquetes/Paquetes.css';
 
 import { urlGetPaquetesEnInventario } from '../../utils/constants';
 import PaginationBar from '../../componentes/paginationBar';
@@ -114,6 +114,7 @@ function PaquetesAdmin() {
                             descripcion={paquete.descripcion}
                             imagen={paquete.imagen}
                             id={paquete.id}
+                            tipoDetalle='admin'
                         />
                     ))}
                 </div>

@@ -121,7 +121,7 @@ const CartasAdmin = () => {
                             precio={carta.precio}
                             id={carta.id}
                             cantidad={carta.cantidad}
-                            mostrarBotonVer={true}
+                            tipoDetalle="admin"
                         />
                     ))}
                 </div>
