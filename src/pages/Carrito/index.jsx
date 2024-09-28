@@ -7,6 +7,7 @@ import './Carrito.css';
 import { NavLink, useNavigate } from 'react-router-dom';
 
 import { urlCompra } from '../../utils/constants';
+import ModalCompra from '../../componentes/ModalCompra';
 const Carrito = () => {
     const { productosEnCarrito, incrementarCantidad, decrementarCantidad, eliminarProducto, vaciarCarrito } = useContext(GlobalContext);
     const { isAuthenticated } = useContext(AuthContext); // Obtén isAuthenticated de AuthContext
@@ -14,6 +15,7 @@ const Carrito = () => {
     const [mostrarModalCarritoVacio, setMostrarModalCarritoVacio] = useState(false);
     const [mostrarModalCompra, setMostrarModalCompra] = useState(false);
     const [mensajeError, setMensajeError] = useState('');
+    const [resumenCompra, setResumenCompra] = useState('');
     const navigate = useNavigate();
 
     const totalItems = productosEnCarrito.reduce((acc, producto) => acc + producto.cantidad, 0);
@@ -30,9 +32,6 @@ const Carrito = () => {
 
         if (isAuthenticated) { // Usar isAuthenticated en lugar de usuarioLogueado
             handleCompra();
-            setTimeout(() => {
-                setMostrarModalCompra(false);
-            }, 3000);
             vaciarCarrito();
         } else {
             setMensajeError('No puedes comprar porque aún no te has logueado o no posees una cuenta.');
@@ -73,6 +72,7 @@ const Carrito = () => {
             .then(data => {
                 setMostrarModalCompra(true);
                 console.log('Compra realizada:', data);
+                setResumenCompra(data);
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -132,12 +132,9 @@ const Carrito = () => {
             )}
 
             {mostrarModalCompra && (
-                <div className="prompt-overlay">
-                    <div className="prompt-contenido">
-                        <p>Compra realizada con éxito.</p>
-                        <NavLink className="aceptar-boton" onClick={() => setMostrarModalCompra(false)}>Aceptar</NavLink>
-                    </div>
-                </div>
+                <ModalCompra 
+                cartas={resumenCompra}
+                handleClose = {() => setMostrarModalCompra(false)}/>
             )}
         </div>
     );
