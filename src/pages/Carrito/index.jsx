@@ -55,7 +55,7 @@ const Carrito = () => {
         });
 
         const compra = {
-            user_id: 3, // Reemplazar con el id del usuario logueado
+            user_id: 6, // TODO: Reemplazar con el id del usuario logueado
             paquetes: paquetesComprados,
             cartas: cartasCompradas
         };

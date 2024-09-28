@@ -6,6 +6,7 @@ import './Card.css';
 
 const Card = ({ imagen, nombre, descripcion, ataque, defensa, precio, id, cantidad, tipoDetalle }) => { // Usa la función del contexto
 
+    const id_usuario = 4;
     return (
         <div className={`card`} >
             <img src={imagen} alt={nombre} className="card-img" />
@@ -14,22 +15,31 @@ const Card = ({ imagen, nombre, descripcion, ataque, defensa, precio, id, cantid
                 <h3 className="card-title">{nombre}</h3>
                 <p className="card-stats">ATK: {ataque}</p>
                 <p className="card-stats">DEF: {defensa}</p>
-                <p className="card-price">Precio: ${precio}</p>
-                <p className="card-quantity">Disponibles: {cantidad}</p>
                 {tipoDetalle === 'admin' && (
-                    <Link to={`/detalle-admin/carta/${id}`} className="card-button">
-                        Ver
-                    </Link> 
+                    <>
+                        <p className="card-price">Precio: ${precio}</p>
+                        <p className="card-quantity">Disponibles: {cantidad}</p>
+                        <Link to={`/detalle-admin/carta/${id}`} className="card-button">
+                            Ver
+                        </Link>
+                    </>
                 )}
                 {tipoDetalle === 'user' && (
-                    <Link to={`/detalle-coleccion/carta/${id}`} className="card-button">
-                        Ver
-                    </Link>
+                    <>
+                        <p className="card-quantity">Cantidad: {cantidad}</p>
+                        <Link to={`/detalle-coleccion/${id_usuario}/${id}`} className="card-button">
+                            Ver
+                        </Link>
+                    </>
                 )}
                 {tipoDetalle === 'compra' && (
-                    <Link to={`/detalle/carta/${id}`} className="card-button">
-                        Ver
-                    </Link>
+                    <>
+                        <p className="card-price">Precio: ${precio}</p>
+                        <p className="card-quantity">Cantidad: {cantidad}</p>
+                        <Link to={`/detalle/carta/${id}`} className="card-button">
+                            Ver
+                        </Link>
+                    </>
                 )}
             </div>
         </div>

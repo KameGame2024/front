@@ -1,7 +1,9 @@
 const urlGetCartas = 'http://localhost:3000/cartas/';
 const urlGetPaquetes = 'http://localhost:3000/paquetes/';
 const urlGetUsuarios = 'http://localhost:3000/usuarios/';
-const urlGetBarajaUsuario = (id) => `${urlGetUsuarios}/${id}/cartas_baraja`;
+const urlGetBarajaUsuario = (id) => `${urlGetUsuarios}${id}/cartas_baraja`;
+const urlGetBarajas = 'http://localhost:3000/barajas/';
+const urlGetCartaBarajaUsuario = (id_usuario, id_carta) => `${urlGetBarajas}${id_usuario}/cartas_baraja/${id_carta}`;
 const urlGetInventario = 'http://localhost:3000/inventario_tiendas/';
 const urlGetCartasEnInventario =  `${urlGetCartas}inventario/`;
 const urlGetPaquetesEnInventario = `${urlGetPaquetes}inventario/`;
@@ -23,7 +25,8 @@ export {
     urlGetPaqueteInventario,
     urlGetCartasUsuario,
     urlGetColecciones,
-    urlGetColeccionUsuario
+    urlGetColeccionUsuario,
+    urlGetCartaBarajaUsuario
 };
 
 const urlUpdateCarta = (id) => `http://localhost:3000/cartas/${id}`;

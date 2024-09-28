@@ -14,9 +14,11 @@ function Coleccion() {
     const [paginasTotales, setPaginasTotales] = useState(0);
 
     const fetchCartasData = async (page) => {
+
+        const user = 6; // TODO: obtener el id del usuario
         try {
             // TODO: con el AUTH token, se puede obtener el id del usuario
-            const urlWithPage = `${urlGetCartasUsuario(3)}?page=${page}&limit=12`;
+            const urlWithPage = `${urlGetCartasUsuario(user)}?page=${page}&limit=12`;
             const response = await fetch(urlWithPage);
             const data = await response.json();
             setCartas(data.data);
@@ -122,6 +124,7 @@ function Coleccion() {
                             precio={carta.precio}
                             id={carta.id}
                             tipoDetalle='user'
+                            cantidad={carta.cantidad}
                         />
                     ))}
                 </div>

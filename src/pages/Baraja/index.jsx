@@ -7,11 +7,13 @@ import { urlGetBarajaUsuario } from '../../utils/constants';
 function Baraja() {
     const [cartasBaraja, setCartasBaraja] = useState([]);
 
+    const user = 6; // TODO: obtener el id del usuario
+
     const fetchCartasBaraja = async () => {
         try {
 
             // TODO: con el AUTH token, se puede obtener el id del usuario
-            const response = await fetch(urlGetBarajaUsuario(3));
+            const response = await fetch(urlGetBarajaUsuario(user));
             const data = await response.json();
             setCartasBaraja(data);
         } catch (error) {
@@ -38,7 +40,8 @@ function Baraja() {
                             defensa={carta.defensa}
                             precio={carta.precio}
                             id={carta.id}
-                            mostrarBotonVer={false}
+                            tipoDetalle='user'
+                            cantidad={carta.cantidad}
                         />
                     ))}
                 </div>
