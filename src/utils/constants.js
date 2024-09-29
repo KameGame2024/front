@@ -72,4 +72,10 @@ export {
     urlCompra
 };
 
+const urlRegister = `${url}/auth/register`;
+const urlLogin = `${url}/auth/login`;
 
+export {
+    urlRegister,
+    urlLogin
+};

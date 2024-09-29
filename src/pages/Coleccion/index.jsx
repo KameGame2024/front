@@ -1,9 +1,9 @@
 // src/componentes/Coleccion.js
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Filtro from '@src/componentes/Filtro';
 import Card from '@src/componentes/Card';
 import './Coleccion.css'; // Añade un archivo CSS específico para la colección
-
+import { AuthContext } from '@src/context/AuthContext'; // Importa AuthContext
 import { urlGetCartasUsuario } from '../../utils/constants';
 import PaginationBar from '../../componentes/paginationBar';
 
@@ -12,13 +12,12 @@ function Coleccion() {
     const [cartas, setCartas] = useState([]);
     const [paginaActual, setPaginaActual] = useState(1);
     const [paginasTotales, setPaginasTotales] = useState(0);
+    const { user_id } = useContext(AuthContext);
 
     const fetchCartasData = async (page) => {
 
-        const user = 6; // TODO: obtener el id del usuario
         try {
-            // TODO: con el AUTH token, se puede obtener el id del usuario
-            const urlWithPage = `${urlGetCartasUsuario(user)}?page=${page}&limit=12`;
+            const urlWithPage = `${urlGetCartasUsuario(user_id)}?page=${page}&limit=12`;
             const response = await fetch(urlWithPage);
             const data = await response.json();
             setCartas(data.data);

@@ -9,6 +9,7 @@ import { GlobalContext } from '@src/context/GlobalContext';
 import TerminosYCondiciones from '@src/componentes/TerminosyCondiciones/TerminosyCondiciones.jsx'; // Importamos el modal
 // Esquema de validación usando Yup
 
+import { urlRegister } from '../../utils/constants';
 
 import { NavLink } from 'react-router-dom';
 
@@ -25,8 +26,9 @@ const schema = yup.object().shape({
     terms: yup.bool().oneOf([true], 'Debes aceptar los términos y condiciones'),
 });
 
+
+
 function CrearCuenta() {
-    const { usuarios, agregarUsuario } = useContext(GlobalContext);
     const { register, handleSubmit, formState: { errors }, setError, reset } = useForm({
         resolver: yupResolver(schema),
     });
@@ -36,17 +38,42 @@ function CrearCuenta() {
 
     const [mostrarRegistroPrompt, setMostrarRegistroPrompt] = useState(false); // Estado para controlar la visibilidad del prompt
 
-    const emailExists = (email) => {
-        return usuarios.some(user => user.email === email);
-    };
+    const fetchReister = async (data) => {
+
+        try {
+            const response = await fetch(urlRegister, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+            if (response === 201) {
+                const data = await response.json();
+                localStorage.setItem('token', data.token);
+            } else if (response == 400) {
+                setError('email', { type: 'manual', message: 'El correo electrónico ya está registrado' });
+            }
+            else {
+                console.error('Error al registrar la cuenta:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error al registrar la cuenta:', error);
+        }
+    }
+
+
 
     const onSubmit = (data) => {
-        if (emailExists(data.email)) {
-            setError('email', { type: 'manual', message: 'El correo electrónico ya está registrado' });
-            return;
-        }
 
-        agregarUsuario({ email: data.email, password: data.password });
+        const user = {
+            email: data.email,
+            password: data.password,
+            name: '',
+        };
+
+        // Registrar el usuario
+        fetchReister(user);
 
         // Limpiar el formulario
         reset();

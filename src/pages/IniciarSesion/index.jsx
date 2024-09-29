@@ -5,8 +5,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Campo from '@src/componentes/Campo';
 import './IniciarSesion.css';
-import { GlobalContext } from '@src/context/GlobalContext'; // Importa GlobalContext
 import AuthContext from "@src/context/AuthContext";
+
+import { urlLogin } from '../../utils/constants';
+import { jwtDecode } from 'jwt-decode';
 
 // Esquema de validación usando Yup
 const schema = yup.object().shape({
@@ -26,21 +28,46 @@ function IniciarSesion() {
         resolver: yupResolver(schema),
     });
     const [loginError, setLoginError] = useState("");
-    
-    const { usuarios } = useContext(GlobalContext); // Usa GlobalContext
     const { login } = useContext(AuthContext);
 
+    const fetchReister = async (data) => {
+
+        try {
+            const response = await fetch(urlLogin, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+            if (response === 201) {
+                const data = await response.json();
+                localStorage.setItem('token', data.token);
+                const decodeToken = jwtDecode(data.token);
+                return decodeToken;
+            } else if (response == 400) {
+                setLoginError("Correo electrónico o contraseña incorrectos.");
+            }
+            else {
+                console.error('Error al registrar la cuenta:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error al registrar la cuenta:', error);
+        }
+    }
+
     const onSubmit = (data) => {
-        const user = usuarios.find(
-            (user) => user.email === data.email && user.password === data.password
-        );
+
+        const userData = {
+            email: data.email,
+            contrasena: data.password
+        };
+        const user = fetchReister(userData);
 
         if (user) {
             console.log("Usuario autenticado correctamente:", user.email);
             setLoginError("");
-            login(user.role); // Llama a la función login con el rol del usuario
-        } else {
-            setLoginError("Correo electrónico o contraseña incorrectos.");
+            login(user); // Llama a la función login con el rol del usuario
         }
     };
 

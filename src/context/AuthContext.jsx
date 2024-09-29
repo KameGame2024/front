@@ -7,12 +7,14 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [userRole, setUserRole] = useState(null);
+    const [userId, setUserId] = useState(null);
     const navigate = useNavigate();
 
-    const login = (role) => {
+    const login = (user) => {
         setIsAuthenticated(true);
-        setUserRole(role);
-        if (role === 'admin') {
+        setUserRole(user.rol);
+        setUserId(user.id);
+        if (user.rol === 'admin') {
             navigate('/admin'); // Redirige a la página de admin
         } else {
             navigate('/'); // Redirige a la página de usuario normal
@@ -26,7 +28,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, userRole, login, logout }}>
+        <AuthContext.Provider value={{ isAuthenticated, userRole, userId, login, logout }}>
             {children}
         </AuthContext.Provider>
     );

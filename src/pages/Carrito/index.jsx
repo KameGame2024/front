@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useContext } from 'react';
 import Producto from '@src/componentes/Producto';
 import Resumen from '@src/componentes/Resumen';
 import { GlobalContext } from '@src/context/GlobalContext';
@@ -10,7 +10,7 @@ import { urlCompra } from '../../utils/constants';
 import ModalCompra from '../../componentes/ModalCompra';
 const Carrito = () => {
     const { productosEnCarrito, incrementarCantidad, decrementarCantidad, eliminarProducto, vaciarCarrito } = useContext(GlobalContext);
-    const { isAuthenticated } = useContext(AuthContext); // Obtén isAuthenticated de AuthContext
+    const { isAuthenticated, user_id } = useContext(AuthContext); // Obtén isAuthenticated de AuthContext
     const [mostrarModal, setMostrarModal] = useState(false);
     const [mostrarModalCarritoVacio, setMostrarModalCarritoVacio] = useState(false);
     const [mostrarModalCompra, setMostrarModalCompra] = useState(false);
@@ -24,6 +24,7 @@ const Carrito = () => {
     const subtotal = costoTotal + costoEnvio;
 
     const pagar = () => {
+
         if (productosEnCarrito.length === 0) {
             setMensajeError('No hay productos en el carrito.');
             setMostrarModalCarritoVacio(true);
@@ -54,7 +55,7 @@ const Carrito = () => {
         });
 
         const compra = {
-            user_id: 6, // TODO: Reemplazar con el id del usuario logueado
+            user_id: user_id,
             paquetes: paquetesComprados,
             cartas: cartasCompradas
         };
