@@ -19,8 +19,8 @@ import CentroCombate from "./pages/CentroCombate";
 import ListaUsuarios from "./pages/ListaUsuarios/ListaUsuarios";
 import AdminRoute from "./componentes/AdminRoute";
 import CartasAdmin from "./pages/CartasAdmin";
-import DetalleAdmin from "./pages/DetalleAdmin";
 import PaquetesAdmin from "./pages/PaquetesAdmin";
+import DetalleAdmin from "./pages/DetalleAdmin";
 import DetalleColeccion from "./pages/DetalleColeccion";
 
 function AppRoutes() {
