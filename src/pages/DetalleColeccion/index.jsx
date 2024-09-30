@@ -98,7 +98,7 @@ function DetalleColeccion() {
                     <button className="detalle_masmenos" onClick={decrementarCantidad}>-</button>
                     <span className="detalle_cant">{cantidad}</span>
                     <button className="detalle_masmenos" onClick={incrementarCantidad}>+</button>
-                    <button className="detalle-agregar" onClick={handleAddToBaraja}>Agregar a la baraja</button>
+                    <button className="detalle-agregar" onClick={handleAddToBaraja}>Modificar baraja</button>
                 </div>
             </div>
             {mostrarModalAgregado && (
