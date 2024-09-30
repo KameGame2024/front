@@ -108,9 +108,6 @@ function Coleccion() {
         <div className='fondo'>
             <h1>MI COLECCIÓN</h1>
             <div className="filtrar-cartas">
-                <div className="filtro-container">
-                    <Filtro categoria="cartas" filtros={filtros} manejarCambioFiltro={manejarCambioFiltro} />
-                </div>
                 <div className="cartas-container">
                     {cartasFiltradas.map((carta) => (
                         <Card

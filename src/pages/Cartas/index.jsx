@@ -1,4 +1,3 @@
-// src/componentes/Cartas.js
 import React, { useState, useContext, useEffect } from 'react';
 import { GlobalContext } from '@src/context/GlobalContext';
 import Filtro from '@src/componentes/Filtro';
@@ -13,44 +12,6 @@ function Cartas() {
     const [cartas, setCartas] = useState([]);
     const [paginaActual, setPaginaActual] = useState(1);
     const [paginasTotales, setPaginasTotales] = useState(0);
-
-    const fetchCartasData = async (page) => {
-        try {
-            const urlWithPage = `${urlGetCartasEnInventario}?page=${page}&limit=12`;
-            const response = await fetch(urlWithPage);
-            const data = await response.json();
-            setCartas(data.data);
-            setPaginasTotales(data.pages);
-
-            console.log(data.data);
-        }
-        catch (error) {
-            console.error("Error fetching data:", error);
-        }
-    };
-
-    useEffect(() => {
-
-        // Fetch cards when the component mounts
-        fetchCartasData(paginaActual);
-
-    }, [paginaActual]);
-
-    const handlePrevPage = () => {
-        if (paginaActual > 1) {
-            setPaginaActual(paginaActual - 1);
-        }
-    }
-
-    const handleNextPage = () => {
-        if (paginaActual < paginasTotales) {
-            setPaginaActual(paginaActual + 1);
-        }
-    }
-
-
-    const { busqueda } = useContext(GlobalContext);
-    const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal visibility
     const [filtros, setFiltros] = useState({
         ataqueMin: '',
         ataqueMax: '',
@@ -73,6 +34,9 @@ function Cartas() {
         }
     });
 
+    const { busqueda } = useContext(GlobalContext);
+    const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal visibility
+
     const manejarCambioFiltro = (e) => {
         const { name, value, type, checked } = e.target;
         const [category, key] = name.split('.');
@@ -93,20 +57,68 @@ function Cartas() {
         }
     };
 
+    // Función que construye la URL con los filtros
+    const construirUrlConFiltros = (page) => {
+        let url = `${urlGetCartasEnInventario}?page=${page}&limit=12`;
+
+        // Añadir filtros si existen
+        if (filtros.ataqueMin) url += `&ataqueMin=${filtros.ataqueMin}`;
+        if (filtros.ataqueMax) url += `&ataqueMax=${filtros.ataqueMax}`;
+        if (filtros.defensaMin) url += `&defensaMin=${filtros.defensaMin}`;
+        if (filtros.defensaMax) url += `&defensaMax=${filtros.defensaMax}`;
+        if (filtros.precioMin) url += `&precioMin=${filtros.precioMin}`;
+        if (filtros.precioMax) url += `&precioMax=${filtros.precioMax}`;
+
+        const tiposSeleccionados = Object.keys(filtros.tipos).filter(tipo => filtros.tipos[tipo]);
+        if (tiposSeleccionados.length) url += `&tipo=${tiposSeleccionados.join(',')}`;
+
+        const atributosSeleccionados = Object.keys(filtros.atributos).filter(atributo => filtros.atributos[atributo]);
+        if (atributosSeleccionados.length) url += `&atributo=${atributosSeleccionados.join(',')}`;
+
+        return url;
+    };
+
+    const fetchCartasData = async (page) => {
+        try {
+            const urlWithFilters = construirUrlConFiltros(page);
+            const response = await fetch(urlWithFilters);
+            const data = await response.json();
+            setCartas(data.data);
+            setPaginasTotales(data.pages);
+
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
+
+    useEffect(() => {
+        // Fetch cards when the component mounts
+        fetchCartasData(paginaActual);
+    }, [paginaActual]);
+
+    const handlePrevPage = () => {
+        if (paginaActual > 1) {
+            setPaginaActual(paginaActual - 1);
+        }
+    }
+
+    const handleNextPage = () => {
+        if (paginaActual < paginasTotales) {
+            setPaginaActual(paginaActual + 1);
+        }
+    }
+
+    // Función para manejar el clic en el botón "Aplicar filtros"
+    const aplicarFiltros = () => {
+        fetchCartasData(1); // Reinicia la página a la primera cuando se aplican los filtros
+    };
+
     const filtrarCartas = (cartas) => {
         return cartas.filter(carta => {
             const cumpleBusqueda = carta.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
-            carta.descripcion.toLowerCase().includes(busqueda.toLowerCase());
-            const cumpleAtaque = (!filtros.ataqueMin || carta.ataque >= filtros.ataqueMin) &&
-                                (!filtros.ataqueMax || carta.ataque <= filtros.ataqueMax);
-            const cumpleDefensa = (!filtros.defensaMin || carta.defensa >= filtros.defensaMin) &&
-                                (!filtros.defensaMax || carta.defensa <= filtros.defensaMax);
-            const cumplePrecio = (!filtros.precioMin || carta.precio >= filtros.precioMin) &&
-                                (!filtros.precioMax || carta.precio <= filtros.precioMax);
-            const cumpleTipo = !Object.values(filtros.tipos).includes(true) || Object.keys(filtros.tipos).some(tipo => filtros.tipos[tipo] && carta.tipo.toLowerCase() === tipo);
-            const cumpleAtributo = !Object.values(filtros.atributos).includes(true) || Object.keys(filtros.atributos).some(atributo => filtros.atributos[atributo] && carta.atributo.toLowerCase() === atributo);
+                carta.descripcion.toLowerCase().includes(busqueda.toLowerCase());
 
-            return cumpleBusqueda && cumpleAtaque && cumpleDefensa && cumplePrecio && cumpleTipo && cumpleAtributo;
+            return cumpleBusqueda;
         });
     };
 
@@ -124,6 +136,8 @@ function Cartas() {
                 {/* Filters container (visible only on larger screens) */}
                 <div className={`filtro-container ${isModalOpen ? 'modal-open' : ''}`}>
                     <Filtro categoria="cartas" filtros={filtros} manejarCambioFiltro={manejarCambioFiltro} />
+                    {/* Botón para aplicar filtros */}
+                    <button className="btn-aplicar-filtros" onClick={aplicarFiltros}>Aplicar Filtros</button>
                 </div>
                 
                 {/* Cards container */}
@@ -159,7 +173,7 @@ function Cartas() {
                     handlePrevPage={handlePrevPage}
                     handleNextPage={handleNextPage}
                 />
-            </div>    
+            </div>
 
             {/* Filter modal for mobile */}
             {isModalOpen && (

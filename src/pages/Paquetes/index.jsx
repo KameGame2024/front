@@ -1,9 +1,8 @@
-// src/componentes/Paquetes.js
 import React, { useState, useContext, useEffect } from 'react';
 import { GlobalContext } from '@src/context/GlobalContext';
 import Filtro from '@src/componentes/Filtro';
 import Paquete from '@src/componentes/Paquete';
-import { FaChevronDown } from 'react-icons/fa'; // Import the down arrow icon
+import { FaChevronDown } from 'react-icons/fa'; 
 import './Paquetes.css';
 
 import { urlGetPaquetes } from '../../utils/constants';
@@ -25,37 +24,53 @@ function Paquetes() {
     const [paginaActual, setPaginaActual] = useState(1);
     const [paginasTotales, setPaginasTotales] = useState(0);
 
+    // Función para construir la query string con los filtros aplicados
+    const construirQueryString = (filtros, pagina) => {
+        const params = new URLSearchParams();
+        params.append('page', pagina);
+        params.append('limit', 12); // Asumimos un límite de 12 paquetes por página
+
+        // Aplicar filtros
+        if (filtros.precioMin) params.append('precioMin', filtros.precioMin);
+        if (filtros.precioMax) params.append('precioMax', filtros.precioMax);
+
+        const setSeleccionado = Object.keys(filtros.sets).find(set => filtros.sets[set]);
+        if (setSeleccionado) params.append('set', setSeleccionado);
+
+        if (busqueda) params.append('nombre', busqueda);
+
+        return params.toString();
+    };
 
     const fetchPaquetesData = async (page) => {
         try {
-            const urlWithPage = `${urlGetPaquetes}?page=${page}&limit=12`;
-            const response = await fetch(urlWithPage);
+            const queryString = construirQueryString(filtros, page);
+            const urlWithQuery = `${urlGetPaquetes}?${queryString}`;
+
+            const response = await fetch(urlWithQuery);
             const data = await response.json();
             setPaquetes(data.data);
             setPaginasTotales(data.pages);
-        }
-        catch (error) {
+        } catch (error) {
             console.error("Error fetching data:", error);
         }
     };
 
     useEffect(() => {
-        // Fetch packages when the component mounts
-
         fetchPaquetesData(paginaActual);
-    }, [paginaActual]);
+    }, [paginaActual, filtros, busqueda]);
 
     const handlePrevPage = () => {
         if (paginaActual > 1) {
             setPaginaActual(paginaActual - 1);
         }
-    }
+    };
 
     const handleNextPage = () => {
         if (paginaActual < paginasTotales) {
             setPaginaActual(paginaActual + 1);
         }
-    }
+    };
 
     const manejarCambioFiltro = (e) => {
         const { name, value, type, checked } = e.target;
@@ -77,10 +92,16 @@ function Paquetes() {
         }
     };
 
+    const aplicarFiltros = () => {
+        setIsModalOpen(false); // Cerrar el modal al aplicar filtros
+        setPaginaActual(1); // Reiniciar a la primera página cuando se apliquen los filtros
+        fetchPaquetesData(1); // Hacer una nueva llamada con los filtros aplicados
+    };
+
     const filtrarPaquetes = (paquetes) => {
         return paquetes.filter(paquete => {
             const cumpleBusqueda = paquete.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
-            paquete.descripcion.toLowerCase().includes(busqueda.toLowerCase());
+                paquete.descripcion.toLowerCase().includes(busqueda.toLowerCase());
             const cumplePrecio = (!filtros.precioMin || paquete.precio >= filtros.precioMin) &&
                                  (!filtros.precioMax || paquete.precio <= filtros.precioMax);
             const cumpleSet = !Object.values(filtros.sets).includes(true) || Object.keys(filtros.sets).some(set => filtros.sets[set] && paquete.set.toLowerCase().includes(set));
@@ -98,11 +119,7 @@ function Paquetes() {
                 <FaChevronDown /> Filtrar
             </div>
             <div className="filtrar-paquetes">
-                <div className={`filtro-container ${isModalOpen ? 'modal-open' : ''}`}>
-                    <Filtro categoria="paquetes" filtros={filtros} manejarCambioFiltro={manejarCambioFiltro} />
-                </div>
                 
-                {/* Paquetes container */}
                 <div className="paquetes-container">
                     {paquetesFiltrados.map((paquete) => (
                         <Paquete
@@ -134,8 +151,8 @@ function Paquetes() {
                 <div className="filtro-modal">
                     <div className="modal-content">
                         <Filtro categoria="paquetes" filtros={filtros} manejarCambioFiltro={manejarCambioFiltro} />
+                        <button className="aplicar-filtros-btn" onClick={aplicarFiltros}>Aplicar Filtros</button>
                         <button className="close-modal" onClick={() => setIsModalOpen(false)}>Cerrar</button>
-                        
                     </div>
                 </div>
             )}

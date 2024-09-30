@@ -10,16 +10,36 @@ const CartasAdmin = () => {
     const [paginaActual, setPaginaActual] = useState(1);
     const [paginasTotales, setPaginasTotales] = useState(0);
 
+    // Función que construye la URL con los filtros
+    const construirUrlConFiltros = (page) => {
+        let url = `${urlGetCartas}?page=${page}&limit=12`;
+
+        // Añadir filtros si existen
+        if (filtros.ataqueMin) url += `&ataqueMin=${filtros.ataqueMin}`;
+        if (filtros.ataqueMax) url += `&ataqueMax=${filtros.ataqueMax}`;
+        if (filtros.defensaMin) url += `&defensaMin=${filtros.defensaMin}`;
+        if (filtros.defensaMax) url += `&defensaMax=${filtros.defensaMax}`;
+        if (filtros.precioMin) url += `&precioMin=${filtros.precioMin}`;
+        if (filtros.precioMax) url += `&precioMax=${filtros.precioMax}`;
+
+        const tiposSeleccionados = Object.keys(filtros.tipos).filter(tipo => filtros.tipos[tipo]);
+        if (tiposSeleccionados.length) url += `&tipo=${tiposSeleccionados.join(',')}`;
+
+        const atributosSeleccionados = Object.keys(filtros.atributos).filter(atributo => filtros.atributos[atributo]);
+        if (atributosSeleccionados.length) url += `&atributo=${atributosSeleccionados.join(',')}`;
+
+        return url;
+    };
     
     const fetchCartasData = async (page) => {
         try {
-            const urlWithPage = `${urlGetCartas}?page=${page}&limit=12`;
-            const response = await fetch(urlWithPage);
+            const urlWithFilters = construirUrlConFiltros(page);
+            const response = await fetch(urlWithFilters);
             const data = await response.json();
             setCartas(data.data);
             setPaginasTotales(data.pages);
-        }
-        catch (error) {
+
+        } catch (error) {
             console.error("Error fetching data:", error);
         }
     };
@@ -62,6 +82,11 @@ const CartasAdmin = () => {
             oscuridad: false
         }
     });
+
+    // Función para manejar el clic en el botón "Aplicar filtros"
+    const aplicarFiltros = () => {
+        fetchCartasData(1); // Reinicia la página a la primera cuando se aplican los filtros
+    };
 
     const manejarCambioFiltro = (e) => {
         const { name, value, type, checked } = e.target;
@@ -108,6 +133,7 @@ const CartasAdmin = () => {
             <div className="filtrar-cartas">
                 <div className="filtro-container">
                     <Filtro categoria="cartas" filtros={filtros} manejarCambioFiltro={manejarCambioFiltro} />
+                    <button className="btn-aplicar-filtros" onClick={aplicarFiltros}>Aplicar Filtros</button>
                 </div>
                 <div className="cartas-container">
                     {cartasFiltradas.map((carta) => (
