@@ -7,7 +7,12 @@ const Producto = ({ producto, incrementarCantidad, decrementarCantidad, eliminar
         <div className="producto">
             <div className='cont'>
                 <h2>Producto {producto.id}</h2>
-                <img src={producto.imagen} alt={producto.nombre} className="producto-img" />
+                {producto.tipo === 'carta' && (
+                    <img src={producto.imagen} alt={producto.nombre} className="producto-img" />
+                )}
+                {producto.tipo === 'paquete' && (
+                    <img src="https://libreriafrancesa.com.co/cdn/shop/files/4012927163801_540x.jpg?v=1703278011" alt={producto.nombre} className="producto-img" />
+                )}
             </div>
             <div className="producto-info">
                 <p>{producto.tipo}</p>
