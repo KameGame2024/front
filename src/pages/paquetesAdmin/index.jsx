@@ -112,7 +112,7 @@ function PaquetesAdmin() {
                             set={paquete.set}
                             precio={paquete.precio}
                             descripcion={paquete.descripcion}
-                            imagen={paquete.imagen}
+                            imagen={paquete.url_imagen}
                             id={paquete.id}
                             tipoDetalle='admin'
                         />
