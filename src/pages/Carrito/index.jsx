@@ -1,4 +1,4 @@
-import React, { useContext, useState, useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import Producto from '@src/componentes/Producto';
 import Resumen from '@src/componentes/Resumen';
 import { GlobalContext } from '@src/context/GlobalContext';
@@ -10,7 +10,7 @@ import { urlCompra } from '../../utils/constants';
 import ModalCompra from '../../componentes/ModalCompra';
 const Carrito = () => {
     const { productosEnCarrito, incrementarCantidad, decrementarCantidad, eliminarProducto, vaciarCarrito } = useContext(GlobalContext);
-    const { isAuthenticated, user_id } = useContext(AuthContext); // Obtén isAuthenticated de AuthContext
+    const { isAuthenticated, userId } = useContext(AuthContext); // Obtén isAuthenticated de AuthContext
     const [mostrarModal, setMostrarModal] = useState(false);
     const [mostrarModalCarritoVacio, setMostrarModalCarritoVacio] = useState(false);
     const [mostrarModalCompra, setMostrarModalCompra] = useState(false);
@@ -55,7 +55,7 @@ const Carrito = () => {
         });
 
         const compra = {
-            user_id: user_id,
+            user_id: userId,
             paquetes: paquetesComprados,
             cartas: cartasCompradas
         };

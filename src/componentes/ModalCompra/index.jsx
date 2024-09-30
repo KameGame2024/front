@@ -20,7 +20,7 @@ function ModalCompra({ cartas, handleClose }) {
                             defensa={carta.cartaInfo.defensa}
                             precio={carta.cartaInfo.precio}
                             id={carta.cartaInfo.id}
-                            tipoDetalle='user'
+                            tipoDetalle='modal'
                             cantidad={carta.cantidad}
                         />
                     ))}

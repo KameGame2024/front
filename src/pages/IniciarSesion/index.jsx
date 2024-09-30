@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Link } from "react-router-dom";
+import { Await, Link } from "react-router-dom";
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -33,6 +33,7 @@ function IniciarSesion() {
     const fetchReister = async (data) => {
 
         try {
+            console.log(data);
             const response = await fetch(urlLogin, {
                 method: 'POST',
                 headers: {
@@ -40,12 +41,18 @@ function IniciarSesion() {
                 },
                 body: JSON.stringify(data),
             });
-            if (response === 201) {
+            if (response.status === 200) {
                 const data = await response.json();
                 localStorage.setItem('token', data.token);
+                console.log(localStorage.getItem('token'));
                 const decodeToken = jwtDecode(data.token);
-                return decodeToken;
-            } else if (response == 400) {
+
+                console.log("Usuario autenticado correctamente:", decodeToken.email);
+                setLoginError("");
+                login(decodeToken);// Llama a la función login con el rol del usuario
+                localStorage.setItem('user', JSON.stringify(decodeToken.id));
+                console.log(localStorage.getItem('user'));
+            } else if (response.status == 400) {
                 setLoginError("Correo electrónico o contraseña incorrectos.");
             }
             else {
@@ -62,13 +69,7 @@ function IniciarSesion() {
             email: data.email,
             contrasena: data.password
         };
-        const user = fetchReister(userData);
-
-        if (user) {
-            console.log("Usuario autenticado correctamente:", user.email);
-            setLoginError("");
-            login(user); // Llama a la función login con el rol del usuario
-        }
+        fetchReister(userData);
     };
 
     return (

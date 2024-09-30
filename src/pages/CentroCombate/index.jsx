@@ -3,10 +3,10 @@ import AuthContext from "../../context/AuthContext";
 
 function CentroCombateRedirect() {
 
-  const { user_id } = useContext(AuthContext);
+  const { userId } = useContext(AuthContext);
 
   useEffect(() => {
-    window.location.href = `https://card-battle-phi.vercel.app/${user_id}`;
+    window.location.href = `https://card-battle-phi.vercel.app/${userId}`;
   }, []);
 
   return null; // o un mensaje indicando la redirección

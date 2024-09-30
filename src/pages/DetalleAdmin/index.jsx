@@ -100,7 +100,7 @@ function DetalleAdmin() {
 
     return (
         <div className={`detalle-${tipo}`}>
-            <img src={detalle.imagen} alt={detalle.nombre} className="detalle-imagen" />
+            <img src={detalle.url_imagen} alt={detalle.nombre} className="detalle-imagen" />
             <div className="detalle-info">
                 <h1 className="detalle-titulo">{detalle.nombre}</h1>
                 <h2 className="descripcion_t">Descripción</h2>

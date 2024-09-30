@@ -1,12 +1,10 @@
 // src/componentes/Card.jsx
 import React, { useContext } from 'react';
-import { GlobalContext } from '@src/context/GlobalContext';
 import { Link } from 'react-router-dom';
 import './Card.css';
 
 const Card = ({ imagen, nombre, descripcion, ataque, defensa, precio, id, cantidad, tipoDetalle }) => { // Usa la función del contexto
 
-    const id_usuario = 4;
     return (
         <div className={`card`} >
             <img src={imagen} alt={nombre} className="card-img" />
@@ -27,7 +25,7 @@ const Card = ({ imagen, nombre, descripcion, ataque, defensa, precio, id, cantid
                 {tipoDetalle === 'user' && (
                     <>
                         <p className="card-quantity">Cantidad: {cantidad}</p>
-                        <Link to={`/detalle-coleccion/${id_usuario}/${id}`} className="card-button">
+                        <Link to={`/detalle-coleccion/${id}`} className="card-button">
                             Ver
                         </Link>
                     </>
@@ -39,6 +37,12 @@ const Card = ({ imagen, nombre, descripcion, ataque, defensa, precio, id, cantid
                         <Link to={`/detalle/carta/${id}`} className="card-button">
                             Ver
                         </Link>
+                    </>
+                )}
+                {tipoDetalle === 'modal' && (
+                    <>
+                        <p className="card-price">Precio: ${precio}</p>
+                        <p className="card-quantity">Cantidad: {cantidad}</p>
                     </>
                 )}
             </div>

@@ -21,6 +21,8 @@ function Cartas() {
             const data = await response.json();
             setCartas(data.data);
             setPaginasTotales(data.pages);
+
+            console.log(data.data);
         }
         catch (error) {
             console.error("Error fetching data:", error);

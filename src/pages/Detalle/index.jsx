@@ -67,9 +67,16 @@ function Detalle() {
 
     if (!detalle) return <p>Cargando...</p>;
 
+    console.log(detalle);
+
     return (
         <div className={`detalle-${tipo}`}>
-            <img src={detalle.imagen} alt={detalle.nombre} className="detalle-imagen" />
+            {tipo === 'carta' && (
+                <img src={detalle.imagen} alt={detalle.nombre} className="detalle-imagen" />
+            )}
+            {tipo === 'paquete' && (
+                <img src="https://libreriafrancesa.com.co/cdn/shop/files/4012927163801_540x.jpg?v=1703278011" alt={detalle.nombre} className="detalle-imagen" />
+            )}
             <div className="detalle-info">
                 <h1 className="detalle-titulo">{detalle.nombre}</h1>
                 <h2 className="descripcion_t">Descripción</h2>

@@ -36,7 +36,7 @@ function AppRoutes() {
             <Route path="/detalle/:tipo/:id" element={<Detalle />}></Route>
             <Route path="*" element={<NotFound />}></Route>
             <Route path="mi-coleccion" element={<PrivateRoute><Coleccion /></PrivateRoute>}></Route>
-            <Route path="detalle-coleccion/:id_usuario/:id_carta" element={<PrivateRoute><DetalleColeccion /></PrivateRoute>}></Route>
+            <Route path="detalle-coleccion/:id_carta" element={<PrivateRoute><DetalleColeccion /></PrivateRoute>}></Route>
             <Route path="mi-baraja" element={<PrivateRoute><Baraja /></PrivateRoute>}></Route>
             <Route path="centro-combate" element={<PrivateRoute><CentroCombate /></PrivateRoute>}></Route>
             <Route path="admin" element={<AdminRoute><Admin /></AdminRoute>}></Route>

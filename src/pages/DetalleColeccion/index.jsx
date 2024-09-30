@@ -1,5 +1,5 @@
 // src/pages/Detalle/Detalle.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 // import { GlobalContext } from '../../context/GlobalContext';
 import '../Detalle/Detalle.css';
@@ -7,16 +7,19 @@ import { NavLink } from 'react-router-dom';
 
 import { urlGetCartaBarajaUsuario, urlPostBaraja} from '../../utils/constants';
 
+import AuthContext from '../../context/AuthContext';
 
 function DetalleColeccion() {
 
-    const { id_carta, id_usuario } = useParams();
+    const { id_carta } = useParams();
     // const { cartas, paquetes, agregarProductoAlCarrito } = useContext(GlobalContext);
     const [detalle, setDetalle] = useState(null);
     const [cantidad, setCantidad] = useState(0);
     const [cantidadBaraja, setCantidadBaraja] = useState(0);
     const [mostrarModalAgregado, setMostrarModalAgregado] = useState(false);
     const [mostrarModalError, setMostrarModalError] = useState(false);
+
+    const { userId } = useContext(AuthContext);
 
     const fetchCartaBaraja = async (id_usuario, id_carta) => {
         try {
@@ -31,7 +34,7 @@ function DetalleColeccion() {
     };
 
     useEffect(() => {
-        fetchCartaBaraja(id_usuario, id_carta);
+        fetchCartaBaraja(userId, id_carta);
     }, []);
 
     const incrementarCantidad = () => setCantidad(prev => (prev < (detalle.cantidad - cantidadBaraja) ? prev + 1 : (detalle.cantidad - cantidadBaraja)));
@@ -39,13 +42,22 @@ function DetalleColeccion() {
 
     const handleAddToBaraja = () => {
         const url = urlPostBaraja;
-        const data = {
-            id: detalle.idBaraja,
-            id_usuario: id_usuario,
-            id_carta: id_carta,
-            cantidad: cantidadBaraja + cantidad
-        };
-
+        let data = {};
+        if (detalle.id === -1) {
+            data = {
+                "id_usuario": userId,
+                "id_carta": id_carta,
+                "cantidad": cantidadBaraja + cantidad
+            };
+        } else {
+            data = {
+                "id": detalle.id,
+                "id_usuario": userId,
+                "id_carta": id_carta,
+                "cantidad": cantidadBaraja + cantidad
+            };
+        }
+        
         fetch(url, {
             method: 'POST',
             headers: {

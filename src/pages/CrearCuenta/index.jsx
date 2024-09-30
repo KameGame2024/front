@@ -38,9 +38,10 @@ function CrearCuenta() {
 
     const [mostrarRegistroPrompt, setMostrarRegistroPrompt] = useState(false); // Estado para controlar la visibilidad del prompt
 
-    const fetchReister = async (data) => {
+    const fetchRegister = async (data) => {
 
         try {
+            console.log(data);
             const response = await fetch(urlRegister, {
                 method: 'POST',
                 headers: {
@@ -48,10 +49,12 @@ function CrearCuenta() {
                 },
                 body: JSON.stringify(data),
             });
-            if (response === 201) {
+            if (response.status === 201) {
                 const data = await response.json();
                 localStorage.setItem('token', data.token);
-            } else if (response == 400) {
+                // Mostrar mensaje de éxito
+                setMostrarRegistroPrompt(true);
+            } else if (response.status == 400) {
                 setError('email', { type: 'manual', message: 'El correo electrónico ya está registrado' });
             }
             else {
@@ -68,18 +71,15 @@ function CrearCuenta() {
 
         const user = {
             email: data.email,
-            password: data.password,
-            name: '',
+            contrasena: data.password,
+            nombre: data.email.split('@')[0],
         };
 
         // Registrar el usuario
-        fetchReister(user);
+        fetchRegister(user);
 
         // Limpiar el formulario
         reset();
-
-        // Mostrar mensaje de éxito
-        setMostrarRegistroPrompt(true);
     };
 
     const handleTermsAccepted = () => {
